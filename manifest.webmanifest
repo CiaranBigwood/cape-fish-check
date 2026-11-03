@@ -1,0 +1,16 @@
+{
+  "name": "Cape Fish Check",
+  "short_name": "Fish Check",
+  "description": "Where to fish near Cape Town: hour-by-hour ratings, tides, moon, tactics and the legal limits for light-tackle shore spots within an hour of the city.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#eef3f0",
+  "theme_color": "#1f6b4e",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

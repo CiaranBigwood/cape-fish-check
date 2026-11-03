@@ -1,0 +1,58 @@
+/* Cape Fish Check service worker: lets the page open with the last forecast when there is no signal.
+   Same-site files: network first, cache as a fallback, so updates show up as soon as you are online.
+   Fonts and libraries: cache first. Forecast APIs and map tiles: always the network.
+   Every cache step is optional: if the browser refuses storage, the page simply works online only. */
+const VERSION = 'cfc-__VERSION__';
+const SHELL = ['./', 'manifest.webmanifest', 'assets/icon-192.png'];
+const LIBS = ['cdnjs.cloudflare.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
+
+function fromCache(req) {
+  return caches.match(req, { ignoreSearch: true })
+    .then(hit => hit || (req.mode === 'navigate' ? caches.match('./') : undefined))
+    .catch(() => undefined);
+}
+
+function remember(req, res) {
+  if (!res || !(res.ok || res.type === 'opaque')) return;
+  const copy = res.clone();
+  caches.open(VERSION).then(c => c.put(req, copy)).catch(() => {});
+}
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(VERSION).then(c => c.addAll(SHELL)).catch(() => {}).then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k.startsWith('cfc-') && k !== VERSION).map(k => caches.delete(k))))
+      .catch(() => {})
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  const req = event.request;
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+
+  if (url.origin === self.location.origin) {
+    const network = fetch(req).then(res => { remember(req, res); return res; });
+    event.waitUntil(network.then(() => {}, () => {}));
+    const fallback = () => fromCache(req).then(hit => hit || Response.error());
+    if (req.mode !== 'navigate') { event.respondWith(network.catch(fallback)); return; }
+    // On one bar of signal, show the saved page after 3 s instead of a blank screen; the fresh copy still gets saved.
+    const slow = new Promise(r => setTimeout(r, 3000)).then(() => fromCache(req)).then(hit => hit || network);
+    event.respondWith(Promise.race([network, slow]).catch(fallback));
+    return;
+  }
+
+  if (LIBS.includes(url.hostname)) {
+    event.respondWith(
+      caches.match(req).catch(() => undefined)
+        .then(hit => hit || fetch(req).then(res => { remember(req, res); return res; }))
+    );
+  }
+});

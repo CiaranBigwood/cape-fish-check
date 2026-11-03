@@ -1,0 +1,422 @@
+{
+ "checked": "2026-11-02",
+ "permits": {
+  "sea": {
+   "name": "Sea and estuaries: DFFE recreational fishing permit",
+   "summary": "Anyone angling in the sea or an estuary (Zandvlei, Milnerton Lagoon and every beach, rock and harbour wall on this page) needs a recreational fishing permit from the Department of Forestry, Fisheries and the Environment, endorsed for angling. Carry it, or a photo of it, when you fish.",
+   "details": [
+    "Buy it online at fishing.dffe.gov.za (monthly or annual, download it straight away) or at a Post Office branch.",
+    "Fees in DFFE's brochure (version 23/1, 2023): angling R69 a year or R45 for four weeks, plus a R7 application fee. Check the current price on the portal.",
+    "The angling endorsement covers fish only. Collecting bait (mussels, red bait, prawns, worms) and catching chokka need the separate invertebrate permit (R87 a year or R50 for four weeks in the same brochure).",
+    "No age exemption for angling was found in DFFE's material, so do not assume children are exempt.",
+    "Inside the Table Mountain National Park marine protected area you must also follow SANParks' zoning: no fishing at all in the restricted zones (St James, Boulders, Castle Rock, Paulsberg, Cape of Good Hope, Karbonkelberg)."
+   ],
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf",
+   "more_sources": [
+    "https://www.sanews.gov.za/south-africa/recreational-fishing-permit-application-goes-online"
+   ]
+  },
+  "fresh": {
+   "name": "Rivers, dams and vleis: CapeNature freshwater angling licence",
+   "summary": "Anyone over six fishing public inland waters (rivers, public dams and vleis) needs CapeNature's freshwater angling licence. It costs R45. Fill in CapeNature's application form, pay by EFT, and email both to permits.fax@capenature.co.za; it takes 2 to 5 working days. No licence is needed on a private farm dam with the owner's permission.",
+   "details": [
+    "Validity: a Western Cape Government page says 12 months from issue; CapeNature's own page does not say.",
+    "On top of the licence, each water has its own access rules: City of Cape Town reserves (Rietvlei, Zandvlei), the Door De Kraal Dam scheme (October to April, City permit), Cape Piscatorial Society membership and beat bookings on the trout streams, and Limietberg Nature Reserve's conservation fee.",
+    "At most two lines in the water, each with at most two single hooks. Snatching (foul-hooking), spears, poison and nets without a netting licence are illegal.",
+    "Every indigenous freshwater fish must be released alive: witvis, Berg River redfin, Cape kurper and Cape galaxias are protected.",
+    "Sharptooth catfish (barbel) may not be released alive in the Western Cape, and Rietvlei's rules say to remove carp and barbel too. Never move live fish from one water to another."
+   ],
+   "source": "https://capenature.co.za/permits/recreational-fishing-permit-dams-and-rivers",
+   "more_sources": [
+    "https://www.capenature.co.za/uploads/files/Nature-Conservation-Ordinance-19-of-1974_2021-05-31-075828.pdf",
+    "https://cer.org.za/wp-content/uploads/2004/09/NEMBA-Alien-and-Invasive-Species-Regulations-2020.pdf"
+   ]
+  }
+ },
+ "permit_note": "Which one you need depends on the water, not the fish: harders caught in a tidal vlei count as marine. Spots on this page say which applies.",
+ "sea_note": "From the recreational fishing table in the Marine Living Resources Act regulations (Annexure 7, as replaced by Government Notice R.959 of 2012), read independently from the Gazette and from DFFE's own brochure; the two agree on every fish listed here. Size is total length, snout to tail. No more than 10 fish a day in total across species with a bag of 10 or less. Anything undersize, over the bag or in its closed season must go back at once. A closed season bans fishing for the species, not only keeping it. DFFE said in September 2025 that the elf closed season is enforced as 1 October to 30 November, although its brochure still prints 1 September.",
+ "fresh_note": "No current Provincial Gazette notice sets freshwater bag limits, minimum sizes or a provincial trout closed season; CapeNature says alien species such as bass, carp, tilapia and catfish generally have none. The winter closure on Cape Piscatorial Society trout streams is a club rule. Releasing listed invasive fish is legal only where they already occur, and never in protected areas for bass and carp.",
+ "mpa_note": "Status of shore angling at the places on this page, from SANParks, the City of Cape Town, CapeNature and DFFE. 'Unclear' means no official page says angling is allowed.",
+ "general": [
+  {
+   "topic": "Sea: aggregate daily limit",
+   "rule": "No more than 10 fish per person per day, all species combined. It does not apply to species with no bag limit (maasbanker, chub mackerel, anchovies, sardines and others) or to species whose bag exceeds 10 (harders 50, chokka 20). Species with a bag of exactly 10 (hottentot, snoek, yellowtail, white stumpnose, strepie, steentjie) do count toward it.",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_22__general.php"
+  },
+  {
+   "topic": "Sea: unlisted species",
+   "rule": "Bony fish on neither Annexure 7 list: 10 per day (DFFE permit condition), within the aggregate of 10. Sharks, rays, skates and chimaeras: 1 per species per day. Rockcods not listed: 5 per species per day.",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_22__general.php"
+  },
+  {
+   "topic": "Sea: rods and hooks",
+   "rule": "Angling means rod, reel and line only, with no more than 10 hooks attached. No national limit on the number of rods per angler was found.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: gaffs and landing nets",
+   "rule": "A gaff or a landing net may be used only to land a fish already hooked on a line. Clubs, sticks, spears and spearguns are banned for anglers. The brochure (rule 14) mentions only the gaff, but the regulation also allows a net, and the regulation is the primary text.",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_22__general.php"
+  },
+  {
+   "topic": "Sea: measuring",
+   "rule": "Size limits are total length, measured in a straight line from the tip of the snout to the extreme end of the tail.",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_22__general.php"
+  },
+  {
+   "topic": "Sea: possession and transport",
+   "rule": "Bony fish must be landed whole with head and tail on (gutting is allowed), so their size can be checked. Filleting at the water is therefore not allowed. Bag limits cap what you land or possess on any one day. For invertebrates (bait), the Annexure 13 limits apply 'at any one time', including while transporting. For elf in its closed season, DFFE also bans transport.",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_22__general.php"
+  },
+  {
+   "topic": "Sea: selling fish",
+   "rule": "Fish caught under a recreational permit are for own use only and may never be sold, bartered or traded. Species on the Annexure 4 commercial-prohibited list (galjoen, white steenbras, leervis, blacktail, zebra, bronze bream, white musselcracker, Cape stumpnose, spotted grunter, baardman, springer and others) may not be caught by commercial linefishers either, so in practice they are recreational-only.",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_22__general.php"
+  },
+  {
+   "topic": "Sea: catch and release (illegal catches)",
+   "rule": "Any fish that is undersize, over the bag limit, in its closed season or on the prohibited list must be returned at once with as little injury as possible.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: closed season: what it bans",
+   "rule": "A closed season bans fishing for the species, including trying to catch it, as well as possessing it. It is not only a ban on keeping, so targeting galjoen for catch-and-release in its closed season is not allowed. Sources: reg 9 (any person, Annexure 2), reg 22(7)(b) (permit holders, Annexure 7) and brochure rule 13(d) ('shall not catch, disturb, land, keep or control'). 'Fishing' is defined to include an attempt. That definition wording was confirmed in the cached Robben Island MPA regulations (GN R.794 of 2019, https://faolex.fao.org/docs/pdf/saf192822.pdf); A reports the same wording in MLRA section 1 (acts.co.za), which is not in the local cache.",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_9__closed_season_and_oth.php"
+  },
+  {
+   "topic": "Sea: prohibited species",
+   "rule": "These may never be caught, landed, possessed or sold: basking shark, brindle bass, coelacanth, great white shark, Natal wrasse, pipefish and seahorses, potato bass, red (copper) steenbras, sawfishes, seventy-four, whale shark. Red steenbras was moved to the prohibited list by R.959 (2012). DFFE brochure v23/1 rule (11) still prints a red steenbras closed season, which is outdated, so tell anglers to release red steenbras.",
+   "source": "https://faolex.fao.org/docs/pdf/saf122591.pdf"
+  },
+  {
+   "topic": "Sea: bait: permit",
+   "rule": "Collecting any invertebrate needs a permit: mussels, red bait, prawns, worms, limpets, octopus, squid. The angling endorsement does not cover it. Buy the 'Molluscs, including octopus, squid, worms, other invertebrates and aquatic plants' permit (R87 annual / R50 short-term per brochure v23/1).",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_55__shellfish__red_bait_.php"
+  },
+  {
+   "topic": "Sea: bait: mussels",
+   "rule": "Rock, black, brown and ribbed mussels: 30 per day, by hand or with a blade or flat edge no wider than 12 mm. White mussel (Donax serra): minimum 35 mm, 50 per day, same method. No collecting between sunset and sunrise.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: bait: red bait",
+   "rule": "Red bait (Pyura): 2 kg per day, weighed without the test (shell). By hand or with a blade no wider than 12 mm.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: bait: prawns",
+   "rule": "Mud prawn (Upogebia): 50 per day, by hand, suction pump or inverted tin. Sand prawn (Callianassa): 50 per day, by hand or suction pump. Swimming prawns (Penaeidae): 50 per day, by hand or a hand-held scoop net or trap no larger than 50 cm x 50 cm.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: bait: worms",
+   "rule": "Bloodworm (Arenicola): 5 per day, by hand, suction pump and/or wire. Any other seaworm (wonder, moonshine, coral, pot, pudding, rock, tape and flatworms, but not bloodworm, mussel worm or Cape reef-worm): 10 per day, by hand or suction pump.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: bait: limpets",
+   "rule": "Limpets (Patellidae): 15 per day, by hand or with a blade no wider than 12 mm. No collecting between sunset and sunrise.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: bait: other organisms",
+   "rule": "Octopus: 2 per day (hand, rod and/or line, or gaff). Razor clam / pencil bait: 20 (hand, suction pump and/or wire). Crabs and hermit crabs: 15. Mole crab: 30. Cuttlefish: 2. Periwinkle, topshell and turbanshell: 50. Alikreukel: 5, minimum 63.5 mm. Abalone (perlemoen): closed to recreational take until further notice. Figures read from the brochure Table 5 page image (rendered at C:\\Users\\CIARAN~1.BIG\\AppData\\Local\\Temp\\claude\\c--Users-ciaran-bigwood-OneDrive---Prescient-Ciaran-Personal\\cebcae06-fed6-422e-aa3c-991d271c9e47\\scratchpad\\render\\bait.png).",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: night fishing",
+   "rule": "No national ban on night angling for fish was found. Two activities are banned between sunset and sunrise: collecting shellfish (snails, mussels, clams, scallops, chitons) and cast-netting. Local exceptions exist: the Breede River estuary bans all fishing from 20h30 to 05h00, and MPAs and municipalities may set their own hours.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: cast nets",
+   "rule": "A cast-net endorsement allows only the Annexure 8 / Table 1 species: harders 50; strepie 15 cm, 10; pinky 7.5 cm, 10; maasbanker, chub mackerel, anchovies, sardines and glassies with no limit; and others. No cast-netting between sunset and sunrise. The net-size rules conflict: reg 22(16) and brochure rule (5) allow a circular net up to 6 m in diameter, while the brochure's Table 1 note says mesh no more than 13 mm, and no net longer than 2 m or wider than 4 m in diameter. Tell anglers to follow the stricter Table 1 figures.",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_22__general.php"
+  },
+  {
+   "topic": "Sea: drones and bait boats",
+   "rule": "Bait-carrying drones, remote-controlled bait boats and other remotely operated vehicles are illegal for recreational fishing.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: lures",
+   "rule": "No national restriction on artificial lures or flies for marine angling was found beyond the 10-hook limit. Do not state any lure rule.",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_22__general.php"
+  },
+  {
+   "topic": "Sea: foul hooking",
+   "rule": "No national rule on foul-hooked (snagged) fish was found in R1111 reg 22 or in the DFFE brochure. Do not state one. Any fish kept must still meet the size, bag and season rules.",
+   "source": "https://www.acts.co.za/marine-living-resources-act-1998/r1111_22__general.php"
+  },
+  {
+   "topic": "Sea: closed area: Strand / Gordon's Bay",
+   "rule": "From the Lourens River mouth to the eastern breakwater of Gordon's Bay harbour, 500 m out to sea, shore angling is the only fishing allowed: no boat fishing, spearfishing, netting or bait collecting. Similar shore-angling-only areas exist further east at Mudge Point (Hawston), Onrus River (Harderbaai), Hermanus and Dyer Island.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Sea: marine protected areas",
+   "rule": "Inside a marine protected area, permit holders must also follow the managing agency's conditions: SANParks for the Table Mountain National Park MPA, which has no-take zones, and the Robben Island MPA regulations (GN R.794 of 2019). National bag and size limits never override an MPA no-take zone.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf"
+  },
+  {
+   "topic": "Fresh water: Which law applies",
+   "rule": "Freshwater angling in the Western Cape still runs under the Nature Conservation Ordinance 19 of 1974. The Western Cape Biodiversity Act 6 of 2021 has only partly commenced: Proclamation 18/2022 (in force 15 Nov 2022) expressly excluded the repeal of the Ordinance. CapeNature says the Ordinance stays in force until the Act's regulations are finalised.",
+   "source": "https://commons.laws.africa/akn/za-wc/act/p/2022/18/media/publication/za-wc-act-p-2022-18-publication-document.pdf"
+  },
+  {
+   "topic": "Fresh water: Number of rods, lines and hooks",
+   "rule": "In public inland waters you may fish with at most two lines, each carrying at most two single hooks. A set line may carry at most two hooks. CapeNature's Code of Practice says the same (two rods or lines, two hooks each) and says rods must be under your immediate control.",
+   "source": "https://www.capenature.co.za/uploads/files/Nature-Conservation-Ordinance-19-of-1974_2021-05-31-075828.pdf"
+  },
+  {
+   "topic": "Fresh water: Prohibited methods: snatching, spearing, nets, poison",
+   "rule": "In public inland waters, snatching (foul-hooking) and spearing are illegal, and so is poison (s48 bans putting anything injurious to fish in the water). Fyke, crab, staked and trek nets need a CapeNature netting licence, and a cast net needs its own licence. A landing net is allowed if its opening is no more than 610 mm across and it is used only to lift fish caught by angling.",
+   "source": "https://www.capenature.co.za/uploads/files/Nature-Conservation-Ordinance-19-of-1974_2021-05-31-075828.pdf"
+  },
+  {
+   "topic": "Fresh water: Live bait and moving live fish",
+   "rule": "Putting live fish into any inland water needs a permit, except putting a fish back immediately into the water it was just caught in. Live carp, bluegill, trout, black bass and banded tilapia may not be transported, sold or bought without a permit. In practice, live fish caught in one water cannot be used as bait in another. Crabs, prawns, pencil bait, shell bait and worms caught in inland waters may not be sold or bought without a permit. These sections (s50, s57, s59) apply even on private waters: s61 does not exempt them.",
+   "source": "https://www.capenature.co.za/uploads/files/Nature-Conservation-Ordinance-19-of-1974_2021-05-31-075828.pdf"
+  },
+  {
+   "topic": "Fresh water: Bag and size limits",
+   "rule": "The Ordinance lets daily bag limits be set by notice (a 'day' is 24 hours from midnight) and minimum sizes by regulation. I found no current notice or regulation for any of these species. CapeNature says there are generally no bag or size limits for most alien species (carp, bass, tilapia, catfish), and that some trout rivers have club catch restrictions. Indigenous fish must be released (see below).",
+   "source": "https://capenature.co.za/activities/recreational-fishing"
+  },
+  {
+   "topic": "Fresh water: Closed seasons",
+   "rule": "Fishing outside a gazetted angling season is an offence, but a season exists only if one is set by notice. I found no current notice, and neither CapeNature's permit page nor its recreational-fishing page mentions one. The Cape Piscatorial Society's river season (1 September to 31 May, so closed 1 June to 31 August) is a club access rule on CPS waters, not law. Do not present it as a provincial closed season.",
+   "source": "https://www.capenature.co.za/uploads/files/Nature-Conservation-Ordinance-19-of-1974_2021-05-31-075828.pdf"
+  },
+  {
+   "topic": "Fresh water: Indigenous fish must be released alive",
+   "rule": "CapeNature requires every indigenous freshwater fish caught in Western Cape inland waters to be released alive. For Schedule 1 'endangered' fish this is also statute: they may not be caught or possessed at all without a permit (s52(a)). That covers the Berg-Breede whitefish, the Berg River redfin and other redfins, Cape kurper, Clanwilliam yellowfish and sawfin. For other indigenous fish, such as galaxias, the release rule comes from CapeNature policy and its published guidance, not from a statutory section. The policy calls Galaxias zebratus 'Mountain galaxias' (Data Deficient, Olifants River south to False Bay) and lists the endemic Vlei galaxias (G. punctifer) for lowland Atlantic-coast wetlands.",
+   "source": "https://www.capenature.co.za/uploads/files/Transport-and-utilisation-of-indigenous-freshwater-fishes-in-the-WCP-Policy-Nov.-2025.pdf"
+  },
+  {
+   "topic": "Fresh water: NEMBA catch-and-release of listed invasive fish",
+   "rule": "Catch-and-release of a listed invasive freshwater fish is a restricted activity (AIS Regulations 2020, reg 6(e)). It is legal only where List 7 exempts it for that species. Bass, carp and bluegill are exempted where they already occur, but releasing carp in protected areas is expressly excluded, and releasing smallmouth bass and other 1b bass in protected areas is prohibited. Trout are exempted for everyone. Sharptooth catfish in the Western Cape has no exemption. The regulations define catch and release as release in the same area where the fish was caught, which is separate from 'release' (stocking). Moving any listed fish to another catchment or past a barrier is prohibited. Dead specimens need no permit.",
+   "source": "https://cer.org.za/wp-content/uploads/2004/09/NEMBA-Alien-and-Invasive-Species-Regulations-2020.pdf"
+  },
+  {
+   "topic": "Fresh water: Private waters",
+   "rule": "On privately owned inland waters (a dam or vlei completely surrounded by one owner's land), the killing, closed-season, licence, netting, bag-limit and method rules (ss51-56) do not apply to the owner, the owner's relatives, the owner's employees or anyone fishing with the owner's permission. The live-fish rules (s50, s57), the Schedule 1 sale ban, and the NEMBA alien-species rules still apply.",
+   "source": "https://www.capenature.co.za/uploads/files/Nature-Conservation-Ordinance-19-of-1974_2021-05-31-075828.pdf"
+  },
+  {
+   "topic": "Fresh water: City of Cape Town dams",
+   "rule": "Angling at City dams has been under a moratorium since 2005. The exception is Doordekraal Dam (Durbanville), where limited, controlled fishing has been allowed since 2007, seasonally from October to April and with permits. That City release dates from 18 Feb 2020. A Weekend Argus article from about July 2025 (secondary) still names Door De Kraal as the designated City site, says fishing at Rosendal Dam is prohibited and reports fines for illegal fishing at Vierlanden Dam. Vleis and reserves set their own access rules (e.g. Zeekoevlei closures). Check each site before going.",
+   "source": "https://www.capetown.gov.za/Media-and-news/To%20fish%20or%20not%20to%20fish,%20that%20is%20the%20question"
+  },
+  {
+   "topic": "Fresh water: Night fishing",
+   "rule": "I found no Ordinance provision that bans freshwater night angling. The bag-limit 'day' runs midnight to midnight (s79(a)(ii)). Gate hours and site rules (CapeNature reserves, City parks and vleis) set the practical limits. Do not state that night fishing is legal everywhere.",
+   "source": "https://www.capenature.co.za/uploads/files/Nature-Conservation-Ordinance-19-of-1974_2021-05-31-075828.pdf"
+  },
+  {
+   "topic": "Fresh water: Trout streams: current access (Limietberg, CPS)",
+   "rule": "Angling in Limietberg Nature Reserve needs the freshwater licence. CapeNature reserves also charge an entrance conservation fee for fishing: \"from R 40 per adult\" in the 1 Sep 2025 to 31 Aug 2026 tariff sheet, which has now expired; the current tariff was not seen. According to the CPS's FOSAF report (8 Oct 2026, secondary), CapeNature closed the Elandspad to fishing after May flood damage to the trail. CPS waters also need club membership or permits, and the club's rivers are open only 1 September to 31 May. Confirm the Elandspad status with CapeNature before publishing.",
+   "source": "https://fosaf.org.za/report-west-cape.php"
+  }
+ ],
+ "places": [
+  {
+   "place": "Table Mountain National Park MPA: restricted (no-take) zones (Karbonkelberg, Cape of Good Hope, Paulsberg, Castle Rock, Boulders, St James)",
+   "status": "prohibited",
+   "rules": "No fishing or spearfishing of any kind inside the six restricted zones. The one exception is snoek, which may be fished beyond the 35 m depth line in Karbonkelberg; that is a boat activity and does not help shore anglers. These are the boundary points as Wikipedia reproduces them from the Gazette, measured offshore from the high-water mark:\n- Karbonkelberg: Oudekraal (S33°58.757') to Hout Bay (S34°03.660', E18°20.252', on the Sentinel side).\n- Cape of Good Hope: Schusters Bay Point, Scarborough (S34°12.271') to Hoek van die Bobbejaan (S34°18.393').\n- Paulsberg: Smitswinkel Point (S34°16.549') to Venus Pool (S34°17.744').\n- Castle Rock: Millers Point (S34°14.100') to Partridge Point (S34°15.480').\n- Boulders: Seaforth, Simon's Town (S34°11.567') to Rocklands (S34°12.705').\n- St James: St James tidal pool (S34°07.123') to Kalk Bay tidal pool (S34°07.567').\nNEW: OpenStreetMap places Llandudno Beach at S34°00.49', E18°20.48'. That is between Oudekraal and the Hout Bay point, so Llandudno is inside the Karbonkelberg no-take zone. Sandy Bay lies further south on the same stretch, so it is inside too. Do not show either as a fishing spot. The legal instrument is GN 695 of 4 June 2004 (Gazette 26431) under MLRA s43. The FAOLEX copy of the Gazette would not extract, so the coordinates come from Wikipedia's reproduction and have not been checked against the Gazette itself.",
+   "source": "https://en.wikipedia.org/wiki/Table_Mountain_National_Park_Marine_Protected_Area",
+   "checked": "2026-11-02",
+   "confidence": "medium"
+  },
+  {
+   "place": "Table Mountain National Park MPA: controlled zone (rest of the Peninsula coast, Bailey's Cottage at Muizenberg round to Green Point)",
+   "status": "allowed-with-conditions",
+   "rules": "Shore angling is allowed with a valid DFFE recreational permit endorsed for angling. National bag, size and closed-season limits apply. The brochure says permit holders fishing in an MPA must follow the conditions of that MPA's management agency, which here is SANParks.\nCORRECTED extent: the MPA's False Bay boundary starts at Bailey's Cottage, Muizenberg (S34°06.590'), and its northern boundary ends at Green Point (S33°54.075', E18°24.037'). So Muizenberg beach and Surfer's Corner, north of Bailey's Cottage, are outside the MPA.\nCORRECTED permits (DFFE brochure, Version 23/1):\n- An angling permit covers rod, reel and line only, with no more than 10 hooks. Fee: R69 a year or R45 for 4 weeks, plus a R7 application fee.\n- Bait collecting (molluscs, worms and other invertebrates) is NOT covered by the angling permit. It needs its own permit: R87 a year or R50 for 4 weeks.\n- Cast-netting also needs its own endorsement (R87 a year or R50 for 4 weeks). The net may not exceed 6 m in diameter and may only take Table 1 species.\n- Drones and remote-controlled bait boats are illegal.\nThe fees are from 2023, so check current fees at fishing.dffe.gov.za.\nThe zone excludes the six restricted zones. It may also exclude the old GN R1111 reg 10(f) 500 m closed areas (Fish Hoek to Glencairn, Bailey's Cottage to St James, Scarborough fence to Cape Point); whether those are still in force is unresolved (see the Muizenberg entry). The City Coastal By-law's sign-dependent bans also apply.",
+   "source": "https://en.wikipedia.org/wiki/Table_Mountain_National_Park_Marine_Protected_Area",
+   "checked": "2026-11-02",
+   "confidence": "medium"
+  },
+  {
+   "place": "Cape of Good Hope section, TMNP (Buffels Bay, Bordjiesrif, Rooikrans, Platboom, Gifkommetjie, Olifantsbos)",
+   "status": "unclear",
+   "rules": "Where angling is allowed you need BOTH a DFFE recreational angling permit AND a SANParks 'Level 3' line-fishing activity permit, sold as a day or annual permit. The daily conservation (entry) fee is separate.\nNEW zone placement, comparing OpenStreetMap points with the Gazette coordinates on Wikipedia:\n- Gifkommetjie (S34°19.45') and Platboom (Platboom Road, S34°19.6') are south of Hoek van die Bobbejaan (S34°18.393'). That puts them OUTSIDE the Cape of Good Hope restricted zone, in the controlled zone.\n- Buffels Bay (S34°19.09') is south of Venus Pool (S34°17.744'). That puts it OUTSIDE the Paulsberg restricted zone, in the controlled zone.\n- Rooikrans lies further south toward Cape Point, so it is probably controlled zone too. Not geocoded.\n- Olifantsbos was not geocoded, but it lies between Schusters Bay Point and Hoek van die Bobbejaan, so it is probably INSIDE the Cape of Good Hope no-take zone. Treat it as no fishing until verified.\n- Bordjiesrif was not geocoded.\nStill unresolved:\n- Old reg 10(f)(i) of GN R1111 still appears on acts.co.za. It closes the area 500 m seaward from the Scarborough (Schuster Bay) reserve fence to Cape Point 'except on the authority of a permit'. The current DFFE brochure no longer lists it as a closed area.\n- The Level 3 price is unconfirmed (R460 or R500).\n- The 2025/26 SANParks tariffs expired on 31 October 2026, and the 2026/27 tariffs were not seen.\n- Gate hours conflict across sources.\n- All SANParks pages returned 403.\nThe brochure also restricts diving gear from Venus Pool round Cape Point to Olifantsbospunt, out to 2 nm. That does not affect rod anglers.",
+   "source": "https://www.sanparks.org/parks/table-mountain/cards-permits/activity-permit",
+   "checked": "2026-11-02",
+   "confidence": "low"
+  },
+  {
+   "place": "Helderberg MPA (Eerste River mouth to Lourens River mouth, Macassar to Strand, 500 m offshore)",
+   "status": "prohibited",
+   "rules": "No fishing of any kind, including from the shore, and no bait collecting. No dogs, with a fine of R2 500. The City's Coastal Management Branch manages the MPA for the Minister under the MLRA and enforces zero tolerance. Report offences on 021 480 7700. The MPA reaches 500 m seaward. Macassar beach, west of the Eerste River mouth, is outside it. Directly east of the Lourens River mouth is the Strand closed area, where shore angling only is allowed (see the next entry). Not re-opened in this pass; nothing found contradicts it.",
+   "source": "https://www.capetown.gov.za/Media-and-news/City reminds Helderberg residents of no-dog zone between Lourens and Eerste River mouths",
+   "checked": "2026-11-02",
+   "confidence": "high"
+  },
+  {
+   "place": "Strand: Lourens River to Gordon's Bay harbour eastern breakwater (closed area, reg 10(f)(v))",
+   "status": "allowed-with-conditions",
+   "rules": "This is a closed area under GN R1111 reg 10(f)(v), running 500 m seaward between the Lourens River security fence and a line from the navigation light at the end of Gordon's Bay harbour's eastern breakwater. Only shore angling is allowed: no boats, spearfishing, cast nets or bait collecting. A DFFE permit endorsed for angling is required.\nVERIFIED this pass: the wording now comes directly from the text of the DFFE Marine Recreational Fishing Information and Permit Conditions Brochure, Version 23/1, closed areas condition (11). Earlier it rested only on a search snippet of the 2014/15 brochure.\nThe City Coastal By-law applies where signs are posted: no fishing within 100 m of a designated bathing area. An unverified 2009 blog says daytime angling is not allowed on Strand beach, which would be bathing-area signage. No official source was found for that.",
+   "source": "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf",
+   "checked": "2026-11-02",
+   "confidence": "high"
+  },
+  {
+   "place": "Robben Island MPA (the island and its surrounding waters)",
+   "status": "prohibited",
+   "rules": "CHANGED from 'allowed'. A shore angler has no lawful option here:\n- Around the island, the restricted zone allows no fishing from a vessel or from the shore, and all gear must be stowed.\n- The controlled zones allow only line fishing from vessels (yellowtail and snoek, per SANParks summaries; not verified).\n- Public access to the island is by museum tour only.\nThe DFFE brochure also bans diving gear within 1 nm of the island.\nThe mainland Table Bay shore is outside this MPA and is now covered only by the Table Bay beaches entry. The MPA's eastern limit is E18°24'/E18°24.06'. Blouberg, Milnerton and Table View lie east of about E18°26', and Melkbosstrand lies north of the S33°45' boundary.\nInstrument: GN R.794 of 2019 (NEMPAA). This was not verified because the FAOLEX PDF would not extract and the SANParks page returned 403.",
+   "source": "https://en.wikipedia.org/wiki/Robben_Island_Marine_Protected_Area",
+   "checked": "2026-10-29",
+   "confidence": "medium"
+  },
+  {
+   "place": "City of Cape Town Coastal By-law 2020 (all City beaches and tidal pools)",
+   "status": "allowed-with-conditions",
+   "rules": "Published in Western Cape Provincial Gazette 8301 on 11 August 2020 and in force the same day.\n- s6(1) bans illegal fishing and possessing illegally caught fish.\n- s6(2) bars using fishing equipment in a way that endangers or obstructs others or invades their privacy.\n- s6(3) requires anglers to remove bait, refuse and gear, or put them in City bins.\n- CORRECTED s14(1): the ban on fishing in a tidal pool (s14(1)(e)(i)) and within 100 m of a designated bathing area applies only WHERE SIGNS PROHIBITING IT HAVE BEEN ERECTED (under s11 or another by-law), unless the City authorises it in writing. Neither is a blanket ban.\n- s7(3): children catching fish in tidal pools during ordinary beach use is not prohibited, whatever the signs say.\n- s11: signs may vary by time of day and day of week.\n- s14(2): no bathing within 50 m of a jetty or launch site.\n- s21(6): fish cleaning and bait disposal at launch sites only at designated facilities.\nPage wording: obey the posted signs at each tidal pool and bathing beach.",
+   "source": "https://openbylaws.org.za/akn/za-cpt/act/by-law/2020/coastal/eng@2020-08-11",
+   "checked": "2026-11-02",
+   "confidence": "high"
+  },
+  {
+   "place": "Muizenberg (Neptune's Corner to St James) and Fish Hoek to Glencairn (Jager's Walk to Glencairn Beach)",
+   "status": "unclear",
+   "rules": "Both stretches are listed closed areas under GN R1111 reg 10(f)(iii) and (ii): 500 m seaward, no fishing 'except on the authority of a permit'.\nNEW evidence that cuts both ways:\n(a) The DFFE brochure (Version 23/1) lists only one False Bay closed area, Strand (Lourens River to Gordon's Bay). It does not list reg 10(f)(i)–(iv), which suggests they may no longer be treated as separate closures.\n(b) acts.co.za, opened 2 Nov 2026, still prints (f)(i)–(vii) with no amendment notes and no consolidation date, behind a subscription wall.\nMPA position:\n- The TMNP MPA begins at Bailey's Cottage (S34°06.590'). From Neptune's Corner and Surfer's Corner down to Bailey's Cottage is outside the MPA but inside reg 10(f)(iii).\n- From Bailey's Cottage to the St James tidal pool is in both the MPA controlled zone and reg 10(f)(iii).\n- St James to Kalk Bay is the TMNP St James restricted zone, which is no-take.\n- Fish Hoek to Glencairn is in the MPA controlled zone and in reg 10(f)(ii). Fish Hoek beach north of Jager's Walk is outside (f)(ii).\nDo not show these stretches as open until DFFE confirms. The Coastal By-law's sign-dependent bathing-area rule applies at Muizenberg and Fish Hoek.",
+   "source": "http://www.acts.co.za/marine-living-resources-act-1998/r1111_10__closed_areas",
+   "checked": "2026-11-02",
+   "confidence": "low"
+  },
+  {
+   "place": "Strandfontein, Mnandi, Monwabisi and Macassar beaches/resorts (False Bay, City)",
+   "status": "allowed-with-conditions",
+   "rules": "The City beach pages list 'Fishing' as an activity at Strandfontein and Mnandi. Monwabisi Resort: 'in winter it is generally only used by anglers'. Monwabisi day tariff on the cached page: R14 adult and R7 child, full day; the tariff year is not shown. Macassar: 'the most regular visitors are anglers', and there is a licensed trek-net operation. Macassar beach is west of the Eerste River mouth, outside the Helderberg MPA. None of these beaches is in a reg 10 closed area or the DFFE brochure closed-area list. A DFFE angling permit is required, and the Coastal By-law's sign-dependent bathing-area rule applies. Opening hours and fees for Strandfontein, Mnandi, Silwerstroom and Soetwater were not found. Safety: an angler was shot at Strandfontein in December 2025 (Cape Argus). Not re-opened this pass.",
+   "source": "https://www.capetown.gov.za/Explore and enjoy/See-all-city-facilities/Our-recreational-facilities/Beaches/strandfontein-beach",
+   "checked": "2026-10-29",
+   "confidence": "medium"
+  },
+  {
+   "place": "Table Bay mainland beaches: Milnerton, Blouberg, Melkbos, Silwerstroom (plus Soetwater on the Peninsula)",
+   "status": "allowed-with-conditions",
+   "rules": "No MPA or reg 10 closed area covers this shore:\n- The Robben Island MPA ends at E18°24' and S33°45', which leaves Blouberg, Milnerton, Table View and Melkbos outside it. Verify on a map.\n- The TMNP MPA's northern limit is at Green Point (S33°54.075').\nA DFFE angling permit is required, and the Coastal By-law's sign-dependent rules apply.\nNEW: the brochure's closed area (18)(a) from Melkbos Point to Die Josie (Chapman's Peak) applies only to west coast rock lobster. It does not affect rod anglers.\nAt Milnerton, the Milnerton Lagoon and Lagoon Beach pollution closure of December 2022 may still affect the area by the estuary mouth (see the Milnerton Lagoon entry).\nSoetwater, at Kommetjie, is not in Table Bay. It is in the TMNP MPA controlled zone, north of the Cape of Good Hope restricted zone, which starts at Schusters Bay Point (S34°12.271').\nResort fees and hours were not found.",
+   "source": "https://www.capetown.gov.za/Explore%20and%20enjoy/Nature-and-outdoors/Our-beaches-and-coast/Ocean-fishing",
+   "checked": "2026-11-02",
+   "confidence": "medium"
+  },
+  {
+   "place": "Kalk Bay harbour wall",
+   "status": "unclear",
+   "rules": "No official statement was found from the Department of Public Works and Infrastructure (DPWI), which owns the fishing harbour, or from the City about recreational angling from the wall. Forum posts and travel pieces from 2009-2013 describe routine angling there.\nNEW: by the Gazette coordinates on Wikipedia, the St James no-take zone and reg 10(f)(iv) both end at the Kalk Bay tidal pool (S34°07.567'). The harbour lies just south of it, so the wall appears to be in the MPA controlled zone. This was not checked against the Gazette.\nHarbour access rules are unknown. Ask the harbour master or DPWI.",
+   "source": "https://sealine.co.za/threads/any-one-fishing-at-kalk-bay-harbour.18908/",
+   "checked": "2026-11-02",
+   "confidence": "low"
+  },
+  {
+   "place": "Hout Bay harbour wall",
+   "status": "unclear",
+   "rules": "No official notice was found from DPWI, the harbour master or SANParks.\nNEW: the Karbonkelberg no-take zone's southern endpoint is 'Hout Bay at S34°03.660'; E018°20.252'', on the Sentinel side, and the zone extends west of it. The harbour sits inside the bay to the north-east, so it appears to be outside the no-take zone, in the controlled zone. Not checked against the Gazette.\nHarbour access rules are unknown. Forum threads from 2010-2011 are anecdotal only.",
+   "source": "https://sealine.co.za/threads/fishing-from-houtbay-harbour.52668/",
+   "checked": "2026-11-02",
+   "confidence": "low"
+  },
+  {
+   "place": "Gordon's Bay harbour wall",
+   "status": "unclear",
+   "rules": "The navigation light at the end of the eastern breakwater is the southern limit of the Strand closed area, where only shore angling is allowed (DFFE brochure v23/1). No rule specific to the harbour walls was found. An SA Navy training base sits next to the old harbour. District Mail angling columns call it a popular spot (secondary source). Harbour master: +27 21 856 1482 (from a search snippet).",
+   "source": "http://www.acts.co.za/marine-living-resources-act-1998/r1111_10__closed_areas",
+   "checked": "2026-11-02",
+   "confidence": "low"
+  },
+  {
+   "place": "Simon's Town (naval harbour, jetty, Boulders)",
+   "status": "unclear",
+   "rules": "The SA Navy port regulations extract contains no fishing rule. It restricts vessels within 30 m of Navy quays, walls and breakwaters.\nNEW: the Boulders no-take zone runs from Seaforth (S34°11.567') to Rocklands (S34°12.705'). Castle Rock (Millers Point S34°14.100' to Partridge Point S34°15.480') is also no-take. The naval harbour and public jetty are north of Seaforth and appear to be in the controlled zone. No source covers angling from the public jetty. A 2012 forum post says 'All fishing in Simonstown area is done from boats' (anecdotal).",
+   "source": "https://fbyc.co.za/about/sa-navy-port-regulations-extract/",
+   "checked": "2026-11-02",
+   "confidence": "low"
+  },
+  {
+   "place": "Zandvlei Estuary Nature Reserve (Muizenberg)",
+   "status": "allowed-with-conditions",
+   "rules": "Limited angling is allowed. Bait collection is NOT permitted (City IRMP, June 2011, with 2016 working-draft updates).\nPermits: Zandvlei is an estuary, and CapeNature says 'a marine angling licence is required to fish estuaries and the sea', so a DFFE angling permit applies. GN R1111 reg 10(a) also says fishing in a tidal river or lagoon only 'on the authority of a permit'.\nThe Zandvlei Trust says releasing leervis is 'required by law'. That conflicts with national bag and size limits, so cross-check it with the species research.\nHours: the City reserve page (checked live 2 Nov 2026) says Monday to Friday 07:30-16:00 and closed at weekends. That page does not mention fishing, closures or water-quality notices. Zandvlei Recreational Park is open 08:00-18:00 Sep-Mar and 07:00-17:00 Apr-Aug.\nThe mouth is open in winter and opened periodically in summer. No current closure was found; the Zandvlei Trust homepage shows no notices. Not found: no-fishing zones in the IRMP zoning (Appendix 12, Map 6).",
+   "source": "https://zandvleitrust.org.za/the-zandvlei/zandvlei-management/zpaac/integrated-reserve-management-plan-zandvlei-estuary-nature-reserve/",
+   "checked": "2026-11-02",
+   "confidence": "medium"
+  },
+  {
+   "place": "Rietvlei, Table Bay Nature Reserve (Milnerton/Table View)",
+   "status": "allowed-with-conditions",
+   "rules": "A CapeNature freshwater angling licence is required, and fishing is at selected sites only.\nSTRENGTHENED: IOL (Cape Argus, 20 August 2024) reports the City reopening Rietvlei after the July 2024 floods, with 'fishing at selected sites' among the reopened activities.\nThe City reserve page (checked live 2 Nov 2026):\n- Hours: daily 07:30-16:00, exit by 17:00.\n- Cashless only, no-bin policy.\n- It does not list fishing among the activities, but it points to the 'nature conservation tariffs' for fishing permits. The City therefore charges its own fishing fee on top of the CapeNature licence; the amount was not seen.\nGear rules from Friends of Rietvlei (2006-2014, older):\n- Rod and reel only, at most 2 rods per person and 2 hooks per rod.\n- Line no heavier than 4.5 kg breaking strain.\n- Carp and barbel must be removed; indigenous fish must be returned.\n- Anglers sign a code-of-conduct agreement.\nContact 021 444 0315.",
+   "source": "https://iol.co.za/capeargus/news/2024-08-20-rietvleis-trails-picnic-areas-and-old-friends-bird-hide-reopen/",
+   "checked": "2026-11-02",
+   "confidence": "medium"
+  },
+  {
+   "place": "Milnerton Lagoon (Diep River estuary, Woodbridge Island)",
+   "status": "unclear",
+   "rules": "No official statement on angling was found. In December 2022 the City closed the lagoon, the estuary mouth and Lagoon Beach for swimming and recreational use because of pollution. NEW: the City's Milnerton Lagoon facility page (checked live 2 Nov 2026) lists 'Water sports', 'Dog walking' and 'Safe swimming'. It has no closure notice and no mention of fishing, which contradicts the 2022 release. A static facility page does not prove the closure was lifted. If angling is open, a DFFE permit is needed because it is an estuary. There were early signs of recovery in October 2026, and the Potsdam wastewater works upgrade was about 80% complete. Do not show as allowed.",
+   "source": "https://www.capetown.gov.za/Media-and-news/Milnerton Lagoon, Milnerton Estuary Mouth and Lagoon Beach remain closed for swimming",
+   "checked": "2026-11-02",
+   "confidence": "low"
+  },
+  {
+   "place": "Princess Vlei and Little Princess Vlei (Grassy Park/Bergvliet)",
+   "status": "unclear",
+   "rules": "No source says angling is allowed or banned. The City conservation-area page lists walking, nature appreciation and education only. The 2020 moratorium release covers 'City dams' and names no vleis, so it is not established that it applies here. The July 2025 release points anglers only to designated sites such as Door De Kraal Dam. Princess Vlei became a provincial heritage site in October 2021. Do not show as allowed.",
+   "source": "https://www.capetown.gov.za/Family%20and%20home/See-all-city-facilities/Our-recreational-facilities/Biodiversity%20parks/princess-vlei-conservation-area",
+   "checked": "2026-10-29",
+   "confidence": "low"
+  },
+  {
+   "place": "City of Cape Town dams in general (2005 angling moratorium)",
+   "status": "prohibited",
+   "rules": "Angling has been banned at City dams since 2005, after antisocial behaviour and injuries to aquatic birds. The only exception named is Door De Kraal (Doordekraal) Dam. The 2020 release reported a feasibility study of more than 60 water bodies and promised public participation before any reopening; no outcome was found. On 29 July 2025 the City enforced no-fishing rules at Rosendal, Sonstraal and Vierlanden dams in Durbanville and issued fines. The moratorium wording covers 'City dams' and does not name any vleis.",
+   "source": "https://www.capetown.gov.za/Media-and-news/To fish or not to fish, that is the question",
+   "checked": "2026-10-29",
+   "confidence": "high"
+  },
+  {
+   "place": "Door De Kraal (Doordekraal) Dam, Durbanville/Bellville",
+   "status": "allowed-with-conditions",
+   "rules": "Limited, controlled angling has been allowed since 2007, in season from October to April (so the season is open on 2 November 2026). July 2025: the City calls it a designated City angling site. Anglers need a CapeNature recreational fishing licence and a City permit; fishing without a valid permit is illegal. Fees, booking method and the 2026/27 season dates were NOT found. Ask City Recreation and Parks at rp.enquiries@capetown.gov.za.",
+   "source": "https://www.capetown.gov.za/Media-and-news/Illegal fishing at local dams put wildlife at risk",
+   "checked": "2026-11-02",
+   "confidence": "medium"
+  },
+  {
+   "place": "Liesbeek, Lourens, Eerste and Berg (Paarl) rivers",
+   "status": "allowed-with-conditions",
+   "rules": "A CapeNature freshwater angling licence is required for anyone over 6 fishing public waters (Nature Conservation Ordinance s53). The licence is R45 according to the CapeNature page as cached on 29 October 2026. Processing takes 2-5 working days, and the licence is valid 12 months (per Friends of Rietvlei).\nIndigenous fish (Clanwilliam yellowfish, sawfin, whitefish) must be released; CapeNature: 'Catch and release is required for indigenous freshwater fishes'. Moving live fish needs a permit.\nNEW: the tidal lower reaches and estuaries are not covered by the CapeNature licence. They need a DFFE marine angling permit ('a marine angling licence is required to fish estuaries and the sea').\nThe sea off the Lourens and Eerste mouths is the Helderberg MPA, where there is no fishing. Reaches inside CapeNature reserves (for example Jonkershoek on the Eerste) need reserve permits. No municipal rule was found on top of the licence. Also ask permission where the bank is private land.",
+   "source": "https://www.capenature.co.za/permits/recreational-fishing-permit-dams-and-rivers",
+   "checked": "2026-10-29",
+   "confidence": "medium"
+  },
+  {
+   "place": "Cape Piscatorial Society waters (Smalblaar/Molenaars, Elandspad, Witte, Holsloot, upper Berg, Lakenvlei)",
+   "status": "allowed-with-conditions",
+   "rules": "Members only, with paid river or still-water rights (Mission Fly magazine; year not given):\n- Start-up fee R122.\n- Annual membership R680.\n- R370 for rights to the rivers or still waters.\nAll beats must be booked in advance. Elandspad is fly-fishing and catch-and-release only. A CapeNature freshwater licence is also needed. Limietberg reserve access needs a CapeNature permit and conservation fee; Wild Card holders do not pay the fee but must still book. A river report of 7 August 2026 said the rivers were closed until 1 September, so they are open now. Contact cps@piscator.co.za or +27 21 424 7725. The piscator.co.za pages returned 403. Not re-checked this pass.",
+   "source": "https://themissionflymag.com/cape-piscatorial-society/",
+   "checked": "2026-10-29",
+   "confidence": "low"
+  },
+  {
+   "place": "Zeekoevlei (False Bay Nature Reserve)",
+   "status": "prohibited",
+   "rules": "Closed to recreation and fishing 'until further notice' since 13 December 2024 because of a Microcystis (blue-green algae) bloom. The public is told not to eat fish from it. A further temporary closure of recreation followed a sewage spill (City letter of 19 December; IOL, 31 December 2025).\nADDED history: GroundUp (17 October 2023) reports the City suspended recreational fishing on 28 August 2023 over mercury and lead in the fish. The Protected Area Advisory Committee then suspended all fishing except organised competitions. An October 2022 partial closure also said 'no fishing or water sports are allowed'.\nNo reopening was found. The City False Bay Nature Reserve page (checked live 2 Nov 2026) neither mentions fishing nor shows a closure notice; that is not evidence of reopening. CapeNature's freshwater page still lists Zeekoevlei as a fishing water, which is out of date against the City closures.",
+   "source": "https://www.capetown.gov.za/Media-and-news/Zeekoevlei%20waterbody%20closed%20until%20further%20notice",
+   "checked": "2026-11-02",
+   "confidence": "high"
+  },
+  {
+   "place": "Rondevlei (False Bay Nature Reserve)",
+   "status": "unclear",
+   "rules": "No official source was found either way. The City False Bay Nature Reserve page (checked live 2 Nov 2026) does not mention fishing. It lists water sports, education, walking, picnics and camping. Hours are daily 07:30-17:00, and 07:30-19:00 at weekends from December to February. Travel sites (Cape Tourism, Cape Town Magazine; undated) say fishing is permitted with a permit and that tackle can be hired. No closure notice was found. Contact 021 706 2404 or rondevleinaturereserve@capetown.gov.za. Do not show as allowed.",
+   "source": "https://capetourism.com/rondevlei-nature-reserve",
+   "checked": "2026-11-02",
+   "confidence": "low"
+  }
+ ],
+ "sources": [
+  "https://faolex.fao.org/docs/pdf/saf122591.pdf",
+  "https://spearfishingsa.co.za/wp-content/uploads/2024/03/Marine-Recreational-Fishing-Brochure.pdf",
+  "https://www.capenature.co.za/uploads/files/Nature-Conservation-Ordinance-19-of-1974_2021-05-31-075828.pdf",
+  "https://capenature.co.za/permits/recreational-fishing-permit-dams-and-rivers"
+ ]
+}

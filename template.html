@@ -1,0 +1,1780 @@
+<title>Cape Fish Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" id="fontcss" media="print" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<script>(function(){var l=document.getElementById('fontcss');if(!l)return;function on(){l.media='all';}if(l.sheet){on();}else{l.addEventListener('load',on);}})();</script>
+<style>
+/* Layout: sticky status bar; "right now" leaderboard; one filter block; map; spot cards with a tactics panel,
+   hourly chart, species table and legal panel; 9-day planner; moon and tides; permits and limits; species guide;
+   catch log. Phone first. Rating is an ordinal five-step green ramp plus a neutral step for "dead". */
+:root {
+  color-scheme: light;
+  --bg: #eef3f0;
+  --surface: #fbfdfc;
+  --surface-2: #e1eae5;
+  --ink: #10211a;
+  --ink-2: #3f5449;
+  --muted: #5a6a62;
+  --line: #d0dcd5;
+  --accent: #1f6b4e;
+  --accent-ink: #ffffff;
+  --accent-soft: #d5e9de;
+  --warn: #8a5a10; --warn-bg: #fbefd9;
+  --bad: #a9271f; --bad-bg: #fae2df;
+  --good: #1d6f36; --good-bg: #dcefe1;
+  --night: #dbe3df;
+  --major: rgba(196, 140, 30, .18); --minor: rgba(196, 140, 30, .09);
+  --r0: #d2dbd6; --r0-ink: #3f5449;
+  --r1: #a5cdb7; --r1-ink: #10211a;
+  --r2: #6fb08f; --r2-ink: #10211a;
+  --r3: #3e8d69; --r3-ink: #ffffff;
+  --r4: #236f50; --r4-ink: #ffffff;
+  --r5: #104c35; --r5-ink: #ffffff;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", "Segoe UI", sans-serif;
+  --font-body: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(16,33,26,.05), 0 10px 28px -16px rgba(16,33,26,.25);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0e1814; --surface: #15231d; --surface-2: #1c2f27; --ink: #e7f1ec; --ink-2: #b2c5bb; --muted: #7f958a; --line: #27392f;
+    --accent: #5cc79a; --accent-ink: #06170f; --accent-soft: #173a2b;
+    --warn: #f2b85c; --warn-bg: #3a2a10; --bad: #f29a92; --bad-bg: #3d1c19; --good: #7bd396; --good-bg: #163b25; --night: #1a2a23;
+    --major: rgba(242, 184, 92, .16); --minor: rgba(242, 184, 92, .08);
+    --r0: #2a3a33; --r0-ink: #b2c5bb; --r1: #2c5c46; --r1-ink: #e7f1ec; --r2: #3a7c5d; --r2-ink: #e7f1ec;
+    --r3: #4f9f78; --r3-ink: #06170f; --r4: #70c296; --r4-ink: #06170f; --r5: #a5e3c0; --r5-ink: #06170f;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e1814; --surface: #15231d; --surface-2: #1c2f27; --ink: #e7f1ec; --ink-2: #b2c5bb; --muted: #7f958a; --line: #27392f;
+  --accent: #5cc79a; --accent-ink: #06170f; --accent-soft: #173a2b;
+  --warn: #f2b85c; --warn-bg: #3a2a10; --bad: #f29a92; --bad-bg: #3d1c19; --good: #7bd396; --good-bg: #163b25; --night: #1a2a23;
+  --major: rgba(242, 184, 92, .16); --minor: rgba(242, 184, 92, .08);
+  --r0: #2a3a33; --r0-ink: #b2c5bb; --r1: #2c5c46; --r1-ink: #e7f1ec; --r2: #3a7c5d; --r2-ink: #e7f1ec;
+  --r3: #4f9f78; --r3-ink: #06170f; --r4: #70c296; --r4-ink: #06170f; --r5: #a5e3c0; --r5-ink: #06170f;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px -16px rgba(0,0,0,.6);
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: var(--font-body); font-size: 15px; line-height: 1.45; background: var(--bg); color: var(--ink);
+  padding-inline: clamp(16px, 3vw, 32px); padding-block: 0 56px; max-width: 1240px; margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h2 { font-size: 1.45rem; font-weight: 700; letter-spacing: -.01em; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--accent); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.eyebrow { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+.sub { color: var(--ink-2); font-size: .92rem; }
+.muted { color: var(--muted); }
+.num { font-variant-numeric: tabular-nums; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin-block: 36px 14px; }
+section:first-of-type .sec-head { margin-top: 20px; }
+
+/* top bar */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px;
+  padding-block: 10px; margin-inline: calc(-1 * clamp(16px, 3vw, 32px)); padding-inline: clamp(16px, 3vw, 32px);
+  background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand h1 { font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; }
+.brand .mark { width: 30px; height: 30px; color: var(--accent); }
+.status { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: .85rem; color: var(--ink-2); }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; font-size: .78rem; font-weight: 600; background: var(--surface-2); color: var(--ink-2); }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+.pill[data-src="live"] { background: var(--good-bg); color: var(--good); } .pill[data-src="live"]::before { background: var(--good); }
+.pill[data-src="cache"] { background: var(--accent-soft); color: var(--accent); } .pill[data-src="cache"]::before { background: var(--accent); }
+.pill[data-src="snapshot"] { background: var(--warn-bg); color: var(--warn); } .pill[data-src="snapshot"]::before { background: var(--warn); }
+.pill[data-src="error"] { background: var(--bad-bg); color: var(--bad); } .pill[data-src="error"]::before { background: var(--bad); }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 5px 11px; cursor: pointer; font-size: .85rem; font-weight: 500; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.btn.small { padding: 3px 8px; font-size: .78rem; }
+a.btn { display: inline-flex; align-items: center; color: inherit; text-decoration: none; }
+.notice { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: .9rem; background: var(--warn-bg); color: var(--warn); border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent); }
+.notice.err { background: var(--bad-bg); color: var(--bad); border-color: color-mix(in srgb, var(--bad) 30%, transparent); }
+.notice.info { background: var(--accent-soft); color: var(--accent); border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+
+/* right now */
+.lead { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 12px; }
+.lead-card { display: flex; gap: 14px; align-items: stretch; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px; min-width: 0; }
+.lead-rank { font-family: var(--font-display); font-weight: 700; font-size: .8rem; color: var(--muted); }
+.score-tile { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 74px; border-radius: 10px; padding: 8px 4px; }
+.score-tile .n { font-size: 1.9rem; font-weight: 600; line-height: 1; letter-spacing: -.02em; }
+.score-tile .l { font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-top: 4px; text-align: center; }
+.lead-body { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.lead-body h3 { font-size: 1.12rem; }
+.lead-body .where { font-size: .8rem; color: var(--muted); }
+.lead-body .line { font-size: .88rem; color: var(--ink-2); }
+.link { background: none; border: 0; padding: 0; color: var(--accent); cursor: pointer; font-weight: 600; font-size: .85rem; text-align: left; }
+.link:hover { text-decoration: underline; }
+a.link, .leaflet-container a.link { color: var(--accent); text-decoration: none; }
+.week-lead { margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+.empty { padding: 20px; border: 1px dashed var(--line); border-radius: var(--radius); color: var(--muted); text-align: center; }
+.moon-now { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; font-size: .88rem; color: var(--ink-2); }
+.moon-now svg { width: 22px; height: 22px; vertical-align: -6px; }
+
+/* rating steps */
+.s0 { background: var(--r0); color: var(--r0-ink); } .s1 { background: var(--r1); color: var(--r1-ink); } .s2 { background: var(--r2); color: var(--r2-ink); }
+.s3 { background: var(--r3); color: var(--r3-ink); } .s4 { background: var(--r4); color: var(--r4-ink); } .s5 { background: var(--r5); color: var(--r5-ink); }
+.badge { display: inline-flex; align-items: baseline; gap: 5px; padding: 3px 9px; border-radius: 7px; font-weight: 600; font-size: .95rem; white-space: nowrap; }
+.badge small { font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+
+/* chips + filters */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-size: .85rem; cursor: pointer; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.chip[aria-pressed="true"] .muted { color: inherit; opacity: .75; }
+.chip:disabled { opacity: .55; cursor: not-allowed; }
+.chip { max-width: 100%; }
+.chip.day { display: inline-flex; gap: 6px; align-items: center; white-space: normal; text-align: left; }
+html, body { overflow-x: clip; }
+.chip.day .sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.filters { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 52px); z-index: 40; background: var(--bg); padding-block: 10px; margin-top: 28px; display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid var(--line); }
+.ctl { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: .85rem; color: var(--ink-2); }
+.ctl label { display: inline-flex; gap: 6px; align-items: center; }
+.ctl .grp { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+select, input[type="search"], input[type="date"], input[type="text"], input[type="number"], textarea { font: inherit; font-size: .88rem; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; }
+input[type="search"] { min-width: 150px; }
+
+/* map */
+.map { position: relative; z-index: 0; isolation: isolate; height: 360px; border-radius: var(--radius); overflow: hidden; background: var(--surface-2); border: 1px solid var(--line); }
+.map-note { margin-top: 6px; font-size: .82rem; color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: .78rem; color: var(--ink-2); align-items: center; }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.leaflet-container { font-family: var(--font-body); }
+.leaflet-container .leaflet-popup-content-wrapper, .leaflet-container .leaflet-popup-tip { background: var(--surface); color: var(--ink); }
+.leaflet-popup-content { margin: 10px 14px; font-size: .9rem; }
+.leaflet-popup-content .badge { margin-right: 6px; }
+.leaflet-bar a { background: var(--surface); color: var(--ink); border-bottom-color: var(--line); }
+.leaflet-control-attribution { background: color-mix(in srgb, var(--surface) 80%, transparent); color: var(--muted); }
+.leaflet-control-attribution a { color: var(--accent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .leaflet-tile { filter: brightness(.72) contrast(1.05) saturate(.7); } }
+:root[data-theme="dark"] .leaflet-tile { filter: brightness(.72) contrast(1.05) saturate(.7); }
+
+/* cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+@media (max-width: 420px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; min-width: 0; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 120px; }
+.card.open { grid-column: 1 / -1; }
+.card-head { display: flex; align-items: flex-start; gap: 10px; }
+.card-head .title { flex: 1; min-width: 0; }
+.card-head h3 { font-size: 1.15rem; }
+.card-head .where { font-size: .8rem; color: var(--muted); }
+.card-head .where b { font-weight: 600; color: var(--ink-2); }
+.star { border: 0; background: none; cursor: pointer; font-size: 1.3rem; line-height: 1; color: var(--line); padding: 0 2px; }
+.star[aria-pressed="true"] { color: #e0a81c; }
+.star:hover { color: #e0a81c; }
+.drive { font-size: .8rem; color: var(--ink-2); }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px 10px; }
+.metric { min-width: 0; }
+.metric .k { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+.metric .v { font-size: .95rem; font-weight: 600; display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.metric .d { font-size: .78rem; color: var(--ink-2); }
+.tag { display: inline-block; font-size: .7rem; font-weight: 600; padding: 1px 6px; border-radius: 5px; background: var(--surface-2); color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.tag.good { background: var(--good-bg); color: var(--good); }
+.tag.warn { background: var(--warn-bg); color: var(--warn); }
+.tag.bad { background: var(--bad-bg); color: var(--bad); }
+.tag.water-sea { background: #d9e8f2; color: #1c4f73; } .tag.water-estuary { background: #e6e3cf; color: #5c5418; } .tag.water-fresh { background: #d8ecd9; color: #1f5c2c; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tag.water-sea { background: #17303f; color: #9cc9e6; } :root:not([data-theme="light"]) .tag.water-estuary { background: #33301a; color: #ddd49a; } :root:not([data-theme="light"]) .tag.water-fresh { background: #1a3520; color: #a5dab0; } }
+:root[data-theme="dark"] .tag.water-sea { background: #17303f; color: #9cc9e6; } :root[data-theme="dark"] .tag.water-estuary { background: #33301a; color: #ddd49a; } :root[data-theme="dark"] .tag.water-fresh { background: #1a3520; color: #a5dab0; }
+.arrow { display: inline-block; width: 12px; height: 12px; vertical-align: -1px; }
+.arrow path { fill: currentColor; }
+.next { font-size: .88rem; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+.strip { display: grid; grid-template-columns: repeat(9, 1fr); gap: 3px; }
+.strip .cell { border-radius: 5px; text-align: center; font-size: .72rem; padding: 4px 0 3px; line-height: 1.1; cursor: pointer; border: 0; font-family: inherit; }
+.strip .cell b { display: block; font-size: .82rem; }
+.strip .cell.today { outline: 2px solid var(--ink); outline-offset: -2px; }
+.card-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
+.card-foot > .sub { flex: 1 1 220px; }
+.actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin-left: auto; }
+.legal-flag { font-size: .82rem; padding: 6px 10px; border-radius: 7px; background: var(--warn-bg); color: var(--warn); }
+
+/* detail */
+.detail { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; padding-top: 6px; border-top: 1px solid var(--line); }
+.detail > *, .two > *, .card > *, .metric, .share-main, .learn .body > * { min-width: 0; }
+.detail h4 { font-size: .98rem; margin-bottom: 8px; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 18px; }
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: 5px 12px; font-size: .9rem; }
+.kv dt { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; padding-top: 2px; }
+.kv dd { margin: 0; min-width: 0; }
+.conds { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.cond { font-size: .8rem; padding: 3px 8px; border-radius: 6px; background: var(--surface-2); color: var(--ink-2); }
+.cond b { color: var(--ink); font-weight: 600; }
+.tactics { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 12px; }
+.tactic { border: 1px solid var(--line); border-radius: 9px; padding: 12px 14px; display: grid; gap: 6px; align-content: start; }
+.tactic .th { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.tactic .th h5 { margin: 0; font-family: var(--font-display); font-size: 1rem; }
+.tactic .tt { font-weight: 600; color: var(--accent); font-size: .9rem; }
+.tactic .kv { font-size: .86rem; }
+.tactic .why-t { font-size: .8rem; color: var(--ink-2); }
+.why { display: grid; gap: 6px; font-size: .88rem; }
+.why .row { display: grid; grid-template-columns: 96px 1fr; gap: 10px; align-items: center; }
+.why .bar { height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.why .bar i { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
+.why .txt { grid-column: 2; color: var(--ink-2); font-size: .82rem; }
+.tides { display: flex; flex-wrap: wrap; gap: 8px; }
+.tide-ev { background: var(--surface-2); border-radius: 8px; padding: 6px 10px; font-size: .85rem; }
+.tide-ev b { display: block; font-size: .95rem; }
+.sources { font-size: .78rem; color: var(--muted); overflow-wrap: anywhere; }
+.conf { font-size: .78rem; }
+.sp-table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.sp-table th, .sp-table td { text-align: left; padding: 6px 8px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.sp-table th { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+.months { display: inline-grid; grid-template-columns: repeat(12, 9px); gap: 1px; vertical-align: middle; }
+.months i { height: 12px; border-radius: 2px; background: var(--surface-2); }
+.months i.p { background: var(--r2); } .months i.k { background: var(--r4); } .months i.c { background: var(--bad); opacity: .55; }
+.months i.now { outline: 1.5px solid var(--ink); outline-offset: 0; }
+.ab { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.ab.common { color: var(--good); } .ab.regular { color: var(--accent); } .ab.occasional { color: var(--warn); } .ab.rare { color: var(--muted); }
+.legal-box { display: grid; gap: 8px; font-size: .88rem; }
+.legal-box .permit { padding: 8px 12px; border-radius: 8px; background: var(--accent-soft); color: var(--ink); }
+.legal-box .permit b { color: var(--accent); }
+
+/* chart */
+.chart-wrap { position: relative; }
+.chart-axis { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 2; background: linear-gradient(90deg, var(--surface) 78%, transparent) 0 14px / 100% calc(100% - 14px) no-repeat; }
+.more { display: flex; justify-content: center; margin-top: 14px; }
+.chart-scroll { overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 4px; }
+.chart { display: block; font-family: var(--font-body); }
+.chart .night { fill: var(--night); }
+.chart .major { fill: var(--major); } .chart .minor { fill: var(--minor); }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .daysep { stroke: var(--muted); stroke-width: 1; opacity: .5; }
+.chart .tick, .chart .daylab, .chart .rowlab { fill: var(--muted); font-size: 11px; }
+.chart .daylab { font-weight: 600; fill: var(--ink-2); }
+.chart .bar.off { fill: var(--line); }
+.chart .bar.s0 { fill: var(--r0); } .chart .bar.s1 { fill: var(--r1); } .chart .bar.s2 { fill: var(--r2); } .chart .bar.s3 { fill: var(--r3); } .chart .bar.s4 { fill: var(--r4); } .chart .bar.s5 { fill: var(--r5); }
+.chart .now { stroke: var(--ink); stroke-width: 1.5; }
+.chart .sel { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 3 2; }
+.chart .xhair { stroke: var(--accent); stroke-width: 1; }
+.chart .warrow { fill: var(--muted); } .chart .warrow.offshore { fill: var(--good); } .chart .warrow.cross { fill: var(--warn); } .chart .warrow.onshore { fill: var(--bad); }
+.chart .tide { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; }
+.chart .wtemp { fill: none; stroke: var(--warn); stroke-width: 1.6; stroke-linejoin: round; }
+.chart .tidept { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
+.tip { position: absolute; top: 8px; left: 0; pointer-events: none; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 8px; padding: 8px 10px; font-size: .8rem; line-height: 1.4; min-width: 190px; z-index: 5; }
+.tip b { font-size: .9rem; }
+.tip .row { display: flex; justify-content: space-between; gap: 10px; }
+.tip .row span:last-child { font-weight: 600; }
+.chart-legend { margin-top: 6px; }
+.table-wrap { overflow-x: auto; }
+
+/* planner */
+.plan { border-collapse: separate; border-spacing: 3px; font-size: .82rem; min-width: 660px; width: 100%; }
+.plan th { font-weight: 600; color: var(--ink-2); padding: 4px 6px; text-align: center; font-size: .78rem; }
+.plan th.spot { text-align: left; position: sticky; left: 0; background: var(--bg); z-index: 2; }
+.plan th.today { color: var(--ink); }
+.plan th.lowc { color: var(--muted); font-weight: 500; }
+.plan td.spot { position: sticky; left: 0; background: var(--bg); z-index: 2; white-space: nowrap; padding: 0 8px 0 0; font-weight: 600; max-width: 190px; overflow: hidden; text-overflow: ellipsis; }
+.plan td.spot small { display: block; font-weight: 400; color: var(--muted); font-size: .72rem; }
+.plan td.cell { padding: 0; }
+.plan td.cell button { width: 100%; border: 0; border-radius: 6px; padding: 6px 2px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.plan td.cell button small { display: block; font-weight: 500; font-size: .66rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 72px; margin: 0 auto; }
+.plan td.today button { box-shadow: inset 0 0 0 2px var(--ink); }
+
+/* moon */
+.moon-table { border-collapse: collapse; font-size: .84rem; min-width: 640px; width: 100%; }
+.moon-table th, .moon-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.moon-table th { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+.moon-table svg { width: 20px; height: 20px; vertical-align: -5px; }
+
+/* learn */
+.learn details { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 4px 18px; margin-bottom: 10px; }
+.learn summary { cursor: pointer; font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; padding-block: 12px; }
+.learn .body { padding-bottom: 16px; max-width: 78ch; display: grid; gap: 10px; overflow-wrap: anywhere; }
+.learn .body.wide { max-width: none; }
+.learn .body p, .learn .body li { color: var(--ink-2); }
+.learn .body ul { margin: 0; padding-left: 20px; }
+.learn table { border-collapse: collapse; font-size: .86rem; }
+.learn th, .learn td { text-align: left; padding: 5px 10px 5px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.learn .body h4 { margin-top: 6px; }
+.sp-guide { display: grid; gap: 12px; }
+.sp-entry { border-top: 1px solid var(--line); padding-top: 10px; display: grid; gap: 6px; scroll-margin-top: 120px; }
+.sp-entry h4 { font-size: 1.02rem; }
+
+/* log */
+.log-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; background: var(--surface); padding: 14px 16px; border-radius: var(--radius); box-shadow: var(--shadow); align-items: end; }
+.log-form label { min-width: 0; display: grid; gap: 4px; font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+.log-form label > * { font-size: .9rem; }
+.log-form select, .log-form input { width: 100%; min-width: 0; }
+.log-form .notes { grid-column: 1 / -1; }
+.log-list { display: grid; gap: 8px; margin-top: 12px; }
+.log-item { background: var(--surface); border-radius: 8px; padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .9rem; box-shadow: var(--shadow); }
+.log-item .cond { color: var(--ink-2); font-size: .82rem; flex: 1 1 240px; background: none; padding: 0; }
+.log-summary { margin-top: 12px; padding: 12px 16px; border-radius: 8px; background: var(--accent-soft); color: var(--ink); font-size: .9rem; }
+.log-io { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.log-io textarea { width: 100%; min-height: 80px; font-family: ui-monospace, Consolas, monospace; font-size: .78rem; }
+
+.share-panel { margin-top: 12px; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); }
+.share-inner { position: relative; display: flex; flex-wrap: wrap; gap: 18px 28px; padding: 16px 44px 16px 18px; align-items: flex-start; }
+.share-main { flex: 1 1 300px; min-width: 0; display: grid; gap: 8px; }
+.share-main h2 { font-size: 1.2rem; }
+.share-main h3 { font-size: .98rem; margin-top: 4px; }
+.share-main ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.share-url { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.share-url input { flex: 1 1 220px; min-width: 0; font-family: ui-monospace, Consolas, monospace; font-size: .82rem; }
+.qr-wrap { flex: 0 0 auto; display: grid; gap: 6px; justify-items: center; text-align: center; }
+.qr { background: #ffffff; padding: 10px; border-radius: 8px; line-height: 0; }
+.qr img, .qr canvas { display: block; width: 156px; height: 156px; }
+.share-close { position: absolute; top: 6px; right: 6px; border: 0; background: none; font-size: 1.5rem; line-height: 1; color: var(--muted); cursor: pointer; padding: 4px 10px; }
+@media (max-width: 640px) { .qr-wrap { display: none !important; } }
+footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); font-size: .8rem; color: var(--muted); display: grid; gap: 6px; max-width: 80ch; }
+@media (prefers-reduced-motion: no-preference) { .card, .chip, .btn { transition: box-shadow .15s, border-color .15s, background .15s; } }
+@media (max-width: 640px) {
+  select, input[type="search"], input[type="date"], input[type="text"], input[type="number"], textarea, .log-form label > *, .share-url input { font-size: 16px; }
+  .filters { position: static; }
+  .map { height: 280px; }
+  .score-tile { width: 64px; } .score-tile .n { font-size: 1.6rem; }
+}
+</style>
+<style>/*LEAFLET_CSS*/</style>
+
+<header class="top" id="top">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 16c4-6.5 10.5-8.5 16-6.2 2.4 1 4.4 2.8 5.8 4.6l3.2-3.4v10l-3.2-3.4c-1.4 1.8-3.4 3.6-5.8 4.6C14.5 24.5 8 22.5 4 16z" fill="currentColor"/><circle cx="10.5" cy="14.6" r="1.4" fill="var(--bg)"/><path d="M15 12.5c1.2 2.2 1.2 4.8 0 7" fill="none" stroke="var(--bg)" stroke-width="1.3" stroke-linecap="round"/></svg>
+    <h1>Cape Fish Check</h1>
+  </div>
+  <div class="status">
+    <span class="pill" id="srcPill" data-src="loading">Loading</span>
+    <span class="updated num" id="updatedAt"></span>
+    <button class="btn small primary" id="installHdr" type="button" hidden>Install</button>
+    <button class="btn small" id="shareBtn" type="button" aria-expanded="false" aria-controls="sharePanel">Share</button>
+    <button class="btn small" id="refreshBtn" type="button">Refresh</button>
+    <button class="btn small" id="unitsBtn" type="button" title="Switch wind units">km/h</button>
+  </div>
+</header>
+<p class="notice" id="notice" hidden></p>
+<section class="share-panel" id="sharePanel" hidden aria-label="Share and install">
+  <div class="share-inner">
+    <div class="share-main">
+      <h2>Take it with you</h2>
+      <p class="sub">Anyone can open this page on a phone or computer. No app or account needed.</p>
+      <div class="share-url">
+        <input id="shareUrl" type="text" readonly aria-label="Page address">
+        <button class="btn small" id="copyUrl" type="button">Copy</button>
+        <button class="btn small primary" id="nativeShare" type="button" hidden>Send to friends</button>
+      </div>
+      <h3>Install it like an app</h3>
+      <ul class="sub">
+        <li><b>iPhone:</b> open the page in Safari, tap the Share button, then <i>Add to Home Screen</i>.</li>
+        <li><b>Android:</b> open the page in Chrome, tap the ⋮ menu, then <i>Add to Home screen</i> or <i>Install app</i>.</li>
+        <li><b>Computer:</b> in Chrome or Edge, click the install icon at the right of the address bar (or <i>Install</i> at the top of this page).</li>
+      </ul>
+      <div><button class="btn small primary" id="installBtn" type="button" hidden>Install the app</button></div>
+    </div>
+    <div class="qr-wrap" id="qrWrap" hidden>
+      <div class="qr" id="qr" role="img" aria-label="QR code for this page"></div>
+      <p class="sub">Scan with your phone's camera</p>
+    </div>
+    <button class="share-close" id="closeShare" type="button" aria-label="Close">×</button>
+  </div>
+</section>
+
+<main>
+  <section class="now" id="nowSec">
+    <div class="sec-head"><h2>Best time to go</h2><p class="sub" id="nowSub">Loading the forecast…</p></div>
+    <div class="lead" id="leadNow"><div class="empty">Loading the forecast…</div></div>
+    <p class="sub" style="margin-top:8px">Each score is for the best fish on offer at that spot in that hour, from the season, the water temperature, the tide, the light, the wind and the sea. The tactics panel on each spot says what to throw.</p>
+    <div class="moon-now" id="moonNow"></div>
+    <div class="week-lead">
+      <h3>Best of the next 9 days</h3>
+      <div class="chips" id="leadWeek"></div>
+    </div>
+  </section>
+
+  <section class="filters" id="filters" aria-label="Filters">
+    <div class="chips" id="waterChips" role="group" aria-label="Water"></div>
+    <div class="ctl">
+      <span class="grp" id="styleChips" role="group" aria-label="Style"></span>
+      <button class="chip" id="mineBtn" type="button" aria-pressed="false">★ My spots</button>
+      <label>From
+        <select id="originSel"><option value="westlake">Westlake (work)</option><option value="green_point">Green Point (home)</option></select>
+      </label>
+      <label>Within
+        <select id="driveSel"><option value="0">any drive</option><option value="15">15 min</option><option value="25">25 min</option><option value="40">40 min</option></select>
+      </label>
+      <label>Sort
+        <select id="sortSel"><option value="now">Best now</option><option value="week">Best this week</option><option value="drive">Closest</option><option value="name">Name</option></select>
+      </label>
+      <label title="Count the hours of darkness when picking the best time"><input type="checkbox" id="nightChk"> Night fishing</label>
+      <input type="search" id="searchBox" placeholder="Find a spot or fish" aria-label="Find a spot or a fish">
+    </div>
+  </section>
+
+  <section class="map-sec" id="mapSec">
+    <div class="sec-head"><h2>Map</h2><div class="legend" id="rampLegend"></div></div>
+    <div id="map" class="map" role="region" aria-label="Map of fishing spots"></div>
+    <p class="map-note" id="mapTouchNote" hidden>Pinch with two fingers to zoom and move the map; one finger scrolls the page.</p>
+    <p class="map-note" id="mapNote" hidden>Map tiles are blocked in this viewer, so the background is blank; the markers still sit at each spot's real position.</p>
+  </section>
+
+  <section class="spots" id="spotsSec">
+    <div class="sec-head"><h2>Spots</h2><p class="sub" id="spotsSub"></p></div>
+    <div class="cards" id="cards"></div>
+    <div class="more" id="moreWrap" hidden><button class="btn" id="showAll" type="button">Show all spots</button></div>
+  </section>
+
+  <section class="planner" id="plannerSec">
+    <div class="sec-head"><h2>9-day planner</h2><p class="sub">Best fishable hour each day (dawn to two hours after dark, or round the clock with Night fishing on), with the fish behind it. Tap a cell to open that spot. Days 8 and 9 are from the far end of the model run; treat them as a hint.</p></div>
+    <div class="table-wrap"><table class="plan" id="planTable"></table></div>
+  </section>
+
+  <section class="moon" id="moonSec">
+    <div class="sec-head"><h2>Moon, tides and solunar times</h2><p class="sub">Worked out in your browser for Cape Town; no outside service. Times SAST.</p></div>
+    <div class="table-wrap"><table class="moon-table" id="moonTable"></table></div>
+    <p class="sub" style="margin-top:8px">Solunar majors are the two hours around the moon passing overhead and underfoot; minors are the hour around moonrise and moonset. Many anglers plan by them. The evidence that they matter is weak, so they are shown here and on each chart but do not move any score. Springs and neaps do matter at sea: they are judged from the moon and shown with the model's tidal range.</p>
+  </section>
+
+  <section class="learn" id="rulesSec">
+    <div class="sec-head"><h2>Permits, limits and closed seasons</h2><p class="sub" id="rulesSub">What the law says, from official sources. Rules change: check before you keep a fish.</p></div>
+    <div id="rulesBody"></div>
+  </section>
+
+  <section class="learn" id="learnSec">
+    <div class="sec-head"><h2>Species guide and how it works</h2><p class="sub">Every fish on the page, the rating model, and what it cannot know.</p></div>
+    <details id="speciesGuide"><summary>Species guide</summary><div class="body wide" id="speciesBody"></div></details>
+    <details>
+      <summary>How the rating works</summary>
+      <div class="body">
+        <p>Every hour at every spot gets a score out of 10 for each fish that lives there, and the spot's score is the best of them. A fish's score starts from how common it is at that spot and whether it is in season, then the conditions of the hour multiply in. One bad factor pulls the score down without zeroing it, because fish still get caught on bad days.</p>
+        <h4>Sea and estuary spots</h4>
+        <ul>
+          <li><b>Tide stage and flow.</b> From the model's sea level: where the water sits in the local range, whether it is pushing or dropping, and how fast it moves. Each spot has a preferred stage from local anglers and each fish has its own preference and need for moving water.</li>
+          <li><b>Springs or neaps.</b> Judged from the moon (springs follow new and full moon by a day or two). Some fish favour the bigger water movement of springs, some the clearer water of neaps.</li>
+          <li><b>Light.</b> Dawn and dusk are the feeding windows for most predators; overcast days stretch them. Each fish has its own weights for night, dawn, bright day, dull day and dusk.</li>
+          <li><b>Sea state.</b> The open-sea wave height is cut by how sheltered the spot is. Galjoen and kob like some white water; reef fish and harbour fish like it calmer. Above a safe height for the stand (rocks, beach or harbour wall), the hour is marked dangerous and scored near zero.</li>
+          <li><b>Wind.</b> Light tackle needs fishable wind: the score drops steadily above about 15 km/h. Onshore, offshore and cross are shown against the direction the spot faces.</li>
+          <li><b>Water temperature.</b> The model's sea-surface temperature against each fish's range, with a penalty when it has crashed by more than 2 °C in a day (south-easter upwelling turns the Atlantic side off).</li>
+          <li><b>Pressure trend and cloud.</b> A falling barometer before a front tends to switch fish on; a fast rise behind it slows them. Small weights.</li>
+        </ul>
+        <h4>Freshwater spots</h4>
+        <ul>
+          <li><b>Water temperature</b> carries the most weight. Nobody measures it at these vleis and rivers, so it is estimated from the last three weeks of air temperature, smoothed for the size of the water (shallow vleis react in days, rivers faster, dams slower). It is an estimate and says so.</li>
+          <li><b>Light</b> (bass and trout feed best at dawn and dusk and in overcast), <b>wind</b> (a light breeze helps bass; strong wind ruins casting), <b>pressure trend</b> and <b>season</b> (spawning and winter slow-downs).</li>
+          <li><b>The moon</b> counts only as night light, and only a little.</li>
+        </ul>
+        <h4>Labels</h4>
+        <p>Dead under 1.5, Slow under 3.5, Fair under 5.5, Good under 7.5, Very good under 9, Excellent above. A fish in its closed season is not rated. The best time to go is the best fishable hour: from first light to two hours after sunset, or every hour with Night fishing ticked.</p>
+        <h4>What it cannot know</h4>
+        <ul>
+          <li>Ocean cells are several kilometres across, so the sea state and water temperature are for the nearby open water, not the gully you stand over.</li>
+          <li>Bait shoals, water clarity on the day, river levels, weed, crowds and boats are not in the numbers.</li>
+          <li>The fish weights come from angling writing and biology references and are a starting point. The catch log is how to tune them: log what you catch and the conditions are saved with it.</li>
+        </ul>
+      </div>
+    </details>
+    <details>
+      <summary>Safety</summary>
+      <div class="body">
+        <ul>
+          <li><b>Freak waves on the rocks.</b> Most Cape angling deaths are anglers washed off rocks. Never turn your back on the sea, watch ten minutes of sets before you settle, and stay well back on the big-swell hours this page marks.</li>
+          <li><b>Wear grippy soles</b> on wet rock and weed; take a friend to the remote ledges (Rooikrans, Platboom, Gifkommetjie, Bontkop).</li>
+          <li><b>NSRI</b> emergency: 087 094 9774, or 112 from a cellphone.</li>
+          <li><b>Personal safety.</b> Several spots on this page carry warnings about muggings or car break-ins in the angling sources; they are listed on each spot. Fish them in company and in daylight.</li>
+          <li><b>Water quality.</b> After rain, the City often warns against contact with water at vleis, river mouths and beaches near stormwater outlets. Check the City of Cape Town's water-quality notices before eating fish from urban vleis.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <section class="log" id="logSec">
+    <div class="sec-head"><h2>Catch log</h2><p class="sub">Log what you catch, or a blank. The page saves the forecast conditions with each entry, so over time you can see what actually worked. Stored only in this browser.</p></div>
+    <form class="log-form" id="logForm">
+      <label>Spot <select id="logSpot"></select></label>
+      <label>Fish <select id="logFish"></select></label>
+      <label>Date <input type="date" id="logDate"></label>
+      <label>Time <select id="logHour"></select></label>
+      <label>How many <input type="number" id="logCount" min="0" max="99" value="1"></label>
+      <label>Kept or released
+        <select id="logKept"><option value="released">Released</option><option value="kept">Kept</option></select>
+      </label>
+      <label class="notes">Notes <input type="text" id="logNotes" placeholder="Lure or bait, size, where you stood…" maxlength="240"></label>
+      <div><button class="btn primary" type="submit">Log it</button></div>
+    </form>
+    <div class="log-summary" id="logSummary" hidden></div>
+    <div class="log-list" id="logList"></div>
+    <div class="log-io">
+      <button class="btn small" type="button" id="logExport">Show as text (backup)</button>
+      <button class="btn small" type="button" id="logImport">Paste a backup</button>
+      <textarea id="logText" hidden aria-label="Catch log as text"></textarea>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p><b>Data:</b> Open-Meteo marine and weather forecasts (open-meteo.com, free, non-commercial). Sea state, sea level and sea temperature come from the nearest ocean model cell; wind, cloud, rain and pressure from the nearest weather cell. The tide curve is the model's sea-level signal, good for timing, not a replacement for the SA Navy tide tables. Freshwater temperatures are estimates from air temperature.</p>
+  <p><b>Ratings are a model, not a fishing report.</b> Nobody has checked the water. Know the rules before you keep a fish, and look after yourself on the rocks.</p>
+  <p>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0). Map © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors. Moon times computed in the browser from standard astronomical formulas. Directions open Google Maps.</p>
+  <p id="siteLinks"></p>
+  <p id="buildInfo"></p>
+</footer>
+
+<script id="snapshot" type="application/json">null</script>
+<script id="engine">
+/* ---------- Catalogue (filled in by build.py) ---------- */
+/*SITE_START*/
+const SITE = { publicUrl: '', repoUrl: '' };
+/*SITE_END*/
+/*SPOTS_START*/
+const SPOTS = [];
+/*SPOTS_END*/
+/*SPECIES_START*/
+const SPECIES = { species: {} };
+/*SPECIES_END*/
+/*RULES_START*/
+const RULES = {};
+/*RULES_END*/
+/* ---------- Engine: pure functions, no DOM ---------- */
+const CFC = (function () {
+  const DAYS = 9;
+  const PAST_DAYS = 2;
+  const HIST_DAYS = 21;
+  const M_VARS = ['wave_height','wave_period','swell_wave_height','swell_wave_period','sea_surface_temperature','sea_level_height_msl'];
+  const W_VARS = ['temperature_2m','pressure_msl','cloud_cover','wind_speed_10m','wind_direction_10m','wind_gusts_10m','precipitation','precipitation_probability','weather_code'];
+  const W_DAILY = ['sunrise','sunset'];
+  const H_DAILY = ['temperature_2m_mean','precipitation_sum'];
+  const MARINE = 'https://marine-api.open-meteo.com/v1/marine';
+  const WEATHER = 'https://api.open-meteo.com/v1/forecast';
+  const LABELS = ['Dead', 'Slow', 'Fair', 'Good', 'Very good', 'Excellent'];
+  const ORIGINS = { westlake: { name: 'Westlake', lat: -34.0765, lon: 18.4470 }, green_point: { name: 'Green Point', lat: -33.905, lon: 18.410 } };
+  const CAPE = { lat: -34.0, lon: 18.5 };
+  const REGIONS = [
+    { key: 'atlantic', name: 'Atlantic Seaboard' },
+    { key: 'south-peninsula', name: 'Kommetjie to Cape Point' },
+    { key: 'false-bay-west', name: 'False Bay: Muizenberg to Cape Point' },
+    { key: 'false-bay-north', name: 'False Bay: Strandfontein to Gordon’s Bay' },
+    { key: 'west-coast', name: 'Table Bay to Silwerstroom' },
+    { key: 'vleis', name: 'Vleis and city rivers' },
+    { key: 'winelands', name: 'Winelands rivers' }
+  ];
+  const WATER_NAME = { sea: 'Sea', estuary: 'Estuary', fresh: 'Fresh water' };
+  const ABUND = { common: 1, regular: 0.86, occasional: 0.68, rare: 0.5 };
+  const ABUND_TEXT = { common: 'Common', regular: 'Regular', occasional: 'Occasional', rare: 'Rare' };
+  const SHELTER = { exposed: 1, semi: 0.65, sheltered: 0.4, enclosed: 0 };
+  /* effective wave height (m) above which a stand is risky, then dangerous */
+  const DANGER = { rock: [1.8, 2.5], wall: [2.2, 3.0], beach: [2.4, 3.2], bank: [99, 99] };
+  /* freshwater temperature model: smoothing time constant (days) and the warmest the water gets (deg C) */
+  const BODY = { vlei: { tau: 5, alpha: 28 }, dam: { tau: 9, alpha: 26 }, river: { tau: 3, alpha: 25 }, stream: { tau: 2, alpha: 22 }, lagoon: { tau: 4, alpha: 26 }, sea: { tau: 4, alpha: 24 } };
+  /* how much each factor counts, by kind of water; K turns the weighted product into a score that one bad factor pulls down without zeroing */
+  const W_SEA = { temp: 1.0, light: 1.0, sea: 1.0, tide: 0.8, flow: 0.6, range: 0.3, trend: 0.4, clarity: 0.4, wind: 0.3 };
+  const W_FRESH = { temp: 1.3, light: 1.1, trend: 0.6, clarity: 0.4, wind: 0.5 };
+  /* the condition factors combine as a weighted geometric mean raised to P, the same for every kind of water, so a
+     freshwater spot (fewer factors) is not scored more leniently than a sea spot */
+  const P = 3.4;
+  /* light tackle needs fishable wind (km/h, the larger of the mean and three quarters of the gusts) */
+  const WIND_FISH = [[0, 1], [15, 1], [25, 0.88], [35, 0.68], [45, 0.45], [60, 0.25], [80, 0.1]];
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  function interp(table, x) {
+    if (x <= table[0][0]) return table[0][1];
+    for (let i = 1; i < table.length; i++) {
+      if (x <= table[i][0]) { const [x0, y0] = table[i - 1], [x1, y1] = table[i]; return y0 + (y1 - y0) * (x - x0) / (x1 - x0); }
+    }
+    return table[table.length - 1][1];
+  }
+  function angDiff(a, b) { const d = Math.abs(((a - b) % 360 + 360) % 360); return d > 180 ? 360 - d : d; }
+  const C16 = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+  const compass16 = d => d == null ? '–' : C16[Math.round((((d % 360) + 360) % 360) / 22.5) % 16];
+  const C8W = ['north', 'north-east', 'east', 'south-east', 'south', 'south-west', 'west', 'north-west'];
+  const compass8w = d => C8W[Math.round((((d % 360) + 360) % 360) / 45) % 8];
+  const mins = s => +s.slice(11, 13) * 60 + +s.slice(14, 16);
+  const hm = m => { m = ((Math.round(m) % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
+
+  /* ---------- time: the page works in SAST (UTC+2, no daylight saving) ---------- */
+  const SAST_FMT = new Intl.DateTimeFormat('en-GB', { timeZone: 'Africa/Johannesburg', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
+  function sastParts(date) {
+    const p = SAST_FMT.formatToParts(date || new Date());
+    const o = {}; p.forEach(x => { if (x.type !== 'literal') o[x.type] = x.value; });
+    if (o.hour === '24') o.hour = '00';
+    return { date: o.year + '-' + o.month + '-' + o.day, hour: +o.hour, minute: +o.minute, key: o.year + '-' + o.month + '-' + o.day + 'T' + o.hour + ':00' };
+  }
+  /* "2026-11-02T14:00" (SAST) -> Date */
+  const sastDate = (s, minutes) => new Date(Date.UTC(+s.slice(0, 4), +s.slice(5, 7) - 1, +s.slice(8, 10), (s.length > 10 ? +s.slice(11, 13) : 0) - 2, minutes || 0));
+
+  /* ---------- moon and sun: low-precision formulas (Meeus; the same set of approximations as Astronomy Answers),
+     good to a few minutes for rise and set, which is all an angler needs ---------- */
+  const RAD = Math.PI / 180, DAYMS = 864e5, J1970 = 2440588, J2000 = 2451545, OBL = RAD * 23.4397;
+  const toDays = date => date.valueOf() / DAYMS - 0.5 + J1970 - J2000;
+  const raOf = (l, b) => Math.atan2(Math.sin(l) * Math.cos(OBL) - Math.tan(b) * Math.sin(OBL), Math.cos(l));
+  const decOf = (l, b) => Math.asin(Math.sin(b) * Math.cos(OBL) + Math.cos(b) * Math.sin(OBL) * Math.sin(l));
+  const sidereal = (d, lw) => RAD * (280.16 + 360.9856235 * d) - lw;
+  function sunCoords(d) {
+    const M = RAD * (357.5291 + 0.98560028 * d);
+    const C = RAD * (1.9148 * Math.sin(M) + 0.02 * Math.sin(2 * M) + 0.0003 * Math.sin(3 * M));
+    const L = M + C + RAD * 102.9372 + Math.PI;
+    return { dec: decOf(L, 0), ra: raOf(L, 0) };
+  }
+  function moonCoords(d) {
+    const L = RAD * (218.316 + 13.176396 * d), M = RAD * (134.963 + 13.064993 * d), F = RAD * (93.272 + 13.229350 * d);
+    const l = L + RAD * 6.289 * Math.sin(M), b = RAD * 5.128 * Math.sin(F), dist = 385001 - 20905 * Math.cos(M);
+    return { ra: raOf(l, b), dec: decOf(l, b), dist };
+  }
+  /* geocentric altitude (radians) and hour angle of the moon */
+  function moonAltHA(date, lat, lon) {
+    const d = toDays(date), c = moonCoords(d), phi = RAD * lat;
+    let H = sidereal(d, RAD * -lon) - c.ra;
+    H = Math.atan2(Math.sin(H), Math.cos(H));
+    const alt = Math.asin(Math.sin(phi) * Math.sin(c.dec) + Math.cos(phi) * Math.cos(c.dec) * Math.cos(H));
+    return { alt, H };
+  }
+  /* fraction lit and phase (0 new, 0.25 first quarter, 0.5 full, 0.75 last quarter) */
+  function moonIllum(date) {
+    const d = toDays(date), s = sunCoords(d), m = moonCoords(d), sdist = 149598000;
+    const phi = Math.acos(Math.sin(s.dec) * Math.sin(m.dec) + Math.cos(s.dec) * Math.cos(m.dec) * Math.cos(s.ra - m.ra));
+    const inc = Math.atan2(sdist * Math.sin(phi), m.dist - sdist * Math.cos(phi));
+    const angle = Math.atan2(Math.cos(s.dec) * Math.sin(s.ra - m.ra), Math.sin(s.dec) * Math.cos(m.dec) - Math.cos(s.dec) * Math.sin(m.dec) * Math.cos(s.ra - m.ra));
+    return { fraction: (1 + Math.cos(inc)) / 2, phase: 0.5 + 0.5 * inc * (angle < 0 ? -1 : 1) / Math.PI };
+  }
+  const SYNODIC = 29.530589;
+  function phaseName(p) {
+    const names = ['New moon', 'Waxing crescent', 'First quarter', 'Waxing gibbous', 'Full moon', 'Waning gibbous', 'Last quarter', 'Waning crescent'];
+    return names[Math.round(p * 8) % 8];
+  }
+  /* springs follow new and full moon by about a day and a half; neaps follow the quarters */
+  function rangeClass(phase) {
+    const age = ((phase * SYNODIC - 1.5) % SYNODIC + SYNODIC) % SYNODIC;
+    const half = SYNODIC / 2, d = Math.min(age % half, half - (age % half));
+    return d <= 2.5 ? 'springs' : (Math.abs(d - half / 2) <= 2.5 ? 'neaps' : 'mid');
+  }
+  /* One SAST day: moonrise and moonset (minutes after midnight), transits overhead and underfoot, the solunar
+     periods (majors two hours round each transit, minors an hour round rise and set) and the phase at noon. */
+  function moonDay(dateStr, lat, lon) {
+    lat = lat == null ? CAPE.lat : lat; lon = lon == null ? CAPE.lon : lon;
+    const start = sastDate(dateStr), STEP = 10, h0 = 0.133 * RAD;
+    const samples = [];
+    for (let m = 0; m <= 1440; m += STEP) samples.push(Object.assign({ m }, moonAltHA(new Date(start.valueOf() + m * 60000), lat, lon)));
+    const out = { date: dateStr, rise: null, set: null, upper: null, lower: null };
+    for (let k = 1; k < samples.length; k++) {
+      const a = samples[k - 1], b = samples[k];
+      const fa = a.alt - h0, fb = b.alt - h0;
+      if (fa < 0 && fb >= 0 && out.rise == null) out.rise = a.m + STEP * (-fa) / (fb - fa);
+      if (fa >= 0 && fb < 0 && out.set == null) out.set = a.m + STEP * fa / (fa - fb);
+      if (a.H < 0 && b.H >= 0 && b.H - a.H < Math.PI && out.upper == null) out.upper = a.m + STEP * (-a.H) / (b.H - a.H);
+      if (a.H > 0 && b.H < 0 && a.H - b.H > Math.PI && out.lower == null) { const bh = b.H + 2 * Math.PI; out.lower = a.m + STEP * (Math.PI - a.H) / (bh - a.H); }
+    }
+    const il = moonIllum(new Date(start.valueOf() + 12 * 3600000));
+    out.fraction = il.fraction; out.phase = il.phase; out.name = phaseName(il.phase); out.age = il.phase * SYNODIC; out.range = rangeClass(il.phase);
+    out.majors = [out.upper, out.lower].filter(v => v != null).sort((x, y) => x - y).map(c => ({ from: c - 60, to: c + 60, centre: c }));
+    out.minors = [out.rise, out.set].filter(v => v != null).sort((x, y) => x - y).map(c => ({ from: c - 30, to: c + 30, centre: c }));
+    return out;
+  }
+  /* moon above the horizon and fraction lit for each forecast hour (at the half hour) */
+  function moonHours(times) {
+    return times.map(t => { const dt = sastDate(t, 30); const a = moonAltHA(dt, CAPE.lat, CAPE.lon); const il = moonIllum(dt); return { up: a.alt > 0, light: a.alt > 0 ? il.fraction : 0, fraction: il.fraction, phase: il.phase, range: rangeClass(il.phase) }; });
+  }
+  /* SVG of the moon as seen from the southern hemisphere (lit side mirrored: a waxing moon is lit on the left) */
+  function moonSvg(phase, fraction) {
+    const r = 10, waxing = phase < 0.5, k = 1 - 2 * fraction;
+    const rx = Math.abs(k) * r;
+    const litLeft = waxing;  /* southern hemisphere */
+    const outer = litLeft ? 'M12 2 A10 10 0 0 0 12 22' : 'M12 2 A10 10 0 0 1 12 22';
+    const sweep = (k > 0) === litLeft ? 1 : 0;
+    const inner = 'A' + rx.toFixed(2) + ' 10 0 0 ' + sweep + ' 12 2';
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--surface-2)" stroke="var(--line)"/><path d="' + outer + ' ' + inner + 'Z" fill="#e9d79a"/></svg>';
+  }
+
+  /* ---------- legal ---------- */
+  function closedNow(legal, dateStr) {
+    const md = dateStr.slice(5, 10);
+    return (legal && legal.closed || []).find(c => {
+      if (c.applies === false) return false;
+      const from = c.from, to = c.to;
+      if (from <= to) return md >= from && md <= to;
+      return md >= from || md <= to || (to === '02-28' && md === '02-29');
+    }) || null;
+  }
+
+  /* ---------- water temperature ---------- */
+  /* Freshwater: a smoothed air temperature (time constant by size of water) through the Mohseni logistic curve
+     that real streams and lakes follow (water lags air and levels off at both ends). An estimate, labelled as one. */
+  function freshTemps(spot, S, data) {
+    const p = BODY[spot.body] || BODY.vlei;
+    let days = data.hdays || [], air = S.h && S.h.temperature_2m_mean;
+    if (!air || !days.length || air.length !== days.length) {
+      /* no history: daily means of the hourly air temperature we have */
+      const by = {}; (data.times || []).forEach((t, i) => { const v = S.w.temperature_2m ? S.w.temperature_2m[i] : null; if (v == null) return; const d = t.slice(0, 10); (by[d] = by[d] || []).push(v); });
+      days = Object.keys(by).sort(); air = days.map(d => by[d].reduce((a, b) => a + b, 0) / by[d].length);
+    }
+    const out = {}; let s = null;
+    days.forEach((d, k) => {
+      const ta = air[k]; if (ta == null) { if (s != null) out[d] = logistic(s, p.alpha); return; }
+      if (s == null) { const first = air.slice(0, 5).filter(v => v != null); s = first.reduce((a, b) => a + b, 0) / first.length; }
+      s += (ta - s) / p.tau;
+      out[d] = logistic(s, p.alpha);
+    });
+    return out;
+  }
+  const logistic = (ta, alpha) => 4 + (alpha - 4) / (1 + Math.exp(0.18 * (15 - ta)));
+  function tempFit(t, wt) {
+    if (wt == null || !t) return 0.85;
+    if (wt < t.min) return clamp(0.35 - 0.08 * (t.min - wt), 0.12, 0.35);
+    if (wt < t.ideal_lo) return 0.4 + 0.6 * (wt - t.min) / Math.max(t.ideal_lo - t.min, 0.5);
+    if (wt <= t.ideal_hi) return 1;
+    if (wt <= t.max) return 1 - 0.5 * (wt - t.ideal_hi) / Math.max(t.max - t.ideal_hi, 0.5);
+    return clamp(0.5 - 0.08 * (wt - t.max), 0.15, 0.5);
+  }
+  const tempClass = (t, wt) => wt == null || !t ? 'ideal' : (wt < t.ideal_lo ? 'cold' : (wt > t.ideal_hi ? 'warm' : 'ideal'));
+  const wgt = (obj, key, dflt) => (obj && typeof obj[key] === 'number') ? clamp(obj[key], 0.05, 1) : (dflt == null ? 1 : dflt);
+
+  function ratingStep(score) { if (score == null) return 0; if (score < 1.5) return 0; if (score < 3.5) return 1; if (score < 5.5) return 2; if (score < 7.5) return 3; if (score < 9) return 4; return 5; }
+  const ratingLabel = score => score == null ? 'No data' : LABELS[ratingStep(score)];
+
+  /* the spot's own tide preference, from local anglers */
+  function spotTidePref(pref, stage, tideF) {
+    switch (pref) {
+      case 'pushing': return { low: 0.8, pushing: 1, high: 0.75, dropping: 0.55 }[stage];
+      case 'dropping': return { low: 0.75, pushing: 0.55, high: 0.8, dropping: 1 }[stage];
+      case 'high': return 0.5 + 0.5 * tideF;
+      case 'low': return 0.5 + 0.5 * (1 - tideF);
+      case 'mid': return 1 - 0.8 * Math.abs(tideF - 0.5);
+      default: return 1;
+    }
+  }
+
+  /* Score one fish at one hour. x is the hour's conditions. Returns null when the fish is in its closed season. */
+  function rateSpecies(prof, entry, spot, x) {
+    if (!prof) return null;
+    if (prof.legal && prof.legal.protected) return { key: entry.key, score: null, closed: { protected: true } };  /* never a target */
+    const closed = closedNow(prof.legal, x.d);
+    if (closed) return { key: entry.key, score: null, closed };
+    const f = {};
+    const month = +x.d.slice(5, 7);
+    const peak = prof.peak_months || [], present = prof.present_months || [];
+    const spotMonths = entry.months && entry.months.length ? entry.months : null;
+    f.season = (spotMonths ? spotMonths.includes(month) : peak.includes(month)) ? 1 : (present.includes(month) ? 0.75 : 0.35);
+    f.abund = ABUND[entry.abundance] || 0.7;
+    f.temp = tempFit(prof.temp, x.wt);
+    if (x.sstDrop != null && x.sstDrop <= -2 && spot.water !== 'fresh') f.temp *= x.sstDrop <= -3.5 ? 0.6 : 0.78;
+    const lk = x.light.replace('-', '_');
+    f.light = wgt(prof.light, lk, 0.7);
+    if (x.light === 'night') f.light *= 0.92 + 0.08 * (x.moonLight || 0);
+    f.trend = wgt(prof.trend, x.trend);
+    f.clarity = wgt(prof.clarity, x.clarity);
+    f.wind = wgt(prof.wind, x.windCls);
+    let W = W_FRESH;
+    if (spot.water !== 'fresh') {
+      W = Object.assign({}, W_SEA);
+      if (spot.shelter === 'enclosed' || x.seaCls == null) delete W.sea; else f.sea = wgt(prof.sea, x.seaCls);
+      if (x.stage) {
+        f.tide = 0.5 * wgt(prof.tide, x.stage) + 0.5 * spotTidePref(spot.tide_pref, x.stage, x.tideF);
+        f.flow = 1 - clamp(prof.flow == null ? 0.4 : prof.flow, 0, 1) * (1 - x.flowN) * 0.7;
+        f.range = x.range === 'mid' ? (wgt(prof.range, 'springs') + wgt(prof.range, 'neaps')) / 2 : wgt(prof.range, x.range);
+      } else { delete W.tide; delete W.flow; delete W.range; }
+    }
+    let lnq = 0, wsum = 0;
+    Object.keys(W).forEach(k => { if (f[k] != null) { lnq += W[k] * Math.log(clamp(f[k], 0.03, 1)); wsum += W[k]; } });
+    const cond = Math.exp(P * lnq / Math.max(wsum, 1e-6));
+    /* small fish few anglers target (klipvis, steentjie) count for less, so they do not top a spot on their own */
+    const appeal = typeof prof.appeal === 'number' ? clamp(prof.appeal, 0.3, 1) : 1;
+    const score = 10 * cond * f.season * f.abund * appeal * x.fishability * x.safety;
+    return { key: entry.key, score: Math.round(clamp(score, 0, 10) * 10) / 10, f, cond, w: W };
+  }
+
+  /* Tactic for this fish in these conditions: the rule whose conditions all hold and which names the most of them. */
+  function pickTactic(prof, ctx) {
+    let best = null, bestN = -1;
+    (prof && prof.tactics || []).forEach(r => {
+      const w = r.when || {}; let ok = true, n = 0;
+      Object.keys(w).forEach(k => {
+        const allowed = w[k]; if (!ok || !Array.isArray(allowed) || !allowed.length) return;
+        n++;
+        const v = ctx[k];
+        if (v == null || !allowed.map(String).includes(String(v))) ok = false;
+      });
+      if (ok && n > bestN) { best = r; bestN = n; }
+    });
+    return best;
+  }
+  function standText(text, wd, ws) {
+    if (!text) return '';
+    const calm = ws == null || wd == null || ws < 8;
+    return text
+      .replace(/\{downwind\}/g, calm ? 'any bank with cover (no wind is pushing food anywhere)' : 'the ' + compass8w(wd + 180) + ' bank (the wind is blowing onto it)')
+      .replace(/\{upwind\}/g, calm ? 'the calmest bank' : 'the ' + compass8w(wd) + ' bank (out of the wind)');
+  }
+
+  /* ---------- the hour-by-hour analysis of one spot ---------- */
+  function analyse(spot, data, fromIdx, opts) {
+    opts = opts || {};
+    const S = data.spots[spot.id]; if (!S || !S.w) return null;
+    const times = data.times, n = times.length, from = fromIdx || 0;
+    const Wd = S.w, M = S.m || {};
+    const g = (arr, i) => (arr && i >= 0 && i < arr.length && arr[i] != null) ? arr[i] : null;
+    const dayInfo = {};
+    (data.days || []).forEach((d, k) => {
+      const sr = S.d && S.d.sunrise ? S.d.sunrise[k] : null, ss = S.d && S.d.sunset ? S.d.sunset[k] : null;
+      dayInfo[d] = { sr: sr ? mins(sr) : 360, ss: ss ? mins(ss) : 1140, sunrise: sr, sunset: ss };
+    });
+    const moon = opts.moonHours || moonHours(times);
+    const sl = (spot.water !== 'fresh' && spot.tidal !== false && M.sea_level_height_msl) ? M.sea_level_height_msl : null;
+    const tidal = !!(sl && sl.some(v => v != null));
+    const WIN = 13;
+    const win = i => { let mn = Infinity, mx = -Infinity, fmax = 0; for (let k = Math.max(1, i - WIN); k <= Math.min(n - 2, i + WIN); k++) { const v = sl[k]; if (v == null) continue; if (v < mn) mn = v; if (v > mx) mx = v; const a = sl[k - 1], b = sl[k + 1]; if (a != null && b != null) fmax = Math.max(fmax, Math.abs(b - a) / 2); } return mx > mn ? { min: mn, max: mx, fmax } : null; };
+    const fresh = spot.water === 'fresh' || (spot.water === 'estuary' && spot.watertemp !== 'sea') ? freshTemps(spot, S, data) : null;
+    const wtMode = spot.watertemp || (spot.water === 'sea' ? 'sea' : (spot.body === 'lagoon' ? 'blend' : 'air'));
+    const shelter = SHELTER[spot.shelter] == null ? 1 : SHELTER[spot.shelter];
+    const danger = DANGER[spot.stand] || DANGER.rock;
+    const species = (spot.species || []).map(e => ({ e, p: SPECIES.species[e.key] })).filter(o => o.p);
+    /* access rules: a season (e.g. a City dam open October to April) and gate hours */
+    const hhmm = s => +s.slice(0, 2) * 60 + +s.slice(3, 5);
+    const gate = Array.isArray(spot.open_hours) && spot.open_hours.length === 2 ? spot.open_hours.map(hhmm) : null;
+    const hours = [];
+    for (let i = 0; i < n; i++) {
+      const t = times[i], d = t.slice(0, 10), H = +t.slice(11, 13), c = H * 60 + 30;
+      const di = dayInfo[d] || { sr: 360, ss: 1140 };
+      const cloud = g(Wd.cloud_cover, i);
+      let light;
+      if (Math.abs(c - di.sr) <= 60) light = 'dawn';
+      else if (Math.abs(c - di.ss) <= 60) light = 'dusk';
+      else if (c < di.sr || c > di.ss) light = 'night';
+      else light = cloud != null && cloud >= 60 ? 'day-dull' : 'day-bright';
+      const offSeason = Array.isArray(spot.open_months) && spot.open_months.length && !spot.open_months.includes(+d.slice(5, 7));
+      const gateShut = !!gate && (c < gate[0] || c > gate[1]);
+      const fishable = !offSeason && !gateShut && (opts.night ? true : (c >= di.sr - 90 && c <= di.ss + 120));
+      const ws = g(Wd.wind_speed_10m, i), wd = g(Wd.wind_direction_10m, i), wg = g(Wd.wind_gusts_10m, i);
+      const windEff = Math.max(ws || 0, 0.75 * (wg || 0));
+      const windCls = ws == null ? 'breeze' : (ws < 10 ? 'calm' : (ws <= 25 ? 'breeze' : 'strong'));
+      let rel = null;
+      if (spot.water !== 'fresh' && wd != null && spot.facing != null) rel = angDiff(wd, spot.facing) <= 60 ? 'onshore' : (angDiff(wd, spot.facing + 180) <= 60 ? 'offshore' : 'cross');
+      const p = g(Wd.pressure_msl, i), p3 = g(Wd.pressure_msl, i - 3);
+      const dp = p != null && p3 != null ? p - p3 : null;
+      const trend = dp == null ? 'steady' : (dp <= -1 ? 'falling' : (dp >= 1 ? 'rising' : 'steady'));
+      let rain48 = 0; for (let k = Math.max(0, i - 48); k < i; k++) rain48 += g(Wd.precipitation, k) || 0;
+      const code = g(Wd.weather_code, i), rainNow = g(Wd.precipitation, i);
+      /* sea */
+      const hs = g(M.wave_height, i), per = g(M.wave_period, i);
+      const hsEff = hs == null ? null : hs * shelter * (per != null && per >= 11 ? 1.15 : 1);
+      const seaCls = spot.water === 'fresh' || shelter === 0 || hsEff == null ? null : (hsEff < 0.5 ? 'flat' : (hsEff < 1 ? 'small' : (hsEff < 1.8 ? 'moderate' : 'rough')));
+      const sst = g(M.sea_surface_temperature, i), sst24 = g(M.sea_surface_temperature, i - 24);
+      const sstDrop = sst != null && sst24 != null ? Math.round((sst - sst24) * 10) / 10 : null;
+      const est = fresh ? (fresh[d] != null ? fresh[d] : null) : null;
+      let wt = null, wtSrc = null;
+      if (wtMode === 'sea') { wt = sst; wtSrc = 'sea model'; }
+      else if (wtMode === 'blend') { wt = sst != null && est != null ? (sst + est) / 2 : (est != null ? est : sst); wtSrc = 'estimate (sea and air)'; }
+      else { wt = est; wtSrc = 'estimate from air temperature'; }
+      if (wt == null && sst != null) { wt = sst; wtSrc = 'sea model'; }
+      const clarity = (rain48 >= 8 || ((spot.stand === 'beach') && (seaCls === 'moderate' || seaCls === 'rough'))) ? 'coloured' : 'clear';
+      /* tide */
+      let tideH = null, tideF = null, stage = null, flowN = null, tideTrend = null;
+      if (tidal) {
+        tideH = g(sl, i); const w = win(i);
+        if (tideH != null && w) {
+          tideF = (tideH - w.min) / (w.max - w.min);
+          const a = g(sl, i - 1), b = g(sl, i + 1);
+          const rate = a != null && b != null ? (b - a) / 2 : (b != null ? b - tideH : (a != null ? tideH - a : 0));
+          tideTrend = rate >= 0 ? 'rising' : 'falling';
+          flowN = w.fmax > 0 ? clamp(Math.abs(rate) / w.fmax, 0, 1) : 0.5;
+          stage = tideF >= 0.82 ? 'high' : (tideF <= 0.18 ? 'low' : (rate >= 0 ? 'pushing' : 'dropping'));
+        }
+      }
+      /* fishable and safe */
+      let fishability = interp(WIND_FISH, windEff);
+      const flags = [];
+      if (code != null && code >= 95) { fishability *= 0.15; flags.push('lightning'); }
+      else if (rainNow != null && rainNow >= 4) { fishability *= 0.75; flags.push('heavy rain'); }
+      if (windEff >= 35) flags.push(windEff >= 50 ? 'gale' : 'strong wind');
+      let safety = 1;
+      if (hsEff != null && spot.water !== 'fresh') {
+        if (hsEff >= danger[1]) { safety = 0.12; flags.push('dangerous swell'); }
+        else if (hsEff >= danger[0]) { safety = 0.72; flags.push('big swell: stand well back'); }
+      }
+      if (sstDrop != null && sstDrop <= -2 && spot.water !== 'fresh') flags.push('cold upwelling');
+      const mh = moon[i] || { light: 0, range: 'mid', up: false };
+      const x = { d, light, windCls, trend, clarity, seaCls, stage, tideF, flowN, range: mh.range, wt, sstDrop, moonLight: mh.light, fishability, safety };
+      if (offSeason) flags.push('closed for the season');
+      else if (gateShut) flags.push('gate closed');
+      const rated = (offSeason || gateShut) ? [] : species.map(o => rateSpecies(o.p, o.e, spot, x)).filter(Boolean);
+      const open = rated.filter(r => r.score != null).sort((a, b) => b.score - a.score);
+      const top = open[0] || null;
+      const score = top ? top.score : null;
+      hours.push({ i, t, d, H, light, fishable, ws, wd, wg, rel, windCls, cloud, rain: g(Wd.precipitation_probability, i), rainMm: rainNow, rain48: Math.round(rain48 * 10) / 10, code, air: g(Wd.temperature_2m, i), p, dp, trend,
+        hs, hsEff, per, seaCls, sst, sstDrop, wt, wtSrc, tideH, tideF, stage, tideTrend, flowN, range: mh.range, moonUp: mh.up, moonLight: mh.light, clarity,
+        score, step: ratingStep(score), label: score == null && rated.length ? (rated.every(r => r.closed && r.closed.protected) ? 'Protected only' : 'Closed season') : ratingLabel(score), best: top ? top.key : null, ranked: open, closed: rated.filter(r => r.score == null), flags, safety, fishability, x });
+    }
+    const todayDate = times[from] ? times[from].slice(0, 10) : '';
+    const daily = (data.days || []).filter(d => d >= todayDate).map((d, k) => {
+      const hs = hours.filter(h => h.d === d && h.fishable && h.score != null && (d !== todayDate || h.i >= from));
+      let best = null; hs.forEach(h => { if (!best || h.score > best.score) best = h; });
+      const shut = !best && hours.some(h => h.d === d && h.label === 'Closed season');
+      return { d, k, best, score: best ? best.score : null, step: best ? best.step : 0, label: best ? best.label : (shut ? 'Closed season' : (d === todayDate ? 'Day done' : 'No data')), species: best ? best.best : null, lowConf: k >= 7 };
+    });
+    const tides = [];
+    if (tidal) {
+      for (let i = 1; i < n - 1; i++) {
+        const a = sl[i - 1], b = sl[i], c2 = sl[i + 1]; if (a == null || b == null || c2 == null) continue;
+        if ((b > a && b >= c2) || (b < a && b <= c2)) {
+          const den = a - 2 * b + c2; const off = den === 0 ? 0 : clamp((a - c2) / (2 * den), -0.5, 0.5);
+          const m = (+times[i].slice(11, 13) + off) * 60;
+          tides.push({ type: b > a ? 'high' : 'low', i, d: times[i].slice(0, 10), time: hm(m), h: b });
+        }
+      }
+    }
+    return { spot, hours, daily, tides, tidal, grid: S.grid, mgrid: S.mgrid, wtMode };
+  }
+
+  /* first run of two or more fishable hours at or above minScore */
+  function nextWindow(an, fromIdx, minScore) {
+    const hs = an.hours; let i = Math.max(0, fromIdx);
+    while (i < hs.length) {
+      if (hs[i].fishable && hs[i].score != null && hs[i].score >= minScore) {
+        let j = i, peak = hs[i];
+        while (j + 1 < hs.length && hs[j + 1].fishable && hs[j + 1].score != null && hs[j + 1].score >= minScore) { j++; if (hs[j].score > peak.score) peak = hs[j]; }
+        if (j > i || i === fromIdx) return { start: hs[i], end: hs[j], peak, hours: j - i + 1 };
+        i = j + 1; continue;
+      }
+      i++;
+    }
+    return null;
+  }
+
+  /* conditions for the tactic rules */
+  function tacticCtx(h, prof, spot) {
+    return { light: h.light, sea: h.seaCls || 'flat', tide: h.stage, range: h.range, wind: h.windCls, wind_rel: h.rel, temp: tempClass(prof && prof.temp, h.wt), clarity: h.clarity, trend: h.trend, months: +h.d.slice(5, 7), water: spot.water, spot: spot.id };
+  }
+
+  function buildUrls(spots) {
+    const out = [], CH = 25;
+    const chunk = arr => { const r = []; for (let i = 0; i < arr.length; i += CH) r.push(arr.slice(i, i + CH)); return r; };
+    const ll = c => 'latitude=' + c.map(s => s.lat).join(',') + '&longitude=' + c.map(s => s.lon).join(',');
+    const tz = '&timezone=Africa%2FJohannesburg&forecast_days=' + DAYS;
+    chunk(spots.filter(s => s.water !== 'fresh')).forEach(c => out.push({ kind: 'm', ids: c.map(s => s.id), url: MARINE + '?' + ll(c) + '&hourly=' + M_VARS.join(',') + tz + '&past_days=' + PAST_DAYS }));
+    [['sea', spots.filter(s => s.water !== 'fresh')], ['land', spots.filter(s => s.water === 'fresh')]].forEach(([sel, grp]) => chunk(grp).forEach(c => out.push({ kind: 'w', ids: c.map(s => s.id), url: WEATHER + '?' + ll(c) + '&hourly=' + W_VARS.join(',') + '&daily=' + W_DAILY.join(',') + tz + '&past_days=' + PAST_DAYS + '&wind_speed_unit=kmh&cell_selection=' + sel })));
+    chunk(spots.filter(s => s.water !== 'sea')).forEach(c => out.push({ kind: 'h', ids: c.map(s => s.id), url: WEATHER + '?' + ll(c) + '&daily=' + H_DAILY.join(',') + tz + '&past_days=' + HIST_DAYS + '&cell_selection=land' }));
+    return out;
+  }
+
+  /* raw: the compact form {v:1, fetchedAt, times, days, hdays, spots} that build.py writes to forecast.json, or
+     {fetchedAt, parts:[{kind, ids, data}]} straight from Open-Meteo */
+  function ingest(raw) {
+    if (raw && raw.v === 1) {
+      if (!Array.isArray(raw.times) || !raw.times.length || !raw.spots) throw new Error('bad forecast file');
+      return { fetchedAt: raw.fetchedAt, times: raw.times, days: raw.days || [], hdays: raw.hdays || [], spots: raw.spots };
+    }
+    const Wm = {}, Mm = {}, Hm = {};
+    (raw.parts || []).forEach(p => {
+      const arr = Array.isArray(p.data) ? p.data : [p.data];
+      if (arr.length !== p.ids.length) throw new Error('location count mismatch');
+      p.ids.forEach((id, k) => { (p.kind === 'w' ? Wm : (p.kind === 'm' ? Mm : Hm))[id] = arr[k]; });
+    });
+    const ids = Object.keys(Wm); if (!ids.length) throw new Error('no weather data');
+    const times = Wm[ids[0]].hourly.time.slice();
+    const days = (Wm[ids[0]].daily && Wm[ids[0]].daily.time) ? Wm[ids[0]].daily.time.slice() : [];
+    const hk = Object.keys(Hm)[0];
+    const hdays = hk && Hm[hk].daily ? Hm[hk].daily.time.slice() : [];
+    const spots = {};
+    ids.forEach(id => {
+      const w = Wm[id]; if (!w || !w.hourly) return;
+      const wi = new Map(w.hourly.time.map((t, k) => [t, k]));
+      const pick = (arr, idx) => times.map(t => { const k = idx.get(t); return (k == null || !arr) ? null : arr[k]; });
+      const rec = { w: {}, d: {}, grid: { lat: w.latitude, lon: w.longitude } };
+      W_VARS.forEach(v => { rec.w[v] = pick(w.hourly[v], wi); });
+      W_DAILY.forEach(v => { rec.d[v] = (w.daily || {})[v] || null; });
+      const m = Mm[id];
+      if (m && m.hourly) { const mi = new Map(m.hourly.time.map((t, k) => [t, k])); rec.m = {}; M_VARS.forEach(v => { rec.m[v] = pick(m.hourly[v], mi); }); rec.mgrid = { lat: m.latitude, lon: m.longitude }; }
+      const h = Hm[id];
+      if (h && h.daily && hdays.length && h.daily.time && h.daily.time.join() === hdays.join()) { rec.h = {}; H_DAILY.forEach(v => { rec.h[v] = h.daily[v] || null; }); }
+      spots[id] = rec;
+    });
+    return { fetchedAt: raw.fetchedAt, times, days, hdays, spots };
+  }
+  const pack = data => ({ v: 1, fetchedAt: data.fetchedAt, times: data.times, days: data.days, hdays: data.hdays, spots: data.spots });
+
+  return { DAYS, PAST_DAYS, HIST_DAYS, M_VARS, W_VARS, W_DAILY, H_DAILY, LABELS, ORIGINS, CAPE, REGIONS, WATER_NAME, ABUND, ABUND_TEXT, SHELTER, DANGER, W_SEA, W_FRESH, P, MONTHS,
+    clamp, interp, angDiff, compass16, compass8w, hm, sastParts, sastDate, moonAltHA, moonIllum, moonDay, moonHours, moonSvg, phaseName, rangeClass, closedNow,
+    freshTemps, tempFit, tempClass, ratingStep, ratingLabel, rateSpecies, pickTactic, standText, analyse, nextWindow, tacticCtx, buildUrls, ingest, pack };
+})();
+if (typeof module !== 'undefined') { module.exports = { CFC, SPOTS, SPECIES, RULES }; }
+</script>
+<script id="app">
+(function () {
+  'use strict';
+  const CACHE_KEY = 'cfc.cache.v1', MINE_KEY = 'cfc.mine.v1', LOG_KEY = 'cfc.log.v1', PREF_KEY = 'cfc.pref.v1';
+  const FRESH_MIN = 210;   /* the site refreshes its forecast every 3 hours */
+  const OLD_MIN = 12 * 60;
+  const framed = (() => { try { return window.top !== window; } catch (e) { return true; } })();
+  const onWeb = /^https?:$/.test(location.protocol);
+  const $ = (sel, root) => (root || document).querySelector(sel);
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } }
+  };
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const SP = SPECIES.species || {};
+  const REGION_NAME = {}; CFC.REGIONS.forEach(r => { REGION_NAME[r.key] = r.name; });
+  const COAST_INDEX = {}; SPOTS.forEach((s, i) => { COAST_INDEX[s.id] = i; });
+  const SPOT_BY_ID = {}; SPOTS.forEach(s => { SPOT_BY_ID[s.id] = s; });
+  const prefs = store.get(PREF_KEY, {});
+  const mineStored = store.get(MINE_KEY, null);
+
+  const state = {
+    data: null, source: 'none', analyses: {}, moonHours: null, moonDays: [], nowIdx: 0, focusIdx: 0, firstLight: false,
+    water: prefs.water || 'all', style: 'light-tackle', mineOnly: !!prefs.mineOnly, origin: prefs.origin || 'westlake', maxDrive: +prefs.maxDrive || 0,
+    sort: prefs.sort || 'now', search: '', night: !!prefs.night, wind: prefs.wind || 'kmh',
+    mine: new Set(Array.isArray(mineStored) ? mineStored : SPOTS.filter(s => s.mine).map(s => s.id)),
+    expanded: new Set(), sel: {}, map: null, markers: {}, tileFail: false, showAllCards: false, plannerReady: false, mapReady: false, leafletPromise: null
+  };
+  const savePrefs = () => store.set(PREF_KEY, { water: state.water, mineOnly: state.mineOnly, origin: state.origin, maxDrive: state.maxDrive, sort: state.sort, night: state.night, wind: state.wind });
+
+  /* ---------- formatting ---------- */
+  const fmtWind = (k, bare) => { if (k == null) return '–'; return state.wind === 'kn' ? Math.round(k * 0.539957) + (bare ? '' : ' kn') : Math.round(k) + (bare ? '' : ' km/h'); };
+  const fmtTemp = t => t == null ? '–' : (Math.round(t * 10) / 10).toFixed(Math.abs(t) < 10 ? 1 : 0) + ' °C';
+  const fmtScore = s => s == null ? '–' : s.toFixed(1);
+  const fmtLen = m => m == null ? '–' : m.toFixed(1) + ' m';
+  const DAY_FMT = {
+    wd: new Intl.DateTimeFormat('en-ZA', { weekday: 'short' }),
+    short: new Intl.DateTimeFormat('en-ZA', { weekday: 'short', day: 'numeric' }),
+    long: new Intl.DateTimeFormat('en-ZA', { weekday: 'long', day: 'numeric', month: 'short' }),
+    def: new Intl.DateTimeFormat('en-ZA', { weekday: 'short', day: 'numeric', month: 'short' })
+  };
+  const DAY_LABELS = new Map();
+  function dayLabel(d, style) {
+    const key = d.slice(0, 10) + '|' + (style || 'def');
+    let v = DAY_LABELS.get(key);
+    if (v === undefined) { v = (DAY_FMT[style] || DAY_FMT.def).format(new Date(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10))); DAY_LABELS.set(key, v); }
+    return v;
+  }
+  const hh = H => String(H).padStart(2, '0') + ':00';
+  const arrowSvg = (dir, cls) => '<svg class="arrow ' + (cls || '') + '" viewBox="-6 -6 12 12" aria-hidden="true"><g transform="rotate(' + (((dir || 0) + 90) % 360) + ')"><path d="M-5,-3.2 L5,0 L-5,3.2 Z"/></g></svg>';
+  const WMO = { 0: 'clear', 1: 'mostly clear', 2: 'partly cloudy', 3: 'overcast', 45: 'fog', 48: 'fog', 51: 'drizzle', 53: 'drizzle', 55: 'drizzle', 56: 'drizzle', 57: 'drizzle', 61: 'light rain', 63: 'rain', 65: 'heavy rain', 66: 'rain', 67: 'rain', 71: 'snow', 73: 'snow', 75: 'snow', 77: 'snow', 80: 'showers', 81: 'showers', 82: 'heavy showers', 85: 'snow showers', 86: 'snow showers', 95: 'thunderstorm', 96: 'thunderstorm', 99: 'thunderstorm' };
+  const wmo = c => WMO[c] || '–';
+  const LIGHT_TEXT = { night: 'dark', dawn: 'dawn', 'day-bright': 'bright day', 'day-dull': 'overcast day', dusk: 'dusk' };
+  const STAGE_TEXT = { low: 'low tide', pushing: 'pushing (rising)', high: 'high tide', dropping: 'dropping (falling)' };
+  const SEA_TEXT = { flat: 'flat', small: 'small', moderate: 'moderate', rough: 'rough' };
+  const RANGE_TEXT = { springs: 'springs', neaps: 'neaps', mid: 'between springs and neaps' };
+  const TIDEPREF_TEXT = { pushing: 'the pushing tide', dropping: 'the dropping tide', high: 'high water', low: 'low water', mid: 'mid tide', any: 'any tide', none: 'no tide (closed or fresh water)' };
+  const spName = k => (SP[k] && SP[k].name) || k;
+  const driveOf = (s, o) => s.drive ? s.drive[(o || state.origin) + '_min'] : null;
+  const driveText = s => s.drive ? s.drive.westlake_min + ' min from Westlake · ' + s.drive.green_point_min + ' min from Green Point' : '';
+  const srcLinks = list => (list || []).map(u => /^https?:/.test(u) ? '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(u.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]) + '</a>' : esc(u)).join(', ');
+  const monthsBar = (prof, entry, legal) => {
+    const now = state.now ? +state.now.date.slice(5, 7) : 0;
+    const peak = entry && entry.months && entry.months.length ? entry.months : (prof && prof.peak_months) || [];
+    const present = (prof && prof.present_months) || [];
+    return '<span class="months" title="Darker: best months here. Lighter: caught. Red: closed season.">' + CFC.MONTHS.map((m, i) => {
+      const mo = i + 1, md = String(mo).padStart(2, '0') + '-15';
+      const closed = legal && CFC.closedNow(legal, '2026-' + md);
+      return '<i class="' + (closed ? 'c' : (peak.includes(mo) ? 'k' : (present.includes(mo) ? 'p' : ''))) + (mo === now ? ' now' : '') + '" title="' + m + '"></i>';
+    }).join('') + '</span>';
+  };
+
+  /* ---------- data ---------- */
+  function readSnapshot() { try { const v = JSON.parse(document.getElementById('snapshot').textContent || 'null'); return v && (v.parts || v.v === 1) ? v : null; } catch (e) { return null; } }
+  async function fetchSiteForecast() {
+    if (!onWeb) return null;
+    try { const r = await fetch('forecast.json', { cache: 'no-cache' }); if (!r.ok) return null; const j = await r.json(); return j && j.v === 1 && j.times && j.spots ? j : null; } catch (e) { return null; }
+  }
+  const isNewer = (a, b) => !!a && (!b || new Date(a.fetchedAt) > new Date(b.fetchedAt));
+  function saveCache(data) { store.set(CACHE_KEY, { data: CFC.pack(data) }); }
+  async function getJSON(url) { const r = await fetch(url, { cache: 'no-store' }); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }
+  async function fetchLive() {
+    const reqs = CFC.buildUrls(SPOTS);
+    const data = await Promise.all(reqs.map(q => getJSON(q.url)));
+    return { fetchedAt: new Date().toISOString(), parts: reqs.map((q, k) => ({ kind: q.kind, ids: q.ids, data: data[k] })) };
+  }
+  function analyseAll() {
+    state.analyses = {};
+    SPOTS.forEach(s => { const an = CFC.analyse(s, state.data, state.nowIdx, { moonHours: state.moonHours, night: state.night }); if (an) state.analyses[s.id] = an; });
+    computeFocus();
+  }
+  function applyRaw(raw, source) {
+    const data = CFC.ingest(raw);
+    state.data = data; state.source = source;
+    const now = CFC.sastParts(); const times = data.times;
+    let idx = times.indexOf(now.key);
+    if (idx < 0) idx = now.key < times[0] ? 0 : times.length - 1;
+    state.nowIdx = idx; state.now = now;
+    state.moonHours = CFC.moonHours(times);
+    state.moonDays = (data.days || []).filter(d => d >= now.date).map(d => CFC.moonDay(d));
+    analyseAll();
+    renderAll();
+  }
+  function computeFocus() {
+    const idx = state.nowIdx;
+    const any = Object.values(state.analyses)[0];
+    let f = idx; state.firstLight = false;
+    if (any && !any.hours[idx].fishable) { let j = idx; while (j < any.hours.length && !any.hours[j].fishable) j++; if (j < any.hours.length) { f = j; state.firstLight = true; } }
+    state.focusIdx = f;
+  }
+  function ageMinutes(iso) { return Math.round((Date.now() - new Date(iso).getTime()) / 60000); }
+  function fmtStamp(iso) { try { return new Date(iso).toLocaleString('en-ZA', { timeZone: 'Africa/Johannesburg', weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false }); } catch (e) { return iso; } }
+
+  async function load(force) {
+    const cache = store.get(CACHE_KEY, null);
+    const cached = cache && cache.data && cache.data.v === 1 ? cache.data : null;
+    const snap = readSnapshot();
+    if (!state.data) {
+      const first = cached && (!snap || isNewer(cached, snap)) ? cached : (snap || cached);
+      if (first) { try { applyRaw(first, first === snap ? 'snapshot' : 'cache'); } catch (e) { console.warn('initial render failed', e); } }
+    }
+    if (!force) {
+      setStatus('loading', 'Checking…');
+      const site = await fetchSiteForecast();
+      if (site && isNewer(site, state.data)) { try { applyRaw(site, 'site'); saveCache(state.data); } catch (e) { console.warn('site forecast failed', e); } }
+      if (state.data && ageMinutes(state.data.fetchedAt) < FRESH_MIN) { renderStatus(); return; }
+    }
+    setStatus('loading', 'Fetching the latest forecast…');
+    try {
+      const raw = await fetchLive();
+      applyRaw(raw, 'live');
+      saveCache(state.data);
+    } catch (err) {
+      console.warn('live fetch failed', err);
+      if (state.data) {
+        renderStatus();
+        const when = fmtStamp(state.data.fetchedAt) + ' SAST';
+        if (state.source === 'snapshot') notice('This copy shows the forecast saved on ' + when + '.' + (SITE.publicUrl ? ' For live forecasts open <a href="' + esc(SITE.publicUrl) + '" target="_blank" rel="noopener">' + esc(SITE.publicUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')) + '</a>.' : ''), 'warn');
+        else if (force || ageMinutes(state.data.fetchedAt) >= FRESH_MIN) notice('Could not reach the forecast service, so this is still the forecast from ' + when + '. ' + (force ? 'Check your connection and try again.' : 'Press Refresh to try again.'), 'warn');
+      } else {
+        setStatus('error', 'No data');
+        notice('Could not load the forecast: ' + esc(err.message) + '. Check your connection and press Refresh.', 'err');
+        $('#leadNow').innerHTML = '<div class="empty">No forecast loaded.</div>';
+      }
+    }
+  }
+
+  /* ---------- status ---------- */
+  function setStatus(src, text) { const p = $('#srcPill'); p.dataset.src = src; p.textContent = text; }
+  function notice(msg, kind) { const n = $('#notice'); n.hidden = !msg; n.className = 'notice' + (kind === 'err' ? ' err' : kind === 'info' ? ' info' : ''); n.innerHTML = msg || ''; }
+  function renderStatus() {
+    $('#unitsBtn').textContent = state.wind === 'kn' ? 'knots' : 'km/h';
+    if (!state.data) return;
+    const age = ageMinutes(state.data.fetchedAt);
+    if (age < FRESH_MIN) setStatus('live', 'Up to date');
+    else if (age < OLD_MIN) setStatus('cache', 'A few hours old');
+    else setStatus('snapshot', 'Old forecast');
+    $('#updatedAt').textContent = 'Updated ' + fmtStamp(state.data.fetchedAt);
+    if (age < FRESH_MIN && state.source !== 'snapshot') notice('');
+  }
+
+  /* ---------- filtering ---------- */
+  function matchesSearch(s, q) {
+    const fish = (s.species || []).map(e => spName(e.key) + ' ' + ((SP[e.key] && SP[e.key].aka) || []).join(' ')).join(' ');
+    return (s.name + ' ' + (s.aka || []).join(' ') + ' ' + (s.area || '') + ' ' + (REGION_NAME[s.region] || '') + ' ' + fish).toLowerCase().includes(q);
+  }
+  function visibleSpots() {
+    const q = state.search.trim().toLowerCase();
+    let list = SPOTS.filter(s => state.analyses[s.id]);
+    if (state.water !== 'all') list = list.filter(s => s.water === state.water);
+    list = list.filter(s => s.style === state.style);
+    if (state.mineOnly) list = list.filter(s => state.mine.has(s.id));
+    if (state.maxDrive) list = list.filter(s => (driveOf(s) || 999) <= state.maxDrive);
+    if (q) list = list.filter(s => matchesSearch(s, q));
+    const f = state.focusIdx;
+    const weekBest = id => Math.max(0, ...state.analyses[id].daily.slice(0, 7).map(d => d.score || 0));
+    if (state.sort === 'now') list.sort((a, b) => (state.analyses[b.id].hours[f].score || 0) - (state.analyses[a.id].hours[f].score || 0) || a.name.localeCompare(b.name));
+    else if (state.sort === 'week') list.sort((a, b) => weekBest(b.id) - weekBest(a.id) || a.name.localeCompare(b.name));
+    else if (state.sort === 'drive') list.sort((a, b) => (driveOf(a) || 999) - (driveOf(b) || 999) || a.name.localeCompare(b.name));
+    else list.sort((a, b) => a.name.localeCompare(b.name));
+    return list;
+  }
+
+  /* ---------- rendering ---------- */
+  function renderAll() {
+    renderStatus(); renderFilters(); renderLead(); renderMoonNow(); renderCards(); renderPlanner(); renderMap(); renderLegend(); renderMoonTable(); renderLogControls(); renderLog();
+    armLazySections();
+    const bi = $('#buildInfo'); if (bi) bi.textContent = SPOTS.length + ' spots · ' + Object.keys(SP).length + ' fish · ' + CFC.DAYS + '-day forecast, refreshed every 3 hours · times in SAST · ratings worked out in your browser from the raw forecast.';
+    const sl = $('#siteLinks'); if (sl) sl.innerHTML = (SITE.publicUrl ? 'Page address: <a href="' + esc(SITE.publicUrl) + '">' + esc(SITE.publicUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')) + '</a>. ' : '') + (SITE.repoUrl ? 'Spot data and code: <a href="' + esc(SITE.repoUrl) + '" target="_blank" rel="noopener">' + esc(SITE.repoUrl.replace(/^https?:\/\//, '')) + '</a>.' : '');
+    if (location.hash && location.hash.startsWith('#spot-')) openSpot(location.hash.slice(6), false);
+  }
+
+  function renderFilters() {
+    const counts = { all: 0, sea: 0, estuary: 0, fresh: 0 };
+    SPOTS.forEach(s => { if (s.style === state.style) { counts.all++; counts[s.water]++; } });
+    $('#waterChips').innerHTML = [['all', 'All water'], ['sea', 'Sea'], ['estuary', 'Estuary'], ['fresh', 'Fresh water']].map(([k, n]) => '<button class="chip" type="button" data-water="' + k + '" aria-pressed="' + (state.water === k) + '">' + n + ' <span class="muted num">' + counts[k] + '</span></button>').join('');
+    const styles = [['light-tackle', 'Light tackle'], ['rock-and-surf', 'Rock and surf']];
+    $('#styleChips').innerHTML = styles.map(([k, n]) => { const c = SPOTS.filter(s => s.style === k).length; return '<button class="chip" type="button" data-style="' + k + '" aria-pressed="' + (state.style === k) + '"' + (c ? '' : ' disabled title="No spots yet"') + '>' + n + (c ? '' : ' (none yet)') + '</button>'; }).join('');
+    $('#mineBtn').setAttribute('aria-pressed', String(state.mineOnly));
+    $('#originSel').value = state.origin; $('#driveSel').value = String(state.maxDrive); $('#sortSel').value = state.sort; $('#nightChk').checked = state.night;
+  }
+
+  function scoreTile(h) { return '<div class="score-tile s' + h.step + '"><span class="n num">' + fmtScore(h.score) + '</span><span class="l">' + esc(h.label) + '</span></div>'; }
+  function tacticFor(spot, h, key) {
+    const prof = SP[key]; if (!prof) return null;
+    return CFC.pickTactic(prof, CFC.tacticCtx(h, prof, spot));
+  }
+  function condLine(spot, h) {
+    const bits = [];
+    if (h.stage) bits.push(STAGE_TEXT[h.stage]);
+    bits.push(LIGHT_TEXT[h.light]);
+    if (h.wt != null) bits.push(fmtTemp(h.wt) + (spot.water === 'sea' ? ' water' : ' water (est.)'));
+    bits.push(CFC.compass16(h.wd) + ' ' + fmtWind(h.ws) + (h.rel ? ' ' + h.rel : ''));
+    if (h.seaCls) bits.push(SEA_TEXT[h.seaCls] + ' sea');
+    return bits.join(' · ');
+  }
+
+  function renderLead() {
+    const list = visibleSpots(); const f = state.focusIdx;
+    const sub = $('#nowSub');
+    const any = Object.values(state.analyses)[0];
+    const fh = any ? any.hours[f] : null;
+    sub.textContent = state.firstLight && fh ? ('Dark now (' + state.now.key.slice(11) + ' SAST). Showing first light: ' + dayLabel(fh.d, 'short') + ' ' + hh(fh.H) + '.') : (fh ? ('Right now: ' + dayLabel(fh.d, 'long') + ', ' + hh(fh.H) + ' SAST') : '');
+    const boardable = s => s.legal_status !== 'unclear' || state.mine.has(s.id);  /* unclear-legality spots only lead for people who chose them */
+    const ranked = list.filter(boardable).map(s => ({ s, h: state.analyses[s.id].hours[f] })).filter(r => r.h.score != null).sort((a, b) => b.h.score - a.h.score).slice(0, 3);
+    const lead = $('#leadNow');
+    if (!ranked.length) lead.innerHTML = '<div class="empty">No spots match the filters.</div>';
+    else lead.innerHTML = ranked.map((r, i) => {
+      const t = r.h.best ? tacticFor(r.s, r.h, r.h.best) : null;
+      return '<article class="lead-card">' + scoreTile(r.h) + '<div class="lead-body"><span class="lead-rank">#' + (i + 1) + '</span><h3>' + esc(r.s.name) + '</h3><span class="where">' + esc(CFC.WATER_NAME[r.s.water]) + ' · ' + esc(r.s.area) + ' · ' + (driveOf(r.s) != null ? driveOf(r.s) + ' min from ' + esc(CFC.ORIGINS[state.origin].name) : '') + '</span>' +
+        (r.h.best ? '<span class="line"><b>' + esc(spName(r.h.best)) + '</b>' + (t ? ': ' + esc(t.title) : '') + '</span>' : '') +
+        '<span class="line">' + esc(condLine(r.s, r.h)) + '</span>' + (r.h.flags.length ? '<span class="line">' + r.h.flags.map(x => '<span class="tag ' + (/danger|lightning|gale/.test(x) ? 'bad' : 'warn') + '">' + esc(x) + '</span>').join(' ') + '</span>' : '') +
+        '<button class="link" type="button" data-goto="' + esc(r.s.id) + '">Open spot and tactics</button></div></article>';
+    }).join('');
+    const pairs = [];
+    list.filter(boardable).forEach(s => { const an = state.analyses[s.id]; let best = null; an.daily.forEach(d => { if (d.score != null && (!best || d.score > best.score)) best = d; }); if (best && best.score >= 3.5) pairs.push({ s, d: best }); });
+    pairs.sort((a, b) => b.d.score - a.d.score);
+    $('#leadWeek').innerHTML = pairs.length ? pairs.slice(0, 8).map(p => '<button class="chip day" type="button" data-goto="' + esc(p.s.id) + '" data-hour="' + (p.d.best ? p.d.best.i : '') + '" title="' + esc(p.d.label + ' for ' + spName(p.d.species) + ' at ' + p.s.name + ', ' + dayLabel(p.d.d) + (p.d.best ? ' ' + hh(p.d.best.H) : '')) + '"><i class="sw s' + p.d.step + '"></i>' + esc(dayLabel(p.d.d, 'wd')) + (p.d.best ? ' ' + hh(p.d.best.H) : '') + ' · ' + esc(p.s.name) + ' <b class="num">' + fmtScore(p.d.score) + '</b></button>').join('') : '<span class="muted">Nothing above "Slow" in the next 9 days for these spots.</span>';
+  }
+
+  function solunarText(md) {
+    const r = x => CFC.hm(x.from) + '–' + CFC.hm(x.to);
+    return (md.majors.length ? 'majors ' + md.majors.map(r).join(', ') : '') + (md.minors.length ? '; minors ' + md.minors.map(r).join(', ') : '');
+  }
+  function renderMoonNow() {
+    const md = state.moonDays[0]; const el = $('#moonNow'); if (!md || !el) return;
+    el.innerHTML = '<span>' + CFC.moonSvg(md.phase, md.fraction) + ' <b>' + esc(md.name) + '</b>, ' + Math.round(md.fraction * 100) + '% lit</span>' +
+      '<span>Moonrise ' + (md.rise != null ? CFC.hm(md.rise) : '–') + ', moonset ' + (md.set != null ? CFC.hm(md.set) : '–') + '</span>' +
+      '<span>Tides: <b>' + esc(RANGE_TEXT[md.range]) + '</b></span><span>Solunar ' + esc(solunarText(md)) + ' <a href="#moonSec">(what this means)</a></span>';
+  }
+
+  function renderLegend() {
+    const el = $('#rampLegend'); if (!el) return;
+    el.innerHTML = CFC.LABELS.map((l, i) => '<span><i class="s' + i + '"></i>' + esc(l) + '</span>').join('');
+  }
+
+  function renderCards() {
+    const list = visibleSpots();
+    $('#spotsSub').textContent = list.length + ' of ' + SPOTS.length + ' spots' + (state.sort === 'now' ? ', best first' : '');
+    const wrap = $('#cards');
+    const lastOpen = list.reduce((m, s, i) => state.expanded.has(s.id) ? i : m, -1);
+    const shown = state.showAllCards ? list : list.slice(0, Math.max(24, lastOpen + 1));
+    wrap.innerHTML = shown.length ? shown.map(s => renderCard(state.analyses[s.id])).join('') : '<div class="empty">No spots match. Clear a filter.</div>';
+    const rest = list.length - shown.length;
+    $('#moreWrap').hidden = rest <= 0;
+    if (rest > 0) $('#showAll').textContent = 'Show all ' + list.length + ' spots (' + rest + ' more)';
+    scrollCharts(wrap);
+  }
+  function scrollCharts(root) {
+    root.querySelectorAll('.chart-scroll').forEach(sc => { const svg = sc.querySelector('svg'); if (!svg) return; const px = +svg.dataset.px, padl = +svg.dataset.padl; sc.scrollLeft = Math.max(0, padl + state.nowIdx * px - 80); });
+  }
+  function refreshCard(id) {
+    const el = document.getElementById('spot-' + id), an = state.analyses[id];
+    if (!el || !an) { renderCards(); return; }
+    el.outerHTML = renderCard(an);
+    scrollCharts(document.getElementById('spot-' + id));
+  }
+
+  function renderCard(an) {
+    const s = an.spot, f = state.focusIdx, h = an.hours[f], open = state.expanded.has(s.id);
+    const nxt = CFC.nextWindow(an, f, 5.5) || CFC.nextWindow(an, f, 3.5);
+    const nxtGood = nxt && nxt.peak.score >= 5.5;
+    const tideNext = an.tides.find(e => e.i >= f);
+    const md = state.moonDays[0];
+    const strip = an.daily.map(d => '<button class="cell s' + d.step + (d.d === state.now.date ? ' today' : '') + '" type="button" data-goto="' + esc(s.id) + '" data-hour="' + (d.best ? d.best.i : '') + '" title="' + esc(dayLabel(d.d) + ': ' + d.label + (d.best ? ' for ' + spName(d.species) + ' at ' + hh(d.best.H) : '')) + '"><b class="num">' + fmtScore(d.score) + '</b>' + esc(dayLabel(d.d, 'wd').slice(0, 2)) + '</button>').join('');
+    const best = h.best ? spName(h.best) : (h.closed.length ? 'closed season' : '–');
+    const second = h.ranked[1] ? spName(h.ranked[1].key) + ' ' + fmtScore(h.ranked[1].score) : '';
+    let m3;
+    if (s.water === 'fresh') m3 = '<div class="metric"><div class="k">Light</div><div class="v">' + esc(LIGHT_TEXT[h.light]) + '</div><div class="d">cloud ' + (h.cloud == null ? '–' : h.cloud + '%') + ' · ' + esc(wmo(h.code)) + '</div></div>';
+    else m3 = '<div class="metric"><div class="k">Sea</div><div class="v">' + (h.seaCls ? esc(SEA_TEXT[h.seaCls]) : (s.shelter === 'enclosed' ? 'sheltered' : '–')) + '</div><div class="d">' + (h.hs != null ? fmtLen(h.hs) + ' offshore' + (h.per ? ' @ ' + Math.round(h.per) + ' s' : '') : '') + '</div></div>';
+    return '<article class="card' + (open ? ' open' : '') + '" id="spot-' + esc(s.id) + '" data-id="' + esc(s.id) + '">' +
+      '<div class="card-head"><span class="badge s' + h.step + '"><span class="num">' + fmtScore(h.score) + '</span><small>' + esc(h.label) + '</small></span>' +
+      '<div class="title"><h3>' + esc(s.name) + '</h3><span class="where"><span class="tag water-' + s.water + '">' + esc(CFC.WATER_NAME[s.water]) + '</span> <b>' + esc(REGION_NAME[s.region] || '') + '</b> · ' + esc(s.area) + '</span></div>' +
+      '<button class="star" type="button" data-mine="' + esc(s.id) + '" aria-pressed="' + state.mine.has(s.id) + '" aria-label="' + esc((state.mine.has(s.id) ? 'Remove ' : 'Add ') + s.name + (state.mine.has(s.id) ? ' from' : ' to') + ' My spots') + '" title="My spots">★</button></div>' +
+      '<div class="drive">' + esc(driveText(s)) + '</div>' +
+      (s.legal_status === 'unclear' ? '<div class="legal-flag"><b>Legal status unclear:</b> ' + esc(s.legal_note || 'no official page says angling is allowed here. Check before you fish.') + '</div>' : '') +
+      '<div class="metrics">' +
+      '<div class="metric"><div class="k">Best bet now</div><div class="v">' + esc(best) + '</div><div class="d">' + esc(second ? 'then ' + second : '') + '</div></div>' +
+      (an.tidal ? '<div class="metric"><div class="k">Tide</div><div class="v">' + esc(h.stage ? STAGE_TEXT[h.stage].replace(/ \(.*\)/, '') : '–') + '</div><div class="d">' + (tideNext ? esc(tideNext.type + ' ' + tideNext.time + (tideNext.d !== h.d ? ' ' + dayLabel(tideNext.d, 'wd') : '')) : '') + ' · ' + esc(RANGE_TEXT[h.range]) + '</div></div>' : '') +
+      '<div class="metric"><div class="k">Water</div><div class="v num">' + fmtTemp(h.wt) + '</div><div class="d">' + esc(s.water === 'sea' ? 'sea model' : 'estimate') + (h.sstDrop != null && h.sstDrop <= -2 ? ' · <b>dropped ' + Math.abs(h.sstDrop) + '° in a day</b>' : '') + '</div></div>' +
+      '<div class="metric"><div class="k">Wind</div><div class="v num">' + arrowSvg(h.wd) + ' ' + fmtWind(h.ws) + '</div><div class="d">' + esc(CFC.compass16(h.wd)) + (h.rel ? ' ' + esc(h.rel) : '') + (h.wg ? ' · gusts ' + fmtWind(h.wg) : '') + '</div></div>' +
+      m3 +
+      (md ? '<div class="metric"><div class="k">Moon</div><div class="v">' + CFC.moonSvg(md.phase, md.fraction).replace('<svg ', '<svg width="16" height="16" ') + ' ' + Math.round(md.fraction * 100) + '%</div><div class="d">' + esc(md.name.toLowerCase()) + '</div></div>' : '') +
+      '</div>' +
+      (h.flags.length ? '<div class="next">' + h.flags.map(x => '<span class="tag ' + (/danger|lightning|gale/.test(x) ? 'bad' : 'warn') + '">' + esc(x) + '</span>').join(' ') + '</div>' : '') +
+      '<div class="next">' + (nxt ? ('<span class="eyebrow">' + (nxtGood ? 'Next good window' : 'Best coming window') + '</span><span><b>' + esc(dayLabel(nxt.start.d, 'short')) + ' ' + hh(nxt.start.H) + '–' + hh(nxt.end.H + 1) + '</b> · ' + esc(spName(nxt.peak.best)) + ' <span class="badge s' + nxt.peak.step + '"><span class="num">' + nxt.peak.score.toFixed(1) + '</span></span></span>') : '<span class="eyebrow">Next good window</span><span>Nothing above Slow in the next 9 days.</span>') + '</div>' +
+      '<div class="strip">' + strip + '</div>' +
+      '<div class="card-foot"><span class="sub">' + esc(s.description) + '</span><div class="actions">' +
+      '<a class="btn small" href="' + esc(directionsUrl(s)) + '" target="_blank" rel="noopener" aria-label="' + esc('Directions to ' + s.name + ' in Google Maps') + '"' + (s.access && s.access.note ? ' title="' + esc(s.access.note) + '"' : '') + '>Directions</a>' +
+      '<button class="btn small primary" type="button" data-toggle="' + esc(s.id) + '">' + (open ? 'Close' : 'Tactics and details') + '</button></div></div>' +
+      (open ? renderDetail(an) : '') + '</article>';
+  }
+
+  function selHour(an) { const i = state.sel[an.spot.id]; return an.hours[i != null && an.hours[i] ? i : state.focusIdx]; }
+
+  function renderDetail(an) {
+    const s = an.spot, h = selHour(an);
+    const tides = an.tides.filter(e => e.i >= state.nowIdx).slice(0, 6).map(e => '<div class="tide-ev"><b>' + esc(e.type === 'high' ? 'High' : 'Low') + ' ' + esc(e.time) + '</b>' + esc(dayLabel(e.d, 'short')) + ' · ' + (e.h >= 0 ? '+' : '') + e.h.toFixed(2) + ' m</div>').join('');
+    return '<div class="detail">' +
+      '<div><h4>What to do ' + (h.i === state.focusIdx ? (state.firstLight ? 'at first light' : 'now') : 'at the hour you picked') + ': ' + esc(dayLabel(h.d, 'short')) + ' ' + hh(h.H) + '</h4>' + renderTactics(an, h) + '</div>' +
+      '<div><h4>Next 9 days, hour by hour</h4>' + renderChart(an) + '<div class="legend chart-legend">' + CFC.LABELS.map((l, i) => '<span><i class="s' + i + '"></i>' + esc(l) + '</span>').join('') + '<span><i style="background:var(--night)"></i>dark</span><span><i style="background:var(--major)"></i>solunar major</span><span><i style="background:var(--minor)"></i>minor</span><span>bars: rating · arrows: wind' + (s.water !== 'fresh' ? ' (green offshore, amber cross, red onshore)' : '') + ' · ' + (an.tidal ? 'blue line: tide' : 'orange line: water temperature') + '. Tap an hour to see its tactics.</span></div></div>' +
+      '<div class="two"><div><h4>Why ' + fmtScore(h.score) + ' at ' + hh(h.H) + '</h4>' + renderWhy(an, h) + '</div>' +
+      (an.tidal ? '<div><h4>Tides</h4><div class="tides">' + (tides || '<span class="muted">No tide signal in the model for this cell.</span>') + '</div><p class="sub" style="margin-top:8px">Model sea level for timing only; heights are relative to mean sea level, not chart datum. This spot fishes best on ' + esc(TIDEPREF_TEXT[s.tide_pref || 'any']) + ' according to local anglers.</p></div>' : '<div><h4>Water temperature</h4><p class="sub">' + fmtTemp(h.wt) + ' estimated for ' + esc(dayLabel(h.d, 'short')) + '. Nobody measures this water, so the page estimates it from three weeks of air temperature, smoothed for a ' + esc(s.body) + '. Treat it as a trend, not a reading.</p></div>') + '</div>' +
+      '<div><h4>Fish here</h4>' + renderSpeciesTable(s, h) + '</div>' +
+      '<div class="two"><div><h4>Permits and rules</h4>' + renderLegal(s, h) + '</div><div><h4>Spot guide</h4>' + renderGuide(an) + '</div></div>' +
+      '</div>';
+  }
+
+  function renderTactics(an, h) {
+    const s = an.spot;
+    const md = state.moonDays.find(m => m.date === h.d);
+    const c = [];
+    c.push('<span class="cond">Light <b>' + esc(LIGHT_TEXT[h.light]) + '</b></span>');
+    if (h.stage) c.push('<span class="cond">Tide <b>' + esc(STAGE_TEXT[h.stage]) + '</b>, ' + esc(RANGE_TEXT[h.range]) + (h.flowN != null ? ', flow ' + Math.round(h.flowN * 100) + '%' : '') + '</span>');
+    c.push('<span class="cond">Water <b>' + fmtTemp(h.wt) + '</b>' + (s.water === 'sea' ? '' : ' est.') + '</span>');
+    c.push('<span class="cond">Wind <b>' + esc(CFC.compass16(h.wd)) + ' ' + fmtWind(h.ws) + '</b>' + (h.rel ? ' ' + esc(h.rel) : '') + '</span>');
+    if (h.seaCls) c.push('<span class="cond">Sea <b>' + esc(SEA_TEXT[h.seaCls]) + '</b> (' + fmtLen(h.hsEff) + ' at the spot)</span>');
+    c.push('<span class="cond">Water clarity <b>' + esc(h.clarity) + '</b>' + (h.rain48 ? ' (' + h.rain48 + ' mm rain in 48 h)' : '') + '</span>');
+    c.push('<span class="cond">Pressure <b>' + esc(h.trend) + '</b>' + (h.dp != null ? ' (' + (h.dp > 0 ? '+' : '') + h.dp.toFixed(1) + ' hPa in 3 h)' : '') + '</span>');
+    if (md) c.push('<span class="cond">Moon <b>' + Math.round(md.fraction * 100) + '%</b>' + (h.light === 'night' ? (h.moonUp ? ', up' : ', down') : '') + '</span>');
+    const top = h.ranked.filter(r => r.score >= 1.5).slice(0, 3);
+    let cards;
+    if (!top.length) cards = '<p class="sub">Nothing worth targeting at this hour' + (h.flags.length ? ' (' + esc(h.flags.join(', ')) + ')' : '') + '. Pick another hour on the chart.</p>';
+    else cards = '<div class="tactics">' + top.map(r => {
+      const prof = SP[r.key], entry = (s.species || []).find(e => e.key === r.key) || {};
+      const t = CFC.pickTactic(prof, CFC.tacticCtx(h, prof, s));
+      const step = CFC.ratingStep(r.score);
+      if (!t) return '';
+      return '<div class="tactic"><div class="th"><h5>' + esc(prof.name) + '</h5><span class="badge s' + step + '"><span class="num">' + fmtScore(r.score) + '</span></span><span class="ab ' + esc(entry.abundance || '') + '">' + esc(CFC.ABUND_TEXT[entry.abundance] || '') + ' here</span></div>' +
+        '<div class="tt">' + esc(t.title) + '</div>' +
+        '<dl class="kv">' +
+        '<dt>' + esc(t.method === 'bait' || t.method === 'float' ? 'Bait' : 'Lure') + '</dt><dd>' + esc(t.lure_or_bait) + '</dd>' +
+        (t.colour ? '<dt>Colour</dt><dd>' + esc(t.colour) + '</dd>' : '') +
+        (t.rig ? '<dt>Rig</dt><dd>' + esc(t.rig) + '</dd>' : '') +
+        '<dt>Retrieve</dt><dd>' + esc(t.retrieve) + '</dd>' +
+        '<dt>Depth</dt><dd>' + esc(t.depth) + '</dd>' +
+        '<dt>Stand</dt><dd>' + esc(CFC.standText(t.stand, h.wd, h.ws)) + (entry.stand ? ' ' + esc(entry.stand) : '') + '</dd>' +
+        (entry.bait ? '<dt>Here</dt><dd>' + esc(entry.bait) + '</dd>' : '') +
+        '</dl>' +
+        (t.why ? '<p class="why-t">' + esc(t.why) + (t.sources && t.sources.length ? ' <span class="sources">' + srcLinks(t.sources.map(x => (String(x).match(/https?:\/\/\S+/) || [x])[0])) + '</span>' : '') + '</p>' : '') +
+        legalLine(prof.legal) + '</div>';
+    }).join('') + '</div>';
+    const closed = h.closed.filter(r => !r.closed.protected).map(r => spName(r.key) + ' (closed ' + r.closed.from + ' to ' + r.closed.to + ')');
+    const prot = h.closed.filter(r => r.closed.protected).map(r => spName(r.key));
+    return '<div class="conds">' + c.join('') + '</div>' + cards + (closed.length ? '<p class="sub" style="margin-top:8px">Not rated, closed season: ' + esc(closed.join(', ')) + '. Release any you catch.</p>' : '') + (prot.length ? '<p class="sub" style="margin-top:8px">Protected, never a target: ' + esc(prot.join(', ')) + '. If one takes your bait, release it unharmed at once.</p>' : '');
+  }
+
+  function legalLine(L) {
+    if (!L) return '';
+    const bits = [];
+    if (L.protected) bits.push('protected: may not be caught or kept, release unharmed');
+    else {
+      if (L.min_size_cm) bits.push('min ' + L.min_size_cm + ' cm');
+      if (L.bag != null) bits.push('bag ' + L.bag + ' a day');
+      else if (L.bag_note) bits.push(L.bag_note.replace(/\.$/, ''));
+    }
+    const cl = (L.closed || []).filter(c => c.applies !== false).map(c => 'closed ' + c.from + ' to ' + c.to);
+    return '<p class="why-t"><b>Law:</b> ' + esc(bits.concat(cl).join(' · ') || 'no species limit found') + (L.release ? '. ' + esc(L.release) : '') + '</p>';
+  }
+
+  function renderWhy(an, h) {
+    const s = an.spot;
+    if (!h.ranked.length) return '<p class="sub">No fish rated at this hour' + (h.closed.length ? ' (closed season)' : '') + '.</p>';
+    const r = h.ranked[0], f = r.f, prof = SP[r.key], pct = v => Math.round(v * 100);
+    const rows = [
+      ['Season', f.season, (f.season >= 1 ? 'a best month for ' : (f.season >= 0.75 ? 'around, but not a peak month for ' : 'out of season for ')) + prof.name],
+      ['How common', f.abund, (CFC.ABUND_TEXT[(s.species.find(e => e.key === r.key) || {}).abundance] || '') + ' at this spot'],
+      ['Water temp', f.temp, fmtTemp(h.wt) + ' against an ideal of ' + prof.temp.ideal_lo + ' to ' + prof.temp.ideal_hi + ' °C' + (h.sstDrop != null && h.sstDrop <= -2 ? '; it has dropped ' + Math.abs(h.sstDrop) + ' °C in a day' : '')],
+      ['Light', f.light, LIGHT_TEXT[h.light]],
+      f.sea != null ? ['Sea', f.sea, SEA_TEXT[h.seaCls] + ' (' + fmtLen(h.hsEff) + ' reaching the spot)'] : null,
+      f.tide != null ? ['Tide', f.tide, STAGE_TEXT[h.stage] + '; the spot likes ' + TIDEPREF_TEXT[s.tide_pref || 'any']] : null,
+      f.flow != null ? ['Water moving', f.flow, Math.round(h.flowN * 100) + '% of the fastest flow today'] : null,
+      f.range != null ? ['Springs/neaps', f.range, RANGE_TEXT[h.range]] : null,
+      ['Pressure', f.trend, h.trend + (h.dp != null ? ' (' + (h.dp > 0 ? '+' : '') + h.dp.toFixed(1) + ' hPa in 3 h)' : '')],
+      ['Clarity', f.clarity, h.clarity],
+      ['Wind (bite)', f.wind, h.windCls],
+      ['Fishable', h.fishability, 'wind ' + fmtWind(h.ws) + (h.wg ? ', gusts ' + fmtWind(h.wg) : '') + (h.flags.includes('heavy rain') ? ', heavy rain' : '')],
+      h.safety < 1 ? ['Safety', h.safety, 'big swell for this stand'] : null
+    ].filter(Boolean);
+    return '<div class="why"><p class="sub">For <b>' + esc(prof.name) + '</b>, the best fish here at this hour.</p>' + rows.map(x => '<div class="row"><span>' + esc(x[0]) + ' <b class="num">' + pct(x[1]) + '%</b></span><div class="bar"><i style="width:' + pct(x[1]) + '%"></i></div><span class="txt">' + esc(x[2]) + '</span></div>').join('') +
+      '<p class="sub">Score = 10 × season × how common × fishable × safety × (weighted average of the condition factors)<sup>' + CFC.P + '</sup>. Conditions weigh ' + (s.water === 'fresh' ? 'water temperature and light most' : 'water temperature, light, sea and tide most') + '. <a href="#learnSec">How the rating works</a>.</p></div>';
+  }
+
+  function renderSpeciesTable(s, h) {
+    const rows = (s.species || []).map(e => {
+      const p = SP[e.key]; if (!p) return '';
+      const L = p.legal || {}; const cl = CFC.closedNow(L, h.d);
+      const r = h.ranked.find(x => x.key === e.key);
+      return '<tr><td><a href="#sp-' + esc(e.key) + '" data-species="' + esc(e.key) + '"><b>' + esc(p.name) + '</b></a>' + (e.local_name ? '<br><small class="muted">' + esc(e.local_name) + '</small>' : '') + '</td>' +
+        '<td><span class="ab ' + esc(e.abundance) + '">' + esc(CFC.ABUND_TEXT[e.abundance]) + '</span>' + (r ? '<br><span class="badge s' + CFC.ratingStep(r.score) + '" style="font-size:.75rem"><span class="num">' + fmtScore(r.score) + '</span></span>' : (cl ? '<br><span class="tag bad">closed</span>' : '')) + '</td>' +
+        '<td>' + monthsBar(p, e, L) + '</td>' +
+        '<td>' + esc(e.size || p.typical_size || '–') + '</td>' +
+        '<td>' + esc(e.method || '') + (e.bait ? ': ' + esc(e.bait) : '') + '</td>' +
+        '<td>' + esc((L.protected ? ['protected: release'] : [L.min_size_cm ? L.min_size_cm + ' cm' : null, L.bag != null ? 'bag ' + L.bag : (/^no bag/i.test(L.bag_note || '') ? 'no limit' : (L.bag_note || null))]).filter(Boolean).join(', ') || '–') + (cl ? '<br><span class="tag bad">closed now, to ' + esc(cl.to) + '</span>' : ((L.closed || []).filter(c => c.applies !== false).length ? '<br><small>closed ' + esc(L.closed.filter(c => c.applies !== false).map(c => c.from + ' to ' + c.to).join('; ')) + '</small>' : '')) + '</td>' +
+        '<td class="sources">' + srcLinks(e.sources) + '</td></tr>';
+    }).join('');
+    return '<div class="table-wrap"><table class="sp-table"><thead><tr><th>Fish</th><th>Here</th><th>Months</th><th>Usual size</th><th>Method and bait</th><th>Size, bag, season</th><th>Sources</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+  }
+
+  function renderLegal(s, h) {
+    const P = (RULES.permits || {})[s.water === 'fresh' ? 'fresh' : 'sea'];
+    const out = [];
+    if (P) out.push('<div class="permit"><b>' + esc(P.name) + '.</b> ' + esc(P.summary || '') + (P.source ? ' <span class="sources">' + srcLinks([P.source]) + '</span>' : '') + '</div>');
+    if (s.legal_status === 'unclear') out.push('<div class="legal-flag"><b>Legal status unclear.</b> ' + esc(s.legal_note || '') + '</div>');
+    if (s.permit) out.push('<p><b>Here:</b> ' + esc(s.permit) + '</p>');
+    if (s.legality) out.push('<p class="sub">' + esc(s.legality) + '</p>');
+    out.push('<p class="sub"><a href="#rulesSec">All permits, size and bag limits and closed seasons</a>.</p>');
+    return '<div class="legal-box">' + out.join('') + '</div>';
+  }
+
+  function renderGuide(an) {
+    const s = an.spot;
+    const rows = [
+      ['Water', CFC.WATER_NAME[s.water] + (s.body ? ' (' + s.body + ')' : '')],
+      s.bottom ? ['Bottom', s.bottom + (s.depth ? ', ' + s.depth : '')] : null,
+      s.water !== 'fresh' ? ['Faces', CFC.compass16(s.facing) + ' (onshore wind is from the ' + CFC.compass16(s.facing) + ')' + (s.shelter ? ', ' + s.shelter + ' to swell' : '')] : null,
+      s.mouth ? ['Mouth', s.mouth] : null,
+      s.stand ? ['You stand on', { rock: 'rocks', wall: 'a harbour wall', beach: 'a beach', bank: 'a bank' }[s.stand] || s.stand] : null,
+      s.access_notes ? ['Access', s.access_notes] : null,
+      s.hazards && s.hazards.length ? ['Hazards', s.hazards.join('; ')] : null,
+      ['Drive', driveText(s) + (s.drive && s.drive.method ? ' (' + s.drive.method + ')' : '')],
+      s.aka && s.aka.length ? ['Also called', s.aka.join(', ')] : null
+    ].filter(Boolean);
+    return '<dl class="kv">' + rows.map(r => '<dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>').join('') +
+      '<dt>Getting there</dt><dd>' + (s.access && s.access.note ? esc(s.access.note) + ' ' : '') + '<a href="' + esc(directionsUrl(s)) + '" target="_blank" rel="noopener">Directions in Google Maps ↗</a></dd></dl>' +
+      '<p class="conf muted" style="margin-top:8px">Spot data confidence: ' + esc(s.confidence) + '. Checked ' + esc(s.checked || '') + '. ' + (an.mgrid ? 'Sea model cell ' + an.mgrid.lat.toFixed(2) + ', ' + an.mgrid.lon.toFixed(2) + '. ' : '') + 'Sources: <span class="sources">' + srcLinks(s.sources) + '</span></p>';
+  }
+
+  function directionsUrl(s) { const p = s.access || s; return 'https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lon; }
+
+  function renderChart(an) {
+    const hrs = an.hours, n = hrs.length, PX = 7, padL = 38, padR = 8, W = n * PX;
+    const barH = 90, windH = 34, lineH = 44, axisH = 20, gap = 14, top = 16;
+    const yWind = top + barH + gap, yLine = yWind + windH + gap, yAxis = yLine + lineH + 6, H = yAxis + axisH;
+    const yOf = v => top + barH - (v / 10) * barH; const x = i => padL + i * PX;
+    const t0 = CFC.sastDate(hrs[0].t).valueOf();
+    const xm = (dateStr, m) => padL + ((CFC.sastDate(dateStr).valueOf() + m * 60000 - t0) / 3600000) * PX;
+    let s = '';
+    let i = 0; while (i < n) { if (hrs[i].light === 'night') { let j = i; while (j < n && hrs[j].light === 'night') j++; s += '<rect class="night" x="' + x(i) + '" y="' + top + '" width="' + ((j - i) * PX) + '" height="' + barH + '"/>'; i = j; } else i++; }
+    state.moonDays.forEach(md => {
+      md.majors.forEach(p => { const a = xm(md.date, p.from), b = xm(md.date, p.to); if (b > padL && a < padL + W) s += '<rect class="major" x="' + Math.max(padL, a).toFixed(1) + '" y="' + top + '" width="' + (Math.min(padL + W, b) - Math.max(padL, a)).toFixed(1) + '" height="' + barH + '"/>'; });
+      md.minors.forEach(p => { const a = xm(md.date, p.from), b = xm(md.date, p.to); if (b > padL && a < padL + W) s += '<rect class="minor" x="' + Math.max(padL, a).toFixed(1) + '" y="' + top + '" width="' + (Math.min(padL + W, b) - Math.max(padL, a)).toFixed(1) + '" height="' + barH + '"/>'; });
+    });
+    let ax = '';
+    [0, 5, 10].forEach(v => { s += '<line class="grid" x1="' + padL + '" x2="' + (padL + W) + '" y1="' + yOf(v).toFixed(1) + '" y2="' + yOf(v).toFixed(1) + '"/>'; ax += '<text class="tick" x="' + (padL - 4) + '" y="' + (yOf(v) + 4).toFixed(1) + '" text-anchor="end">' + v + '</text>'; });
+    hrs.forEach((h, k) => { if (h.H === 0) s += '<line class="daysep" x1="' + x(k) + '" x2="' + x(k) + '" y1="' + (top - 12) + '" y2="' + (yAxis + axisH - 6) + '"/><text class="daylab" x="' + (x(k) + 4) + '" y="' + (top - 4) + '">' + esc(dayLabel(h.d, 'short')) + '</text>'; });
+    hrs.forEach((h, k) => { if (h.score == null || h.score <= 0) return; const bh = Math.max(1, (h.score / 10) * barH); s += '<rect class="bar ' + (h.fishable ? 's' + h.step : 'off') + '" x="' + (x(k) + 1) + '" y="' + yOf(h.score).toFixed(1) + '" width="' + (PX - 2) + '" height="' + bh.toFixed(1) + '" rx="1.5"/>'; });
+    s += '<line class="now" x1="' + (x(state.nowIdx) + PX / 2) + '" x2="' + (x(state.nowIdx) + PX / 2) + '" y1="' + (top - 2) + '" y2="' + yAxis + '"/>';
+    const sel = state.sel[an.spot.id]; if (sel != null && sel !== state.nowIdx) s += '<line class="sel" x1="' + (x(sel) + PX / 2) + '" x2="' + (x(sel) + PX / 2) + '" y1="' + (top - 2) + '" y2="' + yAxis + '"/>';
+    ax += '<text class="rowlab" x="' + (padL - 4) + '" y="' + (yWind + 14) + '" text-anchor="end">wind</text>';
+    hrs.forEach((h, k) => { if (k % 2 || h.wd == null) return; const cx = x(k) + PX, cy = yWind + 11; s += '<g transform="translate(' + cx + ' ' + cy + ') rotate(' + ((h.wd + 90) % 360) + ')"><path class="warrow ' + (h.rel || '') + '" d="M-5,-3 L5,0 L-5,3 Z"/></g>'; if (k % 6 === 0) s += '<text class="tick" x="' + (x(k) + PX) + '" y="' + (yWind + 32) + '" text-anchor="middle">' + fmtWind(h.ws, true) + '</text>'; });
+    if (an.tidal) {
+      const vals = hrs.map(h => h.tideH).filter(v => v != null);
+      if (vals.length) {
+        const mn = Math.min(...vals), mx = Math.max(...vals); const ty = v => yLine + lineH - ((v - mn) / Math.max(mx - mn, 0.01)) * lineH;
+        let d = ''; hrs.forEach((h, k) => { if (h.tideH == null) return; d += (d ? 'L' : 'M') + (x(k) + PX / 2) + ',' + ty(h.tideH).toFixed(1) + ' '; });
+        s += '<path class="tide" d="' + d + '"/>';
+        an.tides.forEach(ev => { if (ev.i < n) s += '<circle class="tidept" cx="' + (x(ev.i) + PX / 2) + '" cy="' + ty(ev.h).toFixed(1) + '" r="3"/>'; });
+        ax += '<text class="rowlab" x="' + (padL - 4) + '" y="' + (yLine + lineH / 2 + 4) + '" text-anchor="end">tide</text>';
+      }
+    } else {
+      const vals = hrs.map(h => h.wt).filter(v => v != null);
+      if (vals.length) {
+        const mn = Math.floor(Math.min(...vals)) - 1, mx = Math.ceil(Math.max(...vals)) + 1; const ty = v => yLine + lineH - ((v - mn) / Math.max(mx - mn, 0.5)) * lineH;
+        let d = ''; hrs.forEach((h, k) => { if (h.wt == null) return; d += (d ? 'L' : 'M') + (x(k) + PX / 2) + ',' + ty(h.wt).toFixed(1) + ' '; });
+        s += '<path class="wtemp" d="' + d + '"/>';
+        ax += '<text class="rowlab" x="' + (padL - 4) + '" y="' + (yLine + lineH / 2 + 4) + '" text-anchor="end">' + Math.round((mn + mx) / 2) + '°</text>';
+      }
+    }
+    hrs.forEach((h, k) => { if (h.H % 6 === 0) s += '<text class="tick" x="' + (x(k) + PX / 2) + '" y="' + (yAxis + 14) + '" text-anchor="middle">' + String(h.H).padStart(2, '0') + '</text>'; });
+    s += '<line class="xhair" x1="-10" x2="-10" y1="' + top + '" y2="' + yAxis + '"/>';
+    return '<div class="chart-wrap"><div class="chart-scroll"><svg class="chart" viewBox="0 0 ' + (padL + W + padR) + ' ' + H + '" width="' + (padL + W + padR) + '" height="' + H + '" data-padl="' + padL + '" data-px="' + PX + '" data-n="' + n + '" role="img" aria-label="Hourly rating, wind and ' + (an.tidal ? 'tide' : 'water temperature') + ' for ' + esc(an.spot.name) + '">' + s + '</svg></div><svg class="chart chart-axis" viewBox="0 0 ' + padL + ' ' + H + '" width="' + padL + '" height="' + H + '" aria-hidden="true">' + ax + '</svg><div class="tip" hidden></div></div>';
+  }
+
+  function renderPlanner() {
+    if (!state.plannerReady) return;
+    const list = visibleSpots(); const t = $('#planTable');
+    if (!state.data || !list.length) { t.innerHTML = ''; return; }
+    const days = (Object.values(state.analyses)[0] || { daily: [] }).daily.map(d => d.d);
+    t.innerHTML = '<thead><tr><th class="spot">Spot</th>' + days.map((d, k) => '<th class="' + (d === state.now.date ? 'today' : '') + (k >= 7 ? ' lowc' : '') + '">' + esc(dayLabel(d, 'wd')) + '<br>' + esc(dayLabel(d, 'short').replace(/^\S+\s/, '')) + (k >= 7 ? '*' : '') + '</th>').join('') + '</tr></thead><tbody>' +
+      list.map(s => { const an = state.analyses[s.id]; return '<tr><td class="spot">' + esc(s.name) + '<small>' + esc(CFC.WATER_NAME[s.water]) + ' · ' + (driveOf(s) != null ? driveOf(s) + ' min' : '') + '</small></td>' + an.daily.map(d => '<td class="cell' + (d.d === state.now.date ? ' today' : '') + '"><button type="button" class="s' + d.step + '" data-goto="' + esc(s.id) + '" data-hour="' + (d.best ? d.best.i : '') + '" title="' + esc(s.name + ', ' + dayLabel(d.d) + ': ' + d.label + (d.best ? ', ' + spName(d.species) + ' at ' + hh(d.best.H) : '')) + '"><span class="num">' + fmtScore(d.score) + '</span><small>' + (d.best ? String(d.best.H).padStart(2, '0') + 'h ' + esc(spName(d.species).split(/[ (/]/)[0]) : '') + '</small></button></td>').join('') + '</tr>'; }).join('') + '</tbody>';
+  }
+
+  function renderMoonTable() {
+    const t = $('#moonTable'); if (!t) return;
+    t.innerHTML = '<thead><tr><th>Day</th><th>Moon</th><th>Lit</th><th>Rise</th><th>Set</th><th>Tides</th><th>Solunar majors</th><th>Minors</th></tr></thead><tbody>' +
+      state.moonDays.map(md => '<tr><td>' + esc(dayLabel(md.date)) + '</td><td>' + CFC.moonSvg(md.phase, md.fraction) + ' ' + esc(md.name) + '</td><td class="num">' + Math.round(md.fraction * 100) + '%</td><td class="num">' + (md.rise != null ? CFC.hm(md.rise) : '–') + '</td><td class="num">' + (md.set != null ? CFC.hm(md.set) : '–') + '</td><td>' + esc(RANGE_TEXT[md.range]) + '</td><td class="num">' + md.majors.map(p => CFC.hm(p.from) + '–' + CFC.hm(p.to)).join(', ') + '</td><td class="num">' + md.minors.map(p => CFC.hm(p.from) + '–' + CFC.hm(p.to)).join(', ') + '</td></tr>').join('') + '</tbody>';
+  }
+
+  /* ---------- rules and species guide (static: built once) ---------- */
+  function renderRules() {
+    const el = $('#rulesBody'); if (!el) return;
+    const P = RULES.permits || {};
+    const today = CFC.sastParts().date;
+    const permit = p => p ? '<div class="permit" style="padding:10px 12px;border-radius:8px;background:var(--accent-soft)"><b>' + esc(p.name) + '</b><br>' + esc(p.summary || '') + (p.details && p.details.length ? '<ul>' + p.details.map(d => '<li>' + esc(d) + '</li>').join('') + '</ul>' : '') + (p.source ? '<span class="sources">Source: ' + srcLinks([p.source].concat(p.more_sources || [])) + '</span>' : '') + '</div>' : '';
+    const limitRows = zone => Object.keys(SP).filter(k => (SP[k].legal || {}).zone === zone).sort((a, b) => SP[a].name.localeCompare(SP[b].name)).map(k => {
+      const L = SP[k].legal || {}, cl = CFC.closedNow(L, today);
+      const seasons = (L.closed || []).map(c => c.from + ' to ' + c.to + (c.area ? ' (' + c.area + ')' : '') + (c.applies === false ? ' (not here)' : '')).join('; ');
+      return '<tr><td><a href="#sp-' + esc(k) + '" data-species="' + esc(k) + '">' + esc(SP[k].name) + '</a></td><td class="num">' + (L.min_size_cm ? L.min_size_cm + ' cm' : '–') + '</td><td class="num">' + (L.protected ? 'none: protected' : (L.bag != null ? L.bag : '–')) + (L.bag_note && !L.protected ? ' <small>' + esc(L.bag_note) + '</small>' : '') + '</td><td>' + (seasons ? esc(seasons) : '–') + (cl ? ' <span class="tag bad">closed now</span>' : '') + '</td><td>' + esc([L.protected ? 'Protected: release unharmed.' : '', L.release || '', L.note || ''].filter(Boolean).join(' ')) + '</td><td class="sources">' + srcLinks(L.source ? [L.source] : []) + (L.confidence && L.confidence !== 'high' ? ' <span class="tag warn">' + esc(L.confidence) + ' confidence</span>' : '') + '</td></tr>';
+    }).join('');
+    const table = rows => '<div class="table-wrap"><table><thead><tr><th>Fish</th><th>Min size</th><th>Bag a day</th><th>Closed season</th><th>Notes</th><th>Source</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+    const places = (RULES.places || []).map(p => '<tr><td><b>' + esc(p.place) + '</b></td><td><span class="tag ' + ({ allowed: 'good', 'allowed-with-conditions': 'good', unclear: 'warn', prohibited: 'bad' }[p.status] || '') + '">' + esc((p.status || '').replace(/-/g, ' ')) + '</span></td><td>' + esc(p.rules) + '</td><td class="sources">' + srcLinks(p.source ? [p.source] : []) + (p.checked ? ' <small>(' + esc(p.checked) + ')</small>' : '') + '</td></tr>').join('');
+    const general = (RULES.general || []).map(g => '<li><b>' + esc(g.topic) + ':</b> ' + esc(g.rule) + (g.source ? ' <span class="sources">' + srcLinks([g.source]) + '</span>' : '') + '</li>').join('');
+    el.innerHTML =
+      '<details open><summary>Which permit do I need?</summary><div class="body">' + permit(P.sea) + permit(P.fresh) + (RULES.permit_note ? '<p>' + esc(RULES.permit_note) + '</p>' : '') + '</div></details>' +
+      '<details><summary>Sea and estuary fish: size, bag and closed seasons</summary><div class="body wide">' + (RULES.sea_note ? '<p>' + esc(RULES.sea_note) + '</p>' : '') + table(limitRows('sea')) + '</div></details>' +
+      '<details><summary>Freshwater fish: limits and release rules</summary><div class="body wide">' + (RULES.fresh_note ? '<p>' + esc(RULES.fresh_note) + '</p>' : '') + table(limitRows('fresh')) + '</div></details>' +
+      '<details><summary>Protected areas and local rules</summary><div class="body wide">' + (RULES.mpa_note ? '<p>' + esc(RULES.mpa_note) + '</p>' : '') + '<div class="table-wrap"><table><thead><tr><th>Place</th><th>Angling</th><th>What applies</th><th>Source</th></tr></thead><tbody>' + places + '</tbody></table></div></div></details>' +
+      (general ? '<details><summary>Bait, gear and other rules</summary><div class="body"><ul>' + general + '</ul></div></details>' : '');
+    const sub = $('#rulesSub'); if (sub && RULES.checked) sub.textContent = 'What the law says, from official sources, checked ' + RULES.checked + '. Rules change: check before you keep a fish.';
+  }
+
+  function renderSpeciesGuide() {
+    const el = $('#speciesBody'); if (!el) return;
+    const where = {}; SPOTS.forEach(s => (s.species || []).forEach(e => { (where[e.key] = where[e.key] || []).push(s); }));
+    const keys = Object.keys(SP).filter(k => where[k]).sort((a, b) => SP[a].name.localeCompare(SP[b].name));
+    el.innerHTML = '<div class="sp-guide">' + keys.map(k => {
+      const p = SP[k], L = p.legal || {};
+      const tactics = (p.tactics || []).map(t => { const w = t.when || {}; const cond = Object.keys(w).filter(x => Array.isArray(w[x]) && w[x].length).map(x => x === 'months' ? w[x].map(m => CFC.MONTHS[m - 1]).join('/') : (x === 'spot' ? 'at ' + w[x].map(id => (SPOT_BY_ID[id] || {}).name || id).join(' or ') : w[x].join('/'))).join(', '); return '<li><b>' + esc(t.title) + '</b>' + (cond ? ' <span class="muted">(' + esc(cond) + ')</span>' : ' <span class="muted">(default)</span>') + ': ' + esc(t.lure_or_bait) + '. ' + esc(t.retrieve) + '</li>'; }).join('');
+      return '<div class="sp-entry" id="sp-' + esc(k) + '"><h4>' + esc(p.name) + (p.latin ? ' <i class="muted" style="font-weight:400;font-size:.85rem">' + esc(p.latin) + '</i>' : '') + '</h4>' +
+        (p.aka && p.aka.length ? '<p class="sub">Also: ' + esc(p.aka.join(', ')) + '</p>' : '') +
+        '<p>' + monthsBar(p, null, L) + ' <span class="sub">' + esc(p.season_note || '') + '</span></p>' +
+        '<dl class="kv"><dt>Where here</dt><dd>' + where[k].map(s => '<a href="#spot-' + esc(s.id) + '" data-goto="' + esc(s.id) + '">' + esc(s.name) + '</a>').join(', ') + '</dd>' +
+        '<dt>Water</dt><dd>' + esc(p.temp.ideal_lo + ' to ' + p.temp.ideal_hi + ' °C ideal (feeds from about ' + p.temp.min + ' °C, goes off above about ' + p.temp.max + ' °C)') + '</dd>' +
+        (p.habitat ? '<dt>Holds</dt><dd>' + esc(p.habitat) + '</dd>' : '') +
+        (p.diet ? '<dt>Eats</dt><dd>' + esc(p.diet) + '</dd>' : '') +
+        (p.typical_size ? '<dt>Size</dt><dd>' + esc(p.typical_size) + '</dd>' : '') +
+        (p.handling ? '<dt>Handling</dt><dd>' + esc(p.handling) + '</dd>' : '') + '</dl>' +
+        legalLine(L) +
+        (tactics ? '<ul class="sub">' + tactics + '</ul>' : '') +
+        '<p class="conf muted">Profile confidence: ' + esc(p.confidence || 'unknown') + (p.review ? '. ' + esc(p.review) : '') + '. Sources: <span class="sources">' + srcLinks(p.sources) + '</span></p></div>';
+    }).join('') + '</div>';
+  }
+
+  /* ---------- map ---------- */
+  function rampColor(step) { return getComputedStyle(document.documentElement).getPropertyValue('--r' + step).trim() || '#888'; }
+  function loadLeaflet() {
+    if (window.L) return Promise.resolve(true);
+    if (!state.leafletPromise) {
+      state.leafletPromise = new Promise(res => {
+        const sc = document.createElement('script');
+        sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+        sc.onload = () => res(!!window.L); sc.onerror = () => res(false);
+        document.head.appendChild(sc);
+      });
+    }
+    return state.leafletPromise;
+  }
+  function renderMap() {
+    if (!state.mapReady || !state.data) return;
+    const sec = $('#mapSec');
+    if (!window.L) { loadLeaflet().then(ok => { if (ok) renderMap(); else sec.hidden = true; }); return; }
+    if (!state.map) {
+      const map = L.map('map', { scrollWheelZoom: false, zoomControl: true, attributionControl: true, dragging: !L.Browser.mobile });
+      if (L.Browser.mobile) $('#mapTouchNote').hidden = false;
+      map.setView([-34.0, 18.65], 9);
+      const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
+      tiles.on('tileerror', () => { if (!state.tileFail) { state.tileFail = true; $('#mapNote').hidden = false; } });
+      tiles.addTo(map);
+      map.on('popupopen', e => { const b = e.popup.getElement().querySelector('[data-goto]'); if (b) b.addEventListener('click', () => openSpot(b.dataset.goto, true)); });
+      ['westlake', 'green_point'].forEach(k => { const o = CFC.ORIGINS[k]; L.circleMarker([o.lat, o.lon], { radius: 5, weight: 2, color: '#444', fillColor: '#fff', fillOpacity: 1 }).bindTooltip(o.name).addTo(map); });
+      state.map = map;
+    }
+    const f = state.focusIdx; const list = visibleSpots(); const visible = new Set(list.map(s => s.id));
+    SPOTS.forEach(s => {
+      const an = state.analyses[s.id]; if (!an) return;
+      const h = an.hours[f];
+      let mk = state.markers[s.id];
+      if (!mk) { mk = L.circleMarker([s.lat, s.lon], { radius: 8, weight: 2, color: getComputedStyle(document.documentElement).getPropertyValue('--surface').trim() || '#fff', fillOpacity: 1 }); mk.bindTooltip(s.name, { direction: 'top', offset: [0, -8] }); state.markers[s.id] = mk; }
+      mk.setStyle({ fillColor: rampColor(h.step) });
+      mk.bindPopup('<span class="badge s' + h.step + '"><span class="num">' + fmtScore(h.score) + '</span><small>' + esc(h.label) + '</small></span><b>' + esc(s.name) + '</b><br><span class="sub">' + esc(h.best ? spName(h.best) + ' · ' : '') + esc(condLine(s, h)) + '</span><br><button class="link" type="button" data-goto="' + esc(s.id) + '">Open spot</button> · <a class="link" href="' + esc(directionsUrl(s)) + '" target="_blank" rel="noopener">Directions</a>');
+      if (visible.has(s.id)) { if (!state.map.hasLayer(mk)) mk.addTo(state.map); } else if (state.map.hasLayer(mk)) state.map.removeLayer(mk);
+    });
+    if (list.length && list.length < SPOTS.length) { const b = L.latLngBounds(list.map(s => [s.lat, s.lon])); state.map.fitBounds(b.pad(0.2), { maxZoom: 12 }); }
+    setTimeout(() => state.map.invalidateSize(), 50);
+  }
+
+  /* ---------- catch log ---------- */
+  function renderLogControls() {
+    const sel = $('#logSpot'); if (!sel) return;
+    const cur = sel.value;
+    sel.innerHTML = SPOTS.slice().sort((a, b) => a.name.localeCompare(b.name)).map(s => '<option value="' + esc(s.id) + '">' + esc(s.name) + '</option>').join('');
+    if (cur) sel.value = cur; else { const mine = SPOTS.find(s => state.mine.has(s.id)); if (mine) sel.value = mine.id; }
+    renderLogFish();
+    const hs = $('#logHour'); if (!hs.options.length) hs.innerHTML = Array.from({ length: 24 }, (_, i) => '<option value="' + i + '"' + (i === 7 ? ' selected' : '') + '>' + hh(i) + '</option>').join('');
+    const d = $('#logDate'); if (!d.value && state.now) d.value = state.now.date;
+  }
+  function renderLogFish() {
+    const s = SPOT_BY_ID[$('#logSpot').value]; const sel = $('#logFish');
+    const keys = s ? s.species.map(e => e.key) : [];
+    sel.innerHTML = keys.map(k => '<option value="' + esc(k) + '">' + esc(spName(k)) + '</option>').join('') + '<option value="other">Something else</option><option value="none">Nothing (a blank)</option>';
+  }
+  function condAt(spotId, date, hour, fish) {
+    const an = state.analyses[spotId]; if (!an) return null;
+    const h = an.hours.find(x => x.d === date && x.H === +hour); if (!h) return null;
+    const r = h.ranked.find(x => x.key === fish);
+    return { score: h.score, fishScore: r ? r.score : null, stage: h.stage, range: h.range, wt: h.wt, ws: h.ws, wd: h.wd, rel: h.rel, sea: h.seaCls, light: h.light, trend: h.trend };
+  }
+  const condText = c => c ? [c.light ? LIGHT_TEXT[c.light] : null, c.stage ? STAGE_TEXT[c.stage] : null, c.wt != null ? fmtTemp(c.wt) + ' water' : null, c.wd != null ? CFC.compass16(c.wd) + ' ' + fmtWind(c.ws) : null, c.sea ? SEA_TEXT[c.sea] + ' sea' : null, c.fishScore != null ? 'forecast ' + c.fishScore.toFixed(1) + ' for this fish' : (c.score != null ? 'forecast ' + c.score.toFixed(1) : null)].filter(Boolean).join(' · ') : 'no forecast captured (outside the forecast window)';
+  function renderLog() {
+    const log = store.get(LOG_KEY, []); const list = $('#logList'); if (!list) return;
+    list.innerHTML = log.length ? log.slice().sort((a, b) => (b.date + String(b.hour).padStart(2, '0')) > (a.date + String(a.hour).padStart(2, '0')) ? 1 : -1).map(e => '<div class="log-item"><b>' + esc(e.fish === 'none' ? 'Blank' : (e.fish === 'other' ? 'Other fish' : spName(e.fish))) + (e.count > 1 ? ' ×' + e.count : '') + '</b><span>' + esc(SPOT_BY_ID[e.spotId] ? SPOT_BY_ID[e.spotId].name : e.spotId) + '</span><span class="muted">' + esc(e.date) + ' ' + hh(e.hour) + (e.fish !== 'none' ? ' · ' + esc(e.kept) : '') + '</span>' + (e.notes ? '<span>' + esc(e.notes) + '</span>' : '') + '<span class="cond">' + esc(condText(e.cond)) + '</span><button class="btn small" type="button" data-dellog="' + esc(e.id) + '">Delete</button></div>').join('') : '<div class="empty">Nothing logged yet. Log your next trip, blanks included: they teach the model as much as the catches.</div>';
+    const caught = log.filter(e => e.fish !== 'none' && e.cond); const sum = $('#logSummary');
+    if (caught.length >= 3) {
+      const tally = (fn) => { const c = {}; caught.forEach(e => { const k = fn(e); if (k) c[k] = (c[k] || 0) + 1; }); return Object.entries(c).sort((a, b) => b[1] - a[1])[0]; };
+      const fish = tally(e => e.fish), stage = tally(e => e.cond.stage), light = tally(e => e.cond.light);
+      const avg = caught.filter(e => e.cond.fishScore != null); const mean = avg.length ? avg.reduce((a, e) => a + e.cond.fishScore, 0) / avg.length : null;
+      const blanks = log.filter(e => e.fish === 'none' && e.cond && e.cond.score != null); const bmean = blanks.length ? blanks.reduce((a, e) => a + e.cond.score, 0) / blanks.length : null;
+      sum.hidden = false; sum.innerHTML = '<b>' + caught.length + ' catches logged.</b> Most often ' + esc(spName(fish[0])) + (stage ? ', mostly on ' + esc(STAGE_TEXT[stage[0]]) : '') + (light ? ', in ' + esc(LIGHT_TEXT[light[0]]) : '') + '.' + (mean != null ? ' The forecast gave those fish ' + mean.toFixed(1) + ' on average' + (bmean != null ? ', and ' + bmean.toFixed(1) + ' on your blanks' : '') + '.' : '');
+    } else sum.hidden = true;
+  }
+
+  /* ---------- actions ---------- */
+  function openSpot(id, scroll, hour) {
+    if (!state.analyses[id]) return;
+    if (!visibleSpots().some(s => s.id === id)) { state.water = 'all'; state.mineOnly = false; state.maxDrive = 0; state.search = ''; $('#searchBox').value = ''; renderFilters(); }
+    state.expanded.add(id);
+    if (hour != null && hour !== '' && !isNaN(+hour)) state.sel[id] = +hour;
+    renderCards();
+    if (scroll !== false) { const el = document.getElementById('spot-' + id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
+  function toggleSpot(id) { if (state.expanded.has(id)) state.expanded.delete(id); else state.expanded.add(id); refreshCard(id); }
+  function rerender() { renderFilters(); renderLead(); renderCards(); renderPlanner(); renderMap(); savePrefs(); }
+
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-goto],[data-toggle],[data-mine],[data-water],[data-style],[data-dellog],[data-species]'); if (!t) return;
+    if (t.dataset.species) { const d = $('#speciesGuide'); if (d) d.open = true; return; }
+    if (t.dataset.goto) { e.preventDefault(); openSpot(t.dataset.goto, true, t.dataset.hour); }
+    else if (t.dataset.toggle) toggleSpot(t.dataset.toggle);
+    else if (t.dataset.mine) {
+      const id = t.dataset.mine; if (state.mine.has(id)) state.mine.delete(id); else state.mine.add(id); store.set(MINE_KEY, Array.from(state.mine));
+      if (state.mineOnly) rerender(); else { t.setAttribute('aria-pressed', String(state.mine.has(id))); }
+    }
+    else if (t.dataset.water) { state.water = t.dataset.water; rerender(); }
+    else if (t.dataset.style) { if (!t.disabled) { state.style = t.dataset.style; rerender(); } }
+    else if (t.dataset.dellog) { store.set(LOG_KEY, store.get(LOG_KEY, []).filter(x => x.id !== t.dataset.dellog)); renderLog(); }
+  });
+  $('#mineBtn').addEventListener('click', () => { state.mineOnly = !state.mineOnly; rerender(); });
+  $('#originSel').addEventListener('change', e => { state.origin = e.target.value; rerender(); });
+  $('#driveSel').addEventListener('change', e => { state.maxDrive = +e.target.value; rerender(); });
+  $('#sortSel').addEventListener('change', e => { state.sort = e.target.value; rerender(); });
+  $('#nightChk').addEventListener('change', e => { state.night = e.target.checked; savePrefs(); if (state.data) { analyseAll(); renderAll(); } });
+  let searchTimer; $('#searchBox').addEventListener('input', e => { clearTimeout(searchTimer); searchTimer = setTimeout(() => { state.search = e.target.value; renderLead(); renderCards(); renderPlanner(); renderMap(); }, 150); });
+  $('#refreshBtn').addEventListener('click', () => { if (state.data) load(true); else load(false); });
+  $('#showAll').addEventListener('click', () => { state.showAllCards = true; renderCards(); });
+  $('#unitsBtn').addEventListener('click', () => { state.wind = state.wind === 'kmh' ? 'kn' : 'kmh'; savePrefs(); if (state.data) renderAll(); else renderStatus(); });
+  $('#logSpot').addEventListener('change', renderLogFish);
+  window.addEventListener('hashchange', () => { if (location.hash.startsWith('#spot-')) openSpot(location.hash.slice(6), true); });
+  function whenNear(el, margin, fn) {
+    if (!('IntersectionObserver' in window)) { fn(); return; }
+    const io = new IntersectionObserver(entries => { if (entries.some(en => en.isIntersecting)) { io.disconnect(); fn(); } }, { rootMargin: margin + 'px 0px' });
+    io.observe(el);
+  }
+  function armLazySections() {
+    if (state.lazyArmed) return;
+    state.lazyArmed = true;
+    whenNear($('#plannerSec'), 700, () => { state.plannerReady = true; renderPlanner(); });
+    whenNear($('#mapSec'), 200, () => { state.mapReady = true; renderMap(); });
+  }
+
+  $('#logForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const spotId = $('#logSpot').value, fish = $('#logFish').value, date = $('#logDate').value, hour = +$('#logHour').value;
+    const count = fish === 'none' ? 0 : Math.max(0, +$('#logCount').value || 0), kept = $('#logKept').value, notes = $('#logNotes').value.trim();
+    if (!spotId || !date) return;
+    const log = store.get(LOG_KEY, []);
+    log.push({ id: String(Date.now()), spotId, fish, date, hour, count, kept, notes, cond: condAt(spotId, date, hour, fish) });
+    if (!store.set(LOG_KEY, log)) notice('This browser is not allowing storage, so the entry could not be saved.', 'err');
+    $('#logNotes').value = ''; renderLog();
+  });
+  $('#logExport').addEventListener('click', () => { const ta = $('#logText'); ta.hidden = false; ta.value = JSON.stringify(store.get(LOG_KEY, []), null, 1); ta.focus(); ta.select(); });
+  $('#logImport').addEventListener('click', () => {
+    const ta = $('#logText'); if (ta.hidden) { ta.hidden = false; ta.value = ''; ta.placeholder = 'Paste a backup here, then press this button again.'; ta.focus(); return; }
+    try { const arr = JSON.parse(ta.value); if (!Array.isArray(arr)) throw new Error('not a list'); const cur = store.get(LOG_KEY, []); const ids = new Set(cur.map(x => x.id)); arr.forEach(x => { if (x && x.id && !ids.has(x.id)) cur.push(x); }); store.set(LOG_KEY, cur); renderLog(); ta.hidden = true; notice('Backup merged: ' + cur.length + ' entries in the log.', 'info'); }
+    catch (err) { notice('That did not look like a catch-log backup (' + esc(err.message) + ').', 'err'); }
+  });
+
+  /* ---------- share, install, offline ---------- */
+  const pageUrl = () => SITE.publicUrl || location.href.split('#')[0];
+  let qrDone = false, deferredInstall = null;
+  function loadQrLib() {
+    return new Promise(res => {
+      if (window.QRCode) return res(true);
+      const sc = document.createElement('script');
+      sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      sc.onload = () => res(true); sc.onerror = () => res(false);
+      document.head.appendChild(sc);
+    });
+  }
+  async function toggleShare(open) {
+    const p = $('#sharePanel'), b = $('#shareBtn');
+    const show = open == null ? p.hidden : open;
+    p.hidden = !show; b.setAttribute('aria-expanded', String(show));
+    if (!show) return;
+    const url = pageUrl();
+    $('#shareUrl').value = url;
+    $('#nativeShare').hidden = !navigator.share;
+    if (!qrDone && /^https?:/.test(url) && await loadQrLib()) {
+      try { new QRCode($('#qr'), { text: url, width: 156, height: 156, colorDark: '#10211a', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M }); qrDone = true; } catch (e) { console.warn('qr', e); }
+    }
+    $('#qrWrap').hidden = !qrDone;
+  }
+  $('#shareBtn').addEventListener('click', () => toggleShare());
+  $('#closeShare').addEventListener('click', () => toggleShare(false));
+  $('#copyUrl').addEventListener('click', async () => {
+    const b = $('#copyUrl');
+    try { await navigator.clipboard.writeText(pageUrl()); b.textContent = 'Copied'; setTimeout(() => { b.textContent = 'Copy'; }, 1600); }
+    catch (e) { const i = $('#shareUrl'); i.focus(); i.select(); }
+  });
+  $('#nativeShare').addEventListener('click', () => { navigator.share({ title: 'Cape Fish Check', text: 'Where to fish near Cape Town this week', url: pageUrl() }).catch(() => {}); });
+  const installButtons = () => [$('#installBtn'), $('#installHdr')];
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; installButtons().forEach(b => { b.hidden = false; }); });
+  window.addEventListener('appinstalled', () => { deferredInstall = null; installButtons().forEach(b => { b.hidden = true; }); });
+  async function promptInstall() { if (!deferredInstall) return; deferredInstall.prompt(); try { await deferredInstall.userChoice; } catch (e) { /* dismissed */ } deferredInstall = null; installButtons().forEach(b => { b.hidden = true; }); }
+  installButtons().forEach(b => b.addEventListener('click', promptInstall));
+  if ('serviceWorker' in navigator && onWeb && !framed && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(err => console.warn('service worker', err)); });
+  }
+  window.addEventListener('online', () => { if (state.data && ageMinutes(state.data.fetchedAt) >= FRESH_MIN) load(false); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && state.data && ageMinutes(state.data.fetchedAt) >= 60) load(false); });
+
+  /* chart hover shows the hour; a tap or click picks it for the tactics panel */
+  document.addEventListener('pointermove', chartTip);
+  document.addEventListener('click', e => {
+    const svg = e.target.closest && e.target.closest('svg.chart'); if (!svg || svg.classList.contains('chart-axis')) return;
+    const i = chartIndex(svg, e); const card = svg.closest('.card'); if (i == null || !card) return;
+    state.sel[card.dataset.id] = i; refreshCard(card.dataset.id);
+  });
+  function chartIndex(svg, e) {
+    const rect = svg.getBoundingClientRect(); const scale = svg.viewBox.baseVal.width / rect.width;
+    const xv = (e.clientX - rect.left) * scale; const padL = +svg.dataset.padl, PX = +svg.dataset.px, n = +svg.dataset.n;
+    const i = Math.floor((xv - padL) / PX); return i < 0 || i >= n ? null : i;
+  }
+  function chartTip(e) {
+    const svg = e.target.closest && e.target.closest('svg.chart:not(.chart-axis)'); const wrap = svg && svg.closest('.chart-wrap');
+    document.querySelectorAll('.tip').forEach(t => { if (!wrap || t.parentElement !== wrap) t.hidden = true; });
+    document.querySelectorAll('.xhair').forEach(l => { if (!svg || l.ownerSVGElement !== svg) { l.setAttribute('x1', -10); l.setAttribute('x2', -10); } });
+    if (!svg) return;
+    const card = svg.closest('.card'); const an = card && state.analyses[card.dataset.id]; if (!an) return;
+    const i = chartIndex(svg, e); const tip = wrap.querySelector('.tip'); const line = svg.querySelector('.xhair');
+    if (i == null) { tip.hidden = true; return; }
+    const h = an.hours[i]; const PX = +svg.dataset.px, padL = +svg.dataset.padl; const cx = padL + i * PX + PX / 2; line.setAttribute('x1', cx); line.setAttribute('x2', cx);
+    tip.innerHTML = '<b>' + esc(dayLabel(h.d, 'short')) + ' ' + hh(h.H) + '</b> <span class="badge s' + h.step + '"><span class="num">' + fmtScore(h.score) + '</span><small>' + esc(h.label) + '</small></span>' + (h.fishable ? '' : ' <span class="muted">' + esc(LIGHT_TEXT[h.light]) + '</span>') +
+      '<div class="row"><span>Best bet</span><span>' + esc(h.best ? spName(h.best) : '–') + '</span></div>' +
+      (h.stage ? '<div class="row"><span>Tide</span><span>' + esc(STAGE_TEXT[h.stage]) + '</span></div>' : '') +
+      '<div class="row"><span>Water</span><span>' + esc(fmtTemp(h.wt)) + '</span></div>' +
+      '<div class="row"><span>Wind</span><span>' + esc(CFC.compass16(h.wd) + ' ' + fmtWind(h.ws) + (h.rel ? ' ' + h.rel : '')) + '</span></div>' +
+      (h.seaCls ? '<div class="row"><span>Sea</span><span>' + esc(SEA_TEXT[h.seaCls] + ', ' + fmtLen(h.hs) + ' offshore') + '</span></div>' : '') +
+      '<div class="row"><span>Sky</span><span>' + esc(wmo(h.code) + (h.rain != null ? ', rain ' + h.rain + '%' : '')) + '</span></div>' +
+      (h.flags.length ? '<div class="row"><span>Flags</span><span>' + esc(h.flags.join(', ')) + '</span></div>' : '') + '<div class="muted">Tap to see tactics for this hour</div>';
+    tip.hidden = false;
+    const wr = wrap.getBoundingClientRect(); let left = e.clientX - wr.left + 14; if (left + tip.offsetWidth > wr.width) left = Math.max(0, e.clientX - wr.left - tip.offsetWidth - 14);
+    tip.style.left = left + 'px';
+  }
+
+  renderRules();
+  renderSpeciesGuide();
+  renderStatus();
+  load(false);
+})();
+</script>
